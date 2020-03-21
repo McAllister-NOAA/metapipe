@@ -1,0 +1,70 @@
+Thalassiosira tenera	291031
+Haptophyta	2830
+Ditylum brightwellii	49249
+Chloropicon	2302914
+Cercozoa	136419
+Thalassiosiraceae	29202
+Chaetoceros	49237
+Guinardia	216800
+Eucampia	49251
+Ditrichocorycaeus anglicus	1582896
+Thalassiosira hendeyi	337443
+Proboscia	216776
+Phaeocystis	33656
+Ostreococcus	70447
+Thalassiosira minuscula	385413
+Pseudo-nitzschia cuspidata	237455
+Pelagiidae	6146
+Cerataulina pelagica	1003031
+Hemiaulus	426649
+Micromonas	38832
+Micromonas	543311
+Oithona	136190
+Rhizosolenia setigera	3005
+Coscinodiscales	216785
+Coscinodiscus	33641
+Skeletonema	2842
+Chaetoceros cinctus	1973196
+Pseudo-nitzschia	41953
+Naviculaceae	67474
+Thalassiosira	35127
+Paracalanus	163471
+Chaetoceros elegans	1937694
+Bacillariophyta	2836
+Pyramimonas	36882
+Bathycoccus prasinos	41875
+Cyclotella	29203
+Pectinaria granulata	283781
+Imbricatea	1736114
+Sigalion spinosus	328601
+Lauderia annulata	382366
+Leptocylindrus convexus	1398153
+Cylindrotheca closterium	2856
+Lynnella semiglobulosa	696186
+Rhizosolenia robusta	265547
+Pyramimonas australis	132611
+Stephanopyxis	3006
+Lobata	27921
+Oikopleura	34763
+Tintinnida	200604
+Ploima	84394
+Pterocystis sp.	1982029
+Rhizosolenia	3004
+Odontella	2838
+Odontella	332376
+Actinocyclus sp. 1 MPA-2013	1335100
+Calanidae	6835
+Sagittidae	34753
+Ciliophora	5878
+Chrysochromulina strobilus	696961
+Prymnesium	35143
+Pseudo-nitzschia pungens	37318
+Asteromphalus sp. TN-2014	1529363
+Cryothecomonas aestivalis	151026
+Pseudo-nitzschia heimii	476441
+Choreotrichida	200605
+Bacteriastrum	426670
+Stellarima microtrias	188541
+Coscinodiscus sp. TN-2014	1529365
+Thecofilosea	1004930
+Mamiella	41876

@@ -1,6 +1,46 @@
 # metapipe
 Metabarcoding Pipeline
 
+Created by Sean McAllister, Matt Galaska, Chris Paight
+
+##Required input files
+*Raw reads
+*Program settings
+primer sequence F
+primer sequence R
+force merge? T/F [F]
+DESeq rarefaction T/F [F]
+expected insert size (bp)
+sequence read length (bp)
+location of sample metadata file
+taxa depth (for figures)
+control samples (positive/negative)
+contaminant taxa list
+taxid of interest list
+
+*Sample metadata
+sample order
+sample groups
+sample lat/long
+replicate indication
+chemistry
+
+##Dependencies
+R (Rscript)
+dada2 – v.1.14.1
+dbplyr - v.1.4.2
+vegan - v.2.5-6
+mapping packages
+ggplot2 - v.3.3.0
+
+blastn - v.x
+cutadapt - v.2.8
+taxonkit - v.0.5.0
+krona
+subtree (taxonomy...)
+...
+
+##Test dataset
 
 #### Legal Disclaimer
 *This repository is a software product and is not official communication

@@ -1,0 +1,4 @@
+reads.in	reads.out
+MP_18cp44_R1_trimmed.fq.gz	38235	30246
+MP_18cp45_R1_trimmed.fq.gz	55934	43585
+MP_18cp46_R1_trimmed.fq.gz	69785	53672

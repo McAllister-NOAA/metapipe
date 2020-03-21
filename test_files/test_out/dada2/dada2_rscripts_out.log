@@ -1,0 +1,59 @@
+Loading required package: Rcpp
+Read 3 items
+Scale for 'y' is already present. Adding another scale for 'y', which will
+replace the existing scale.
+null device 
+          1 
+Scale for 'y' is already present. Adding another scale for 'y', which will
+replace the existing scale.
+null device 
+          1 
+Scale for 'y' is already present. Adding another scale for 'y', which will
+replace the existing scale.
+null device 
+          1 
+Scale for 'y' is already present. Adding another scale for 'y', which will
+replace the existing scale.
+null device 
+          1 
+Loading required package: Rcpp
+Read 3 items
+DADA2 - Learning error Running
+33487182 total bases in 127503 reads from 3 samples will be used for learning the error rates.
+34353263 total bases in 127503 reads from 3 samples will be used for learning the error rates.
+Warning messages:
+1: Transformation introduced infinite values in continuous y-axis 
+2: Transformation introduced infinite values in continuous y-axis 
+null device 
+          1 
+Warning message:
+Transformation introduced infinite values in continuous y-axis 
+null device 
+          1 
+DADA2 - Dereplication Running
+Dereplicating sequence entries in Fastq file: MP_18cp44_R1_filtered.fq.gz
+Encountered 10488 unique sequences from 30246 total sequences read.
+Dereplicating sequence entries in Fastq file: MP_18cp45_R1_filtered.fq.gz
+Encountered 16271 unique sequences from 43585 total sequences read.
+Dereplicating sequence entries in Fastq file: MP_18cp46_R1_filtered.fq.gz
+Encountered 17119 unique sequences from 53672 total sequences read.
+Dereplicating sequence entries in Fastq file: MP_18cp44_R2_filtered.fq.gz
+Encountered 14650 unique sequences from 30246 total sequences read.
+Dereplicating sequence entries in Fastq file: MP_18cp45_R2_filtered.fq.gz
+Encountered 22320 unique sequences from 43585 total sequences read.
+Dereplicating sequence entries in Fastq file: MP_18cp46_R2_filtered.fq.gz
+Encountered 25475 unique sequences from 53672 total sequences read.
+Sample 1 - 30246 reads in 10488 unique sequences.
+Sample 2 - 43585 reads in 16271 unique sequences.
+Sample 3 - 53672 reads in 17119 unique sequences.
+
+   selfConsist step 2Sample 1 - 30246 reads in 14650 unique sequences.
+Sample 2 - 43585 reads in 22320 unique sequences.
+Sample 3 - 53672 reads in 25475 unique sequences.
+
+   selfConsist step 2DADA2 - Merge Running
+DADA2 - Chimera Check Running
+Identified 34 bimeras out of 283 input sequences.
+Percent non-chimera:
+[1] 97.05543
+DADA2 - Creating ASV outs
