@@ -415,7 +415,7 @@ perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASV
 cd ${workingdirectory}
 
 
-
+#TODO will need to decide on what blastn outfiles to focus on and what to use. For now, just running all here... Need to discuss.
 
 
 
