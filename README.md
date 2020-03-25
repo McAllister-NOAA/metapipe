@@ -38,7 +38,12 @@ cutadapt - v.2.8
 taxonkit - v.0.5.0
 krona
 subtree (taxonomy...)
+
+perl : List::MoreUtils
 ...
+
+acknowledge citations for dada2 (including blog post), cutadapt
+
 
 ##Test dataset
 

@@ -56,11 +56,11 @@ setwd(as.character(args[1]))
 write.table(filtered_out, file='filtered_out_stats.txt', sep= '\t', quote=FALSE)
 
 trimFQuality <- plotQualityProfile(filtered_forward_reads)
-pdf(file='trimFQualityPlot.pdf', width=11, height = 8.5*(sample_num/5))
+pdf(file='trimFQualityPlot.pdf', width=11, height = 8.5*(sample_num/7))
 trimFQuality
 dev.off()
 
 trimRQuality <- plotQualityProfile(filtered_reverse_reads)
-pdf(file='trimRQualityPlot.pdf', width=11, height = 8.5*(sample_num/5))
+pdf(file='trimRQualityPlot.pdf', width=11, height = 8.5*(sample_num/7))
 trimRQuality
 dev.off()

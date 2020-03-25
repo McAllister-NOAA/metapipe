@@ -1,0 +1,459 @@
+1003031	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Biddulphiophycidae;Hemiaulales;Hemiaulaceae;Cerataulina;Cerataulina pelagica
+1003062	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Biddulphiophycidae;Hemiaulales;Hemiaulaceae;Hemiaulus;Hemiaulus sinensis
+1010430	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA071-B18
+1010435	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA071-E15
+1010437	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA071-E17
+1010439	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA071-F22
+1010447	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA071-I17
+1010450	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA071-J07
+1010457	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA071-L17
+1010462	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA071-M18
+1010465	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA071-N08
+1010471	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA071-O10
+1010505	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA074-E03
+1010547	cellular organisms;Eukaryota;unclassified eukaryotes;eukaryote SCGC;eukaryote SCGC AAA074-K06
+1035528	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Pyramimonadophyceae;Pyramimonadales;Pyramimonadaceae;Pyramimonas;unclassified Pyramimonas;Pyramimonas sp. RCC2015
+1041513	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia lineola
+1041877	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;unclassified Alexandrium;Alexandrium sp. ACC01
+1050070	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Tintinnida;Tintinnidiidae;Leprotintinnus;Leprotintinnus pellucidus
+1050072	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Tintinnida;Xystonellidae;Parundella;unclassified Parundella;Parundella sp. TK-2011
+107032	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Deuterostomia;Chordata;Tunicata;Appendicularia;Copelata;Oikopleuridae;Oikopleura;Oikopleura longicauda
+107758	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Lepidodinium;Lepidodinium chlorophorum
+1079765	cellular organisms;Eukaryota;Sar;Stramenopiles;Bigyra;Labyrinthulomycetes;Oblongichytrida;Oblongichytrium;unclassified Oblongichytrium;Oblongichytrium sp. BAFCcult 3519
+1100087	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Bacteriastrum;Bacteriastrum jadranum
+1122278	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Lepidodinium;unclassified Lepidodinium;Lepidodinium sp. MH 360
+1124235	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Blastodiniales;Blastodinium;unclassified Blastodinium;Blastodinium sp. 8 CAdS-2011
+1124241	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Blastodiniales;Blastodinium;Blastodinium mangini
+1126601	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;unclassified Alexandrium;Alexandrium sp. ACQH01
+1126602	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;unclassified Alexandrium;Alexandrium sp. AL10
+1126603	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;unclassified Alexandrium;Alexandrium sp. AL52
+1126604	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;unclassified Alexandrium;Alexandrium sp. CCMP1911
+1126605	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;unclassified Alexandrium;Alexandrium sp. CCMP1978
+1126607	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;unclassified Alexandrium;Alexandrium sp. GTCA28
+1126608	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;unclassified Alexandrium;Alexandrium sp. GTM253
+1126609	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;unclassified Alexandrium;Alexandrium sp. HT140G4
+1126610	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;unclassified Alexandrium;Alexandrium sp. LKC11
+1127108	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Sphaenacanthida;Acanthometridae;Acanthometra;Acanthometra fusca
+1127109	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Sphaenacanthida;Acanthometridae;Acanthometra;Acanthometra pellucida
+1127115	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Phyllacantha;Phyllostauridae;Acanthostaurus;Acanthostaurus conacanthus
+1127117	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Phyllacantha;Phyllostauridae;Amphistaurus;Amphistaurus complanatus
+1127127	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Phyllacantha;Phyllostauridae;Acanthostaurus;Acanthostaurus purpurascens
+1127211	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Phyllacantha;Phyllostauridae;Lonchostaurus;Lonchostaurus rombicus
+1127218	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Phyllacantha;Phyllostauridae;Phyllostaurus;Phyllostaurus siculus
+1131898	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Tintinnida;Tintinnidae;Eutintinnus;Eutintinnus tenuis
+1132520	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Eudubosquellidae;Euduboscquella;unclassified Euduboscquella;Euduboscquella sp. ex Favella arcuata
+1132523	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Eudubosquellidae;Euduboscquella;unclassified Euduboscquella;Euduboscquella sp. ex Tintinnopsis cf. subacuta
+1132524	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Eudubosquellidae;Euduboscquella;unclassified Euduboscquella;Euduboscquella sp. ex Tintinnopsis sp. 1
+113644	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Gymnoplea;Calanoida;Calanidae;Calanus;Calanus glacialis
+1140381	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Gymnodinium;Gymnodinium eucyaneum
+114068	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Gymnoplea;Calanoida;Calanidae;Calanus;Calanus helgolandicus
+114070	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Gymnoplea;Calanoida;Calanidae;Calanus;Calanus sinicus
+1144756	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Oligotrichia;Strombidiidae;Parallelostrombidium;Parallelostrombidium conicum
+1155186	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira hispida
+1155554	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;Chromulinales;Paraphysomonadaceae;Paraphysomonas;unclassified Paraphysomonas;Paraphysomonas sp. RCC1993-2
+1167625	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Pyrophacaceae;Fragilidium;Fragilidium duplocampanaeforme
+1167876	cellular organisms;Eukaryota;Sar;Stramenopiles;Bigyra;Opalozoa;Nanomonadea;Incisomonas;Incisomonas marina
+1169006	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Tintinnida;Metacylididae;Helicostomella;Helicostomella subulata
+1170544	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Phyllopharyngea;Phyllopharyngia;Dysteriida;Dysteriidae;Trochilia;Trochilia petrani
+1171678	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. BCC62000
+1171682	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. BCC68000
+1171683	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. BCC69000
+1171684	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. BCC7000
+1171685	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. BCC72000
+1171686	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. BCC75000
+1176368	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Tintinnida;Tintinnidae;Eutintinnus;Eutintinnus apertus
+1186237	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Gymnodinium;unclassified Gymnodinium;Gymnodinium sp. QZ-2012
+1193141	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Cnidaria;Scyphozoa;Semaeostomeae;Pelagiidae;Chrysaora;Chrysaora helvola
+119370	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Gymnoplea;Calanoida;Calanidae;Neocalanus;Neocalanus plumchrus
+1196156	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Sphaenacanthida;Acanthometridae;Acanthometron;unclassified Acanthometron;Acanthometron sp. C JD-2012
+119757	cellular organisms;Eukaryota;Sar;Rhizaria;Endomyxa;Plasmodiophorida;Plasmodiophoridae;Spongospora;Spongospora subterranea;Spongospora subterranea f. sp. nasturtii
+1197881	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Tintinnida;Tintinnidae;Eutintinnus;Eutintinnus lususundae
+122233	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros debilis
+1226012	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;Prorocentrum texanum
+1239449	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Suessiales;Suessiaceae;Pelagodinium;unclassified Pelagodinium;Pelagodinium sp. JD-2012
+1242177	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Choreotrichida;Strobilidiidae;Pelagostrobilidium;Pelagostrobilidium minutum
+127145	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Ctenophora;Tentaculata;Lobata;Lampoctenidae;Lampocteis;Lampocteis cruentiventer
+1273161	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;Chromulinales;Paraphysomonadaceae;Paraphysomonas;Paraphysomonas aff. imperforata CCAP935/13
+1273570	cellular organisms;Eukaryota;Cryptophyceae;Pyrenomonadales;Geminigeraceae;Teleaulax;Teleaulax gracilis
+1274397	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;Chromulinales;Paraphysomonadaceae;Paraphysomonas;unclassified Paraphysomonas;Paraphysomonas sp. WA20KP
+1276030	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;Chromulinales;Paraphysomonadaceae;Paraphysomonas;unclassified Paraphysomonas;Paraphysomonas sp. 9 JMS-2012
+1276039	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;Chromulinales;Paraphysomonadaceae;Paraphysomonas;Paraphysomonas lucasi
+1276066	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;Chromulinales;Paraphysomonadaceae;Paraphysomonas;Paraphysomonas mikadiforma
+1276142	cellular organisms;Eukaryota;Sar;Rhizaria;Imbricatea;Silicofilosea;Thaumatomonadida;Thaumatomastigidae;Reckertia;Reckertia gemma
+1276173	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;Chromulinales;Paraphysomonadaceae;Paraphysomonas;Paraphysomonas acuminata
+128131	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Cnidaria;Scyphozoa;Semaeostomeae;Pelagiidae;Sanderia;Sanderia malayensis
+1281429	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Gymnoplea;Calanoida;Paracalanidae;Paracalanus;Paracalanus tropicus
+1282893	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Polykrikos;Polykrikos geminatum
+1290334	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;Prorocentrum shikokuense
+1294205	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Amoebophryaceae;Amoebophrya;unclassified Amoebophrya;Amoebophrya sp. ex Akashiwo sanguinea
+1294207	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Amoebophryaceae;Amoebophrya;unclassified Amoebophrya;Amoebophrya sp. ex Prorocentrum triestinum
+1295631	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Oligotrichia;Tontoniidae;Pseudotontonia;unclassified Pseudotontonia;Pseudotontonia sp. JG-2011a
+1297756	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Phyllopharyngea;Phyllopharyngia;Dysteriida;Plesiotrichopidae;Pithites;Pithites vorax
+132611	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Pyramimonadophyceae;Pyramimonadales;Pyramimonadaceae;Pyramimonas;Pyramimonas australis
+1333877	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Endodiniaceae;Brandtodinium;Brandtodinium nutricula
+1334967	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Biddulphiophycidae;Eupodiscales;Eupodiscaceae;Odontella;Odontella aurita;Odontella aurita var. minima
+1334977	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Rhizosoleniophycidae;Rhizosoleniales;Rhizosoleniaceae;Rhizosolenia;Rhizosolenia formosa
+1335100	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Coscinodiscophycidae;Coscinodiscales;Hemidiscaceae;Actinocyclus;unclassified Actinocyclus (in: Bacillariophyta);Actinocyclus sp. 1 MPA-2013
+1335110	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Coscinodiscophycidae;Coscinodiscales;Coscinodiscaceae;Coscinodiscus;unclassified Coscinodiscus;Coscinodiscus sp. 1 MPA-2013
+1335114	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Biddulphiophycidae;Hemiaulales;Hemiaulaceae;Eucampia;unclassified Eucampia;Eucampia sp. 1 MPA-2013
+1335120	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Biddulphiophycidae;Eupodiscales;Eupodiscaceae;Odontella;unclassified Odontella;Odontella sp. 1 MPA-2013
+1343134	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Tintinnida;Metacylididae;Helicostomella;unclassified Helicostomella;Helicostomella sp. type I
+1348415	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Phyllopharyngea;Phyllopharyngia;Dysteriida;Hartmannulidae;Brooklynella;Brooklynella sinensis
+136180	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Gymnoplea;Calanoida;Acartiidae;Acartia;Acartia tonsa
+1366867	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros teres
+1384505	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros contortus
+139025	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Heterocapsaceae;Heterocapsa;Heterocapsa circularisquama
+1398153	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Leptocylindrales;Leptocylindraceae;Leptocylindrus;Leptocylindrus convexus
+1400982	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;unclassified Bacillariophyta;Bacillariophyta sp. 1 MAB-2013
+140455	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Ctenophora;Tentaculata;Lobata;Bolinopsidae;Bolinopsis;Bolinopsis infundibulum
+1406828	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-1
+1406829	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-2
+1406830	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-3
+1406831	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-7
+1406834	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-13
+1406837	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-18
+1406838	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-19
+1407009	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Suessiales;Biecheleriaceae;Biecheleria;Biecheleria brevisulcata
+1420631	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-22
+1420632	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-23
+1420634	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-26
+1420635	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-27
+1420636	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-29
+1420637	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-30
+1420638	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-31
+1420640	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-37
+1420644	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-43
+1420645	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-44
+1420646	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-45
+1420647	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-46
+1420648	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. cult-48
+1425173	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Nassophorea;Nassulida;Colpodidiidae;Apocolpodidium;Apocolpodidium etoschense
+1442597	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Bacteriastrum;Bacteriastrum furcatum
+1449113	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Rotifera;Monogononta;Pseudotrocha;Ploima;Synchaetidae;Synchaeta;Synchaeta cf. tremula/oblonga CQT-2013
+1453980	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Amoebophryaceae;Amoebophrya;unclassified Amoebophrya;Amoebophrya sp. ex Cochlodinium polykrikoides
+1461544	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Chloropicophyceae;Chloropicales;Chloropicaceae;Chloropicon;Chloropicon roscoffensis
+1461550	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Pyramimonadophyceae;Pyramimonadales;Pyramimonadaceae;Pyramimonas;unclassified Pyramimonas;Pyramimonas sp. CCMP2087
+1471208	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;Alexandrium tamarense species complex group I
+151026	cellular organisms;Eukaryota;Sar;Rhizaria;Cercozoa;Thecofilosea;Cryomonadida;Protaspidae;Cryothecomonas;Cryothecomonas aestivalis
+151027	cellular organisms;Eukaryota;Sar;Rhizaria;Cercozoa;Thecofilosea;Cryomonadida;Protaspidae;Cryothecomonas;Cryothecomonas longipes
+1514137	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Rhizosoleniophycidae;Rhizosoleniales;Rhizosoleniaceae;Guinardia;Guinardia striata
+1519423	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Amphidomataceae;Azadinium;Azadinium concinnum
+1524179	cellular organisms;Eukaryota;Sar;Stramenopiles;Bigyra;Labyrinthulomycetes;Oblongichytrida;Oblongichytrium;unclassified Oblongichytrium;Oblongichytrium sp. SEK 711
+1524180	cellular organisms;Eukaryota;Sar;Stramenopiles;Bigyra;Labyrinthulomycetes;Oblongichytrida;Oblongichytrium;unclassified Oblongichytrium;Oblongichytrium sp. SEK 712
+1524181	cellular organisms;Eukaryota;Sar;Stramenopiles;Bigyra;Labyrinthulomycetes;Oblongichytrida;Oblongichytrium;unclassified Oblongichytrium;Oblongichytrium sp. SEK 713
+1527828	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Biddulphiophycidae;Hemiaulales;Hemiaulaceae;Eucampia;Eucampia cornuta
+1529363	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Coscinodiscophycidae;Asterolamprales;Asterolampraceae;Asteromphalus;unclassified Asteromphalus;Asteromphalus sp. TN-2014
+1529364	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Coscinodiscophycidae;Coscinodiscales;Heliopeltaceae;Actinoptychus;unclassified Actinoptychus;Actinoptychus sp. TN-2014
+1529365	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Coscinodiscophycidae;Coscinodiscales;Coscinodiscaceae;Coscinodiscus;unclassified Coscinodiscus;Coscinodiscus sp. TN-2014
+1537842	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;unclassified Thalassiosira;Thalassiosira sp. UNC1203
+1539492	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;unclassified prasinophytes;prasinophyte sp. CCMP1998
+156134	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;prasinophyte incertae sedis;Pycnococcaceae;Pycnococcus;unclassified Pycnococcus;Pycnococcus sp. MBIC10519
+1562717	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Chaetognatha;Sagittoidea;Aphragmophora;Ctenodontina;Sagittidae;Ferosagitta;Ferosagitta ferox
+1563420	cellular organisms;Eukaryota;Opisthokonta;Ichthyosporea;unclassified Ichthyosporea;Ichthyosporea sp. NK52
+1570327	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Micromonas;unclassified Micromonas;Micromonas sp. SCSH14
+1573495	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;unclassified Dinophyceae;Levanderina;Levanderina fissa
+1573537	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros dayaensis
+1582896	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Podoplea;Poecilostomatoida;Corycaeidae;Ditrichocorycaeus;Ditrichocorycaeus anglicus
+160611	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Thoracosphaerales;Thoracosphaeraceae;Scrippsiella;Scrippsiella sweeneyae
+1606475	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;prasinophyte incertae sedis;Pycnococcaceae;Pycnococcus;unclassified Pycnococcus;Pycnococcus sp. RCC521
+1607871	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Oligotrichia;Strombidiidae;Strombidium;Strombidium caudispina
+1610580	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Nusuttodinium;Nusuttodinium acidotum
+1618018	cellular organisms;Eukaryota;Sar;Stramenopiles;Oomycetes;Saprolegniales;Saprolegniaceae;Leptolegnia;unclassified Leptolegnia;Leptolegnia sp. LB-2015
+1629645	cellular organisms;Eukaryota;Sar;Alveolata;Apicomplexa;Conoidasida;Gregarinasina;Eugregarinorida;Porosporidae;Thiriotia;unclassified Thiriotia;Thiriotia sp. MS-2015
+1631189	cellular organisms;Eukaryota;Haptista;Haptophyta;Prymnesiophyceae;Phaeocystales;Phaeocystaceae;Phaeocystis;Phaeocystis rex
+1641413	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Torodiniales;Torodiniaceae;Torodinium;Torodinium robustum
+1654606	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Eudubosquellidae;Euduboscquella;Euduboscquella costata
+1655547	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Heterocapsaceae;Heterocapsa;Heterocapsa psammophila
+1664502	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia sabit
+1679438	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Warnowiaceae;Warnowia;unclassified Warnowia;Warnowia sp.
+1682429	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;unclassified Choreotrichia;Choreotrichia sp. bBoG1
+1682430	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;unclassified Choreotrichia;Choreotrichia sp. bLPN2
+1682431	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;unclassified Choreotrichia;Choreotrichia sp. bTS1
+168724	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Cnidaria;Scyphozoa;Semaeostomeae;Pelagiidae;Chrysaora;Chrysaora melanaster
+168767	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Cnidaria;Scyphozoa;Semaeostomeae;Pelagiidae;Chrysaora;Chrysaora colorata
+1689149	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Suessiales;Suessiaceae;Pelagodinium;unclassified Pelagodinium;Pelagodinium sp. EP-2015
+1690225	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Pyramimonadophyceae;Pyramimonadales;Pyramimonadaceae;Pyramimonas;Pyramimonas diskoicola
+1752179	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Naviculales;Naviculaceae;Navicula;Navicula viridula;Navicula viridula var. rostellata
+1764286	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Chloropicophyceae;Chloropicales;Chloropicaceae;Chloropicon;Chloropicon sieburthii
+1764922	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Skeletonemataceae;Skeletonema;unclassified Skeletonema;Skeletonema sp. RCC843
+1764932	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;unclassified Prorocentrum;Prorocentrum sp. RCC2563
+1798950	cellular organisms;Eukaryota;Sar;Stramenopiles;Oomycetes;Lagenidiales;Haliphthoraceae;Haliphthoros;unclassified Haliphthoros;Haliphthoros sp.
+1806893	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Peridiniaceae;Peridinium;Peridinium wisconsinense
+181122	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Oligotrichia;Strombidiidae;Strombidium;unclassified Strombidium;Strombidium sp.
+1812833	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Naviculales;Naviculaceae;Navicula;Navicula cf. normaloides CU-2016a
+181622	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Choreotrichida;Strombidinopsidae;Strombidinopsis;unclassified Strombidinopsis;Strombidinopsis sp.
+183588	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia fraudulenta
+1840506	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Cnidaria;Scyphozoa;Semaeostomeae;Pelagiidae;Chrysaora;Chrysaora chinensis
+1848823	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Micromonas;unclassified Micromonas;Micromonas sp. RCC746
+1848828	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Micromonas;Micromonas polaris
+1848830	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Micromonas;unclassified Micromonas;Micromonas sp. RCC830
+1848831	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Micromonas;unclassified Micromonas;Micromonas sp. RCC831
+1859706	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Cnidaria;Scyphozoa;Semaeostomeae;Pelagiidae;Chrysaora;unclassified Chrysaora;Chrysaora sp. JX-2016
+1859708	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Cnidaria;Cubozoa;Carybdeida;Carukiidae;unclassified Carukiidae;Carukiidae sp. JX-2016
+186176	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia seriata
+1864604	cellular organisms;Eukaryota;Opisthokonta;Choanoflagellata;Acanthoecida;Stephanoecidae;Calliacantha;Calliacantha natans
+1864606	cellular organisms;Eukaryota;Opisthokonta;Choanoflagellata;Acanthoecida;Acanthoecidae;Cosmoeca;Cosmoeca ventricosa
+1864621	cellular organisms;Eukaryota;Opisthokonta;Choanoflagellata;Acanthoecida;Acanthoecidae;Crinolina;Crinolina isefiordensis
+187406	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Gymnoplea;Calanoida;Paracalanidae;Paracalanus;Paracalanus parvus
+188541	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Coscinodiscophycidae;Coscinodiscales;Coscinodiscaceae;Stellarima;Stellarima microtrias
+1891026	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;unclassified Thalassiosira;Thalassiosira sp.
+1905723	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;unclassified Prorocentrum;Prorocentrum sp.
+1905834	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Heterocapsaceae;Cachonina;unclassified Cachonina;Cachonina sp. NIES-3881
+1907928	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Micromonas;unclassified Micromonas;Micromonas sp. RCC4440
+1911418	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Cnidaria;Scyphozoa;Semaeostomeae;Pelagiidae;Chrysaora;Chrysaora pacifica
+1912850	cellular organisms;Eukaryota;Cryptophyceae;Pyrenomonadales;Geminigeraceae;Teleaulax;unclassified Teleaulax;Teleaulax sp.
+1923966	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Naviculales;Naviculaceae;Navicula;unclassified Navicula;Navicula sp.
+1923967	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Rhizosoleniophycidae;Rhizosoleniales;Rhizosoleniaceae;Proboscia;unclassified Proboscia;Proboscia sp.
+1923972	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Biddulphiophycidae;Hemiaulales;Hemiaulaceae;Eucampia;unclassified Eucampia;Eucampia sp.
+1925416	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Tintinnida;Tintinnidae;Salpingacantha;Salpingacantha undata
+1925417	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Tintinnida;Tintinnidae;Salpingacantha;Salpingacantha unguiculata
+1932427	cellular organisms;Eukaryota;Opisthokonta;Ichthyosporea;unclassified Ichthyosporea;Ichthyosporea sp. XGB-2017a
+1937694	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros elegans
+1955561	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;Chromulinales;Paraphysomonadaceae;Paraphysomonas;unclassified Paraphysomonas;Paraphysomonas sp.
+195935	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia brasiliana
+1973196	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros cinctus
+1982027	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Prostomatea;Prorodontida;Plagiocampidae;Plagiocampa;unclassified Plagiocampa;Plagiocampa sp.
+1982029	cellular organisms;Eukaryota;Haptista;Centroplasthelida;Pterocystida;Pterista;Pterocystidae;Pterocystis;unclassified Pterocystis;Pterocystis sp.
+1982030	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Peridiniaceae;Pentapharsodinium;unclassified Pentapharsodinium;Pentapharsodinium sp.
+1982032	cellular organisms;Eukaryota;Sar;Stramenopiles;Bigyra;Labyrinthulomycetes;Oblongichytrida;Oblongichytrium;unclassified Oblongichytrium;Oblongichytrium sp.
+2014769	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Naviculales;Naviculaceae;Navicula;Navicula incertata
+2018706	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Naviculales;Naviculaceae;Haslea;Haslea tsukamotoi
+2022002	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Choreotrichida;Leegaardiellidae;Leegaardiella;unclassified Leegaardiella;Leegaardiella sp.
+2023888	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Ctenophora;Tentaculata;Lobata;Bolinopsidae;Bolinopsis;Bolinopsis ashleyi
+2026621	cellular organisms;Eukaryota;Sar;Stramenopiles;Bigyra;Labyrinthulomycetes;Thraustochytrida;Thraustochytriaceae;unclassified Thraustochytriidae;Thraustochytriaceae sp.
+203191	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Ceratiaceae;Tripos;Tripos horridus
+2037922	cellular organisms;Eukaryota;Sar;Rhizaria;Cercozoa;unclassified Cercozoa;Quadricilia;Quadricilia rotundata
+2038130	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Ctenophora;Tentaculata;Lobata;Bolinopsidae;Mnemiopsis;unclassified Mnemiopsis;Mnemiopsis sp. New Jersey
+2039479	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Cnidaria;Scyphozoa;Semaeostomeae;Pelagiidae;Chrysaora;Chrysaora achlyos
+2044563	cellular organisms;Eukaryota;Eukaryota incertae sedis;Ancoracysta;Ancoracysta twista
+2047754	cellular organisms;Eukaryota;Sar;Stramenopiles;Oomycetes;Olpidiopsidales;Olpidiopsidaceae;Olpidiopsis;Olpidiopsis heterosiphoniae
+2049438	cellular organisms;Eukaryota;Sar;Alveolata;Apicomplexa;Conoidasida;Gregarinasina;Eugregarinorida;Cephaloidophoridae;Cephaloidophora;Cephaloidophora oradareae
+2072404	cellular organisms;Eukaryota;Sar;Rhizaria;Cercozoa;Thecofilosea;Tectofilosida;Fisculla;Fisculla cf. margaritae
+2082250	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Biddulphiophycidae;Hemiaulales;Hemiaulaceae;Hemiaulus;unclassified Hemiaulus;Hemiaulus sp.
+2107305	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros cf. convolutus
+2126239	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Naviculales;Naviculaceae;Haslea;Haslea cf. howeana
+2126440	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Ceratiaceae;Ceratium;unclassified Ceratium;Ceratium sp. SIOpier15
+216777	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Rhizosoleniophycidae;Rhizosoleniales;Rhizosoleniaceae;Proboscia;Proboscia alata
+216790	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Coscinodiscophycidae;Coscinodiscales;Heliopeltaceae;Actinoptychus;Actinoptychus sinensis
+216921	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;unclassified Chaetoceros;Chaetoceros sp. p442
+218683	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Coscinodiscophycidae;Melosirales;Stephanopyxidaceae;Stephanopyxis;Stephanopyxis nipponica
+2302162	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;unclassified Pseudo-nitzschia;Pseudo-nitzschia sp. RCC5397
+2302903	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Pyramimonadophyceae;Pyramimonadales;Pyramimonadaceae;Pyramimonas;unclassified Pyramimonas;Pyramimonas sp. RCC4218
+2303287	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;unclassified Prorocentrum;Prorocentrum sp. RCC5648
+2303293	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Thoracosphaerales;Thoracosphaeraceae;Scrippsiella;unclassified Scrippsiella;Scrippsiella sp. RCC5709
+2303294	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Thoracosphaerales;Thoracosphaeraceae;Scrippsiella;unclassified Scrippsiella;Scrippsiella sp. RCC5710
+230410	cellular organisms;Eukaryota;Sar;Stramenopiles;Pirsoniales;Pirsonia;Pirsonia guinardiae
+230411	cellular organisms;Eukaryota;Sar;Stramenopiles;Pirsoniales;Pirsonia;Pirsonia verrucosa
+230420	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Amoebophryaceae;Amoebophrya;unclassified Amoebophrya;Amoebophrya sp. ex Prorocentrum minimum
+2315412	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Minidiscus;unclassified Minidiscus;Minidiscus sp.
+2315413	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Fragilariopsis;unclassified Fragilariopsis;Fragilariopsis sp.
+2315890	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Oligotrichia;Strombidiidae;Strombidium;unclassified Strombidium;Strombidium sp. 1 SFT-2018
+2315891	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Oligotrichia;Strombidiidae;Strombidium;unclassified Strombidium;Strombidium sp. 2 SFT-2018
+2315893	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Oligotrichia;Strombidiidae;Strombidium;unclassified Strombidium;Strombidium sp. 3 SFT-2018
+2340796	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Prostomatea;Prorodontida;Hexasterias;Hexasterias problematica
+2364126	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;Prorocentrum cordatum
+237449	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;unclassified Dinophyceae;Dinophyceae sp. Bullet
+237452	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;unclassified Dinophyceae;Dinophyceae sp. Shepherd's Crook
+237455	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia cuspidata
+237470	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;Prorocentrum gracile
+242159	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. 'lucimarinus'
+244960	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Gyrodinium;Gyrodinium spirale
+244961	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Gyrodinium;Gyrodinium fusiforme
+244963	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Gyrodinium;Gyrodinium helveticum
+2528217	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;unclassified Chaetoceros;Chaetoceros sp. RCC6034
+2528218	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;unclassified Chaetoceros;Chaetoceros sp. RCC6040
+2555684	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros cf. convolutus L7-B6
+2571262	cellular organisms;Eukaryota;Cryptophyceae;Pyrenomonadales;Chroomonadaceae;unclassified Chroomonadaceae;Chroomonadaceae sp.
+2576346	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Amphidomataceae;Azadinium;unclassified Azadinium;Azadinium sp. StW-2019a
+257771	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;Prorocentrum donghaiense
+258031	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Pheopolykrikos;Pheopolykrikos hartmannii
+2587268	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;unclassified Ostreococcus;Ostreococcus sp. E12
+2591690	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Pfiesteriaceae;Chimonodinium;Chimonodinium lomnickii;Chimonodinium lomnickii var. wierzejskii
+2592186	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;unclassified Thalassiosira;Thalassiosira sp. RCC6148
+2592187	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;unclassified Thalassiosira;Thalassiosira sp. RCC6150
+2592189	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Thoracosphaerales;Thoracosphaeraceae;Thoracosphaeraceae sp. RCC6135
+2593073	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Minidiscus;Minidiscus spinulatus
+260685	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;Prorocentrum dentatum
+261184	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;Alexandrium hiranoi
+2613926	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Syltodinium;Syltodinium listii
+261842	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Pyrophaceae;Pyrophacus;Pyrophacus steinii
+261843	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Protoperidiniaceae;Protoperidinium;Protoperidinium conicum
+261845	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Protoperidiniaceae;Protoperidinium;Protoperidinium pellucidum
+265540	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Minidiscus;Minidiscus trioculatus
+265545	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Rhizosoleniophycidae;Rhizosoleniales;Rhizosoleniaceae;Rhizosolenia;Rhizosolenia fallax
+265547	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Rhizosoleniophycidae;Rhizosoleniales;Rhizosoleniaceae;Rhizosolenia;Rhizosolenia robusta
+265558	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Rhizosoleniophycidae;Rhizosoleniales;Rhizosoleniaceae;Guinardia;Guinardia solstherfothii
+2662319	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Dictyochophyceae;Florenciellales;Florenciella;unclassified Florenciella;Florenciella sp.
+267565	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Skeletonemataceae;Skeletonema;Skeletonema grethae
+267982	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Skeletonemataceae;Skeletonema;Skeletonema tropicum
+267983	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Skeletonemataceae;Skeletonema;Skeletonema japonicum
+271679	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Polykrikos;Polykrikos kofoidii
+271680	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Polykrikos;Polykrikos schwartzii
+2762	cellular organisms;Eukaryota;Glaucocystophyceae;Cyanophoraceae;Cyanophora;Cyanophora paradoxa
+278115	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Sphaenacanthida;Dorataspididae;Dorataspid;unclassified Dorataspid;Dorataspid sp. 915
+27923	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Ctenophora;Tentaculata;Lobata;Bolinopsidae;Mnemiopsis;Mnemiopsis leidyi
+281611	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Protoperidiniaceae;Protoperidinium;Protoperidinium divergens
+283781	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Lophotrochozoa;Annelida;Polychaeta;Scolecida;Terebellida;Pectinariidae;Pectinaria;Pectinaria granulata
+2843	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Skeletonemataceae;Skeletonema;Skeletonema costatum
+284793	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Heterocapsaceae;Cachonina;unclassified Cachonina;Cachonina sp. MBIC10795
+2856	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Cylindrotheca;Cylindrotheca closterium
+285985	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Gyrodinium;Gyrodinium dominans
+289378	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Thoracosphaerales;Thoracosphaeraceae;Scrippsiella;Scrippsiella precaria
+291030	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira concaviuscula
+291031	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira tenera
+2920	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Heterocapsaceae;Heterocapsa;Heterocapsa niei
+2926	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;Alexandrium tamarense
+2932	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;Alexandrium fundyense
+293210	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;unclassified Chrysophyceae;Spumella-like flagellate JB;Spumella-like flagellate JBM06
+293646	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Gonyaulax;Gonyaulax polygramma
+2945	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;Prorocentrum micans
+2957	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Suessiales;Suessiaceae;Protodinium;Protodinium simplex
+296587	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Micromonas;Micromonas commoda
+296588	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Micromonas;Micromonas bravo
+2966	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Noctilucales;Noctilucaceae;Noctiluca;Noctiluca scintillans
+298366	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Lophodiniales;Lophodiniaceae;Woloszynskia;Woloszynskia halophila
+298604	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Kareniaceae;Takayama;Takayama cf. pulchellum
+3005	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Rhizosoleniophycidae;Rhizosoleniales;Rhizosoleniaceae;Rhizosolenia;Rhizosolenia setigera
+310565	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Thoracosphaerales;Thoracosphaeraceae;Scrippsiella;unclassified Scrippsiella;Scrippsiella sp. HZ-2005
+310905	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Stephanodiscaceae;Cyclotella;Cyclotella choctawhatcheeana
+324873	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Podoplea;Cyclopoida;Oithonidae;Oithona;Oithona similis
+328601	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Lophotrochozoa;Annelida;Polychaeta;Palpata;Aciculata;Phyllodocida;Sigalionidae;Sigalion;Sigalion spinosus
+33642	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Coscinodiscophycidae;Coscinodiscales;Coscinodiscaceae;Coscinodiscus;Coscinodiscus radiatus
+33657	cellular organisms;Eukaryota;Haptista;Haptophyta;Prymnesiophyceae;Phaeocystales;Phaeocystaceae;Phaeocystis;Phaeocystis antarctica
+33659	cellular organisms;Eukaryota;Haptista;Haptophyta;Prymnesiophyceae;Phaeocystales;Phaeocystaceae;Phaeocystis;Phaeocystis pouchetii
+337443	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira hendeyi
+338913	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Rotifera;Monogononta;Pseudotrocha;Ploima;Epiphanidae;Epiphanes;Epiphanes senta
+340022	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira minima
+340024	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira aestivalis
+340370	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Syndiniaceae;Syndinium;Syndinium turbo
+340371	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Syndiniaceae;Syndinium;unclassified Syndinium;Syndinium sp. ex Corycaeus sp.
+34765	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Deuterostomia;Chordata;Tunicata;Appendicularia;Copelata;Oikopleuridae;Oikopleura;Oikopleura dioica
+349456	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira proschkinae
+355634	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Naviculales;Naviculaceae;Navicula;Navicula arenaria
+35672	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Heterocapsaceae;Heterocapsa;Heterocapsa pygmaea
+35682	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Dictyochophyceae;Pedinellales;Apedinella;Apedinella radians
+360677	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Rotifera;Monogononta;Pseudotrocha;Ploima;Microcodonidae;Microcodon;Microcodon clavus
+360686	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Rotifera;Monogononta;Pseudotrocha;Ploima;Brachionidae;Plationus;Plationus patulus
+360688	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Rotifera;Monogononta;Pseudotrocha;Ploima;Brachionidae;Platyias;Platyias quadricornis
+360690	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Rotifera;Monogononta;Pseudotrocha;Ploima;Synchaetidae;Ploesoma;Ploesoma hudsoni
+360691	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Rotifera;Monogononta;Pseudotrocha;Ploima;Synchaetidae;Ploesoma;Ploesoma truncatus
+360704	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Rotifera;Monogononta;Pseudotrocha;Ploima;Trichocercidae;Trichocerca;Trichocerca elongata
+360708	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Rotifera;Monogononta;Pseudotrocha;Ploima;Trichotriidae;Trichotria;Trichotria tetractis
+361426	cellular organisms;Eukaryota;Sar;Rhizaria;Cercozoa;Thecofilosea;Ebriacea;Ebria;Ebria tripartita
+363325	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Blastodiniales;Blastodinium;Blastodinium contortum
+363326	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Blastodiniales;Blastodinium;Blastodinium navicula
+363907	cellular organisms;Eukaryota;Sar;Stramenopiles;Bigyra;Labyrinthulomycetes;Thraustochytrida;Thraustochytriaceae;unclassified Thraustochytriidae;Thraustochytriidae sp. HU1
+365525	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia decipiens
+366441	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Chaetognatha;Sagittoidea;Aphragmophora;Ctenodontina;Sagittidae;Parasagitta;Parasagitta setosa
+366456	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;unclassified Bacillariophyta;Peridinium quinquecorne endosymbiont
+37318	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia pungens
+37319	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia multiseries
+373514	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Skeletonemataceae;Skeletonema;Skeletonema cf. pseudocostatum
+37475	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;Chromulinales;Paraphysomonadaceae;Paraphysomonas;Paraphysomonas foraminifera
+376353	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Protoperidiniaceae;Protoperidinium;Protoperidinium depressum
+37642	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Chrysophyceae;Chromulinales;Paraphysomonadaceae;Paraphysomonas;Paraphysomonas imperforata
+380132	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Protoperidiniaceae;Protoperidinium;Protoperidinium pentagonum
+382360	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Stephanodiscaceae;Cyclotella;Cyclotella atomus
+382364	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Stephanodiscaceae;Cyclotella;Cyclotella striata
+382365	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Detonula;Detonula pumila
+382366	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Lauderiaceae;Lauderia;Lauderia annulata
+382373	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira pacifica
+385413	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira minuscula
+388226	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Protoperidiniaceae;Protoperidinium;Protoperidinium thulesense
+38833	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Micromonas;Micromonas pusilla
+393032	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Syndiniales incertae sedis;Ichthyodinium;Ichthyodinium chabelardi
+39449	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;Prorocentrum minimum
+39450	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;Prorocentrum triestinum
+406516	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Syndiniales incertae sedis;Ichthyodinium;unclassified Ichthyodinium;Ichthyodinium sp. PL
+407301	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Kareniaceae;Karlodinium;Karlodinium veneficum
+410738	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Pfiesteriaceae;Pfiesteria;Pfiesteria shumwayae
+41875	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Bathycoccus;Bathycoccus prasinos
+41877	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Mamiella;unclassified Mamiella;Mamiella sp.
+41880	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;prasinophyte incertae sedis;Pycnococcaceae;Pycnococcus;Pycnococcus provasolii
+41886	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;prasinophyte incertae sedis;Pycnococcaceae;Pseudoscourfieldia;Pseudoscourfieldia marina
+418956	cellular organisms;Eukaryota;Haptista;Haptophyta;Prymnesiophyceae;Prymnesiales;Prymnesiaceae;Prymnesium;Prymnesium faveolatum
+420281	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Rhizosoleniophycidae;Rhizosoleniales;Rhizosoleniaceae;Proboscia;Proboscia inermis
+420782	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros dichaeta
+426635	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros peruvianus
+426638	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros tenuissimus
+427312	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros lauderi
+429241	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;unclassified prasinophytes;prasinophyte sp. RS-11
+431568	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Naviculales;Naviculaceae;Navicula;Navicula tripunctata
+433501	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;unclassified Dinophyceae;Naked dinoflagellate UDNSW0701
+43686	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Suessiales;Suessiaceae;Pelagodinium;Pelagodinium beii
+437763	cellular organisms;Eukaryota;Cryptophyceae;unclassified Cryptophyta;Cryptophyta sp. CR-MAL01
+437766	cellular organisms;Eukaryota;Cryptophyceae;unclassified Cryptophyta;Cryptophyta sp. CR-MAL04
+44056	cellular organisms;Eukaryota;Sar;Stramenopiles;Pelagophyceae;Pelagomonadales;Aureococcus;Aureococcus anophagefferens
+44447	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia delicatissima
+444606	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Biddulphiophycidae;Hemiaulales;Hemiaulaceae;Eucampia;Eucampia zodiacus
+454270	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Gymnodinium;unclassified Gymnodinium;Gymnodinium sp. CCMP424
+462884	cellular organisms;Eukaryota;Haptista;Haptophyta;Prymnesiophyceae;Prymnesiales;Prymnesiaceae;Prymnesium;Prymnesium palpebrale
+471943	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Pyramimonadophyceae;Pyramimonadales;Pyramimonadaceae;Pyramimonas;Pyramimonas gelidicola
+476099	cellular organisms;Eukaryota;Sar;Stramenopiles;Oomycetes;Olpidiopsidales;Olpidiopsidaceae;Olpidiopsis;unclassified Olpidiopsis;Olpidiopsis sp. 4439
+476441	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia heimii
+49239	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros rostratus
+49240	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Chaetocerotophycidae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;unclassified Chaetoceros;Chaetoceros sp.
+49249	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Lithodesmiophycidae;Lithodesmiales;Lithodesmiaceae;Ditylum;Ditylum brightwellii
+49252	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Mediophyceae;Biddulphiophycidae;Hemiaulales;Hemiaulaceae;Eucampia;Eucampia antarctica
+49261	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira eccentrica
+513281	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Tintinnida;Tintinnidae;Salpingella;Salpingella acuminata
+515487	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Coscinodiscophycidae;Melosirales;Stephanopyxidaceae;Stephanopyxis;Stephanopyxis turris
+51983	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;unclassified prasinophytes;prasinophyte sp. CCMP1198
+525906	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Rotifera;Monogononta;Pseudotrocha;Ploima;Synchaetidae;Synchaeta;Synchaeta pectinata
+52890	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Spiralia;Gnathifera;Chaetognatha;Sagittoidea;Aphragmophora;Ctenodontina;Sagittidae;Sagitta;Sagitta setosa
+547557	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;unclassified Dinophyceae;Dinophyceae sp. UDMS0803
+584794	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Suessiales;Biecheleriaceae;Biecheleria;Biecheleria cincta
+629751	cellular organisms;Eukaryota;Sar;Rhizaria;Imbricatea;Silicofilosea;Thaumatomonadida;Thaumatomastigidae;Protaspis;Protaspis obliqua
+629761	cellular organisms;Eukaryota;Sar;Rhizaria;Cercozoa;Thecofilosea;Ventricleftida;Ventrifissuridae;Ventrifissura;Ventrifissura artocarpoidea
+629762	cellular organisms;Eukaryota;Sar;Rhizaria;Cercozoa;unclassified Cercozoa;Cercozoa sp. CC-2009d
+631387	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Minidiscus;unclassified Minidiscus;Minidiscus sp. CCL-2009a
+63141	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Naviculales;Naviculaceae;Navicula;Navicula salinicola
+641227	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Oligotrichia;Tontoniidae;Spirotontonia;Spirotontonia grandis
+644167	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Ceratiaceae;Tripos;Tripos concilians
+644169	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Ceratiaceae;Tripos;Tripos declinatus
+644173	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Ceratiaceae;Tripos;Tripos hexacanthus
+644174	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Ceratiaceae;Tripos;Tripos kofoidii
+644177	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Ceratiaceae;Tripos;Tripos minutus
+644179	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Ceratiaceae;Tripos;Tripos pentagonus
+650052	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Coccidiniales;Chytriodiniaceae;Chytriodinium;Chytriodinium roseum
+650053	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Coccidiniales;Chytriodiniaceae;Chytriodinium;Chytriodinium affine
+651205	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;prasinophyte incertae sedis;Pycnococcaceae;Pycnococcus;unclassified Pycnococcus;Pycnococcus sp. KMMCC P-54
+651451	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Warnowiaceae;Proterythropsis;unclassified Proterythropsis;Proterythropsis sp. BSL-2009a
+652710	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Warnowiaceae;Erythropsidinium;Erythropsidinium agile
+652711	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Warnowiaceae;Warnowia;unclassified Warnowia;Warnowia sp. FG20
+655474	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Oligotrichia;Strombidiidae;Strombidium;Strombidium cf. basimorphum
+655801	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia cf. granii
+65670	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Gonyaulacaceae;Alexandrium;Alexandrium pseudogonyaulax
+659878	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Minidiscus;Minidiscus variabilis
+66465	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Ceratiaceae;Tripos;Tripos tenuis
+66471	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Lepidodinium;Lepidodinium viride
+66473	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Peridiniaceae;Pentapharsodinium;Pentapharsodinium tyrrhenicum
+672931	cellular organisms;Eukaryota;Sar;Alveolata;Apicomplexa;Conoidasida;Gregarinasina;Eugregarinorida;Gregarinidae;unclassified Gregarinidae;Gregarinidae sp. from Paranemertes peregrina SR-2009a
+6837	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Gymnoplea;Calanoida;Calanidae;Calanus;Calanus finmarchicus
+686725	cellular organisms;Eukaryota;Sar;Rhizaria;Cercozoa;Cercomonadida;Cercomonadidae;Cercomonas;Cercomonas rotunda
+687948	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Mamiellaceae;Mamiella;Mamiella gilva
+692279	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gonyaulacales;Ceratiaceae;Tripos;Tripos platycornis
+693143	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Prostomatea;Prorodontida;Placidae;Placus;Placus salinus
+696186	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Choreotrichida;Lynnellidae;Lynnella;Lynnella semiglobulosa
+696961	cellular organisms;Eukaryota;Haptista;Haptophyta;Prymnesiophyceae;Prymnesiales;Chrysochromulinaceae;Chrysochromulina;Chrysochromulina strobilus
+702563	cellular organisms;Eukaryota;Sar;Alveolata;Ciliophora;Intramacronucleata;Spirotrichea;Choreotrichia;Choreotrichida;Strobilidiidae;Rimostrombidium;Rimostrombidium veniliae
+703024	cellular organisms;Eukaryota;Sar;Rhizaria;unclassified Rhizaria;Acantharian sp. 6204
+703029	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Sphaenacanthida;Acanthometridae;Acanthometra;unclassified Acanthometra;Acanthometra sp. 1 ICG-2009;Acanthometra sp. 1 6202
+703030	cellular organisms;Eukaryota;Sar;Rhizaria;Retaria;Acantharea;Arthracanthida;Sphaenacanthida;Acanthometridae;Acanthometra;unclassified Acanthometra;Acanthometra sp. 1 ICG-2009;Acanthometra sp. 1 6203
+70448	cellular organisms;Eukaryota;Viridiplantae;Chlorophyta;Mamiellophyceae;Mamiellales;Bathycoccaceae;Ostreococcus;Ostreococcus tauri
+708205	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Bacillariophyceae;Bacillariophycidae;Bacillariales;Bacillariaceae;Pseudo-nitzschia;Pseudo-nitzschia cf. cuspidata
+72677	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Prorocentrales;Prorocentraceae;Prorocentrum;Prorocentrum mexicanum
+732115	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Gyrodinium;Gyrodinium cf. gutrula
+741090	cellular organisms;Eukaryota;Sar;Rhizaria;Imbricatea;Silicofilosea;Thaumatomonadida;Thaumatomastigidae;Thaumatomastix;unclassified Thaumatomastix;Thaumatomastix sp. CC002-Boundary Bay
+746505	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Podoplea;Cyclopoida;Oithonidae;Oithona;unclassified Oithona;Oithona sp. AC-2010
+77931	cellular organisms;Eukaryota;Cryptophyceae;Pyrenomonadales;Geminigeraceae;Teleaulax;Teleaulax amphioxeia
+83372	cellular organisms;Eukaryota;Sar;Stramenopiles;Ochrophyta;Bacillariophyta;Coscinodiscophyceae;Thalassiosirophycidae;Thalassiosirales;Thalassiosiraceae;Thalassiosira;Thalassiosira nordenskioeldii
+84301	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Bilateria;Protostomia;Ecdysozoa;Panarthropoda;Arthropoda;Mandibulata;Pancrustacea;Crustacea;Multicrustacea;Hexanauplia;Copepoda;Neocopepoda;Gymnoplea;Calanoida;Calanidae;Calanus;Calanus pacificus
+860588	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Amoebophryaceae;Amoebophrya;unclassified Amoebophrya;Amoebophrya sp. ex Akashiwo sanguineaum
+87105	cellular organisms;Eukaryota;Sar;Stramenopiles;Bigyra;Labyrinthulomycetes;Thraustochytrida;Thraustochytriaceae;Thraustochytrium;Thraustochytrium multirudimentale
+880219	cellular organisms;Eukaryota;Opisthokonta;Metazoa;Eumetazoa;Cnidaria;Scyphozoa;Semaeostomeae;Pelagiidae;Chrysaora;Chrysaora fuscescens
+88552	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Syndiniales;Amoebophryaceae;Amoebophrya;unclassified Amoebophrya;Amoebophrya sp.
+89963	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Peridiniales;Heterocapsaceae;Heterocapsa;Heterocapsa rotundata
+904677	cellular organisms;Eukaryota;Sar;Alveolata;Dinophyceae;Gymnodiniales;Gymnodiniaceae;Gymnodinium;unclassified Gymnodinium;Gymnodinium sp. NVA/RUS/2008
+947098	cellular organisms;Eukaryota;Sar;Alveolata;Apicomplexa;Conoidasida;Gregarinasina;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+985833	cellular organisms;Eukaryota;Sar;Rhizaria;Imbricatea;Nudifila;Nudifila producta
