@@ -269,6 +269,7 @@ else
 fi
 
 #TODO: What to do with samples where ALL reads are filtered out? Will it produce an error?
+#TODO: May consider removing intermediate fastq.gz files after they are used. They take up a lot of space.
 
 ##########################################################################################
 ##
