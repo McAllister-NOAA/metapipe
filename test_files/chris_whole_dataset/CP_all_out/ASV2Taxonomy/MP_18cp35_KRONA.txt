@@ -1,0 +1,192 @@
+28905	Environmental Unknown
+930	Environmental Unknown
+7	Environmental Unknown
+19	Environmental Unknown
+15	Environmental Unknown
+6	Environmental Unknown
+9	Environmental Unknown
+914	Unknown
+1	Environmental Unknown
+5	Eukaryota	Ciliophora	Spirotrichea
+11	Environmental Unknown
+10	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	Pseudo-nitzschia
+866	Environmental Unknown
+23	Environmental Unknown
+8	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	Thalassiosira
+13	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	Chaetoceros	Chaetoceros elegans
+9	Environmental Unknown
+2	Environmental Unknown
+19	Environmental Unknown
+20	Eukaryota	Ciliophora	Spirotrichea
+12	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+15	Eukaryota	Cercozoa
+6	Environmental Unknown
+252	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	Thalassiosira	Thalassiosira hispida
+2	Eukaryota	Chlorophyta	Trebouxiophyceae	Trebouxiales	Trebouxiaceae	Trebouxia
+4	Eukaryota	Ciliophora	Spirotrichea	Choreotrichida	Lynnellidae	Lynnella	Lynnella semiglobulosa
+18	Eukaryota	Ciliophora	Spirotrichea
+102	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae
+1	Environmental Unknown
+3	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Leptocylindrales	Leptocylindraceae	Leptocylindrus	Leptocylindrus convexus
+9	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	Chaetoceros
+6	Environmental Unknown
+51	Environmental Unknown
+12	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Rhizosoleniales	Rhizosoleniaceae
+68	Environmental Unknown
+7	Eukaryota	Ciliophora	Spirotrichea
+13	Eukaryota	Bacillariophyta	Bacillariophyceae	Naviculales	Naviculaceae
+3	Environmental Unknown
+2	Eukaryota	Ciliophora	Spirotrichea	Tintinnida
+2	Environmental Unknown
+497	Unknown
+3	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	Chaetoceros
+4	Eukaryota	Ciliophora	Spirotrichea	Tintinnida	Tintinnidae	Salpingella
+7	Environmental Unknown
+4	Environmental Unknown
+24	Unknown
+118	Eukaryota	Bacillariophyta	Mediophyceae	Lithodesmiales	Lithodesmiaceae	Ditylum	Ditylum brightwellii
+4	Environmental Unknown
+3	Eukaryota	Cercozoa	Thecofilosea	Cryomonadida	Protaspidae	Cryothecomonas
+27	Eukaryota	Ciliophora	Spirotrichea
+2264	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	Thalassiosira	Thalassiosira tenera
+89	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Ostreococcus
+6	Eukaryota	Haptista	Haptophyta	Prymnesiales	Chrysochromulinaceae	Chrysochromulina	Chrysochromulina strobilus
+5	Environmental Unknown
+7	Environmental Unknown
+1	Eukaryota	Chlorophyta	Pyramimonadophyceae	Pyramimonadales	Pyramimonadaceae	Pyramimonas	Pyramimonas australis
+3	Environmental Unknown
+15	Environmental Unknown
+11	Environmental Unknown
+11	Eukaryota	Ciliophora	Spirotrichea	Tintinnida	Codonellidae	Tintinnopsis
+4	Environmental Unknown
+5	Environmental Unknown
+114	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	Fragilariopsis
+4	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	Chaetoceros	Chaetoceros cf. lauderi
+1	Environmental Unknown
+10	Environmental Unknown
+17	Environmental Unknown
+5	Eukaryota	Haptista	Haptophyta	Phaeocystales	Phaeocystaceae	Phaeocystis
+270	Environmental Unknown
+4	Environmental Unknown
+19	Environmental Unknown
+4	Eukaryota	Cercozoa	Thecofilosea	Cryomonadida	Protaspidae	Cryothecomonas	Cryothecomonas aestivalis
+5	Environmental Unknown
+12	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Corycaeidae	Ditrichocorycaeus	Ditrichocorycaeus anglicus
+1	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	Thalassiosira	Thalassiosira tenera
+6	Eukaryota	Ciliophora	Spirotrichea
+2	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	Bacteriastrum
+272	Environmental Unknown
+2	Environmental Unknown
+13	Environmental Unknown
+2	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Asterolamprales	Asterolampraceae	Asteromphalus	Asteromphalus sp. TN-2014
+5	Environmental Unknown
+26	Environmental Unknown
+3	Unknown
+4	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	Chaetoceros
+3	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	Cyclotella
+4	Environmental Unknown
+4	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	Cylindrotheca	Cylindrotheca closterium
+2	Environmental Unknown
+43	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae
+6	Environmental Unknown
+1	Eukaryota	Apicomplexa	Conoidasida	Eugregarinorida
+12	Environmental Unknown
+12	Environmental Unknown
+6	Unknown
+1	Unknown
+71	Environmental Unknown
+186	Environmental Unknown
+7	Environmental Unknown
+1	Unknown
+4	Environmental Unknown
+2	Unknown
+60	Eukaryota	Ciliophora	Spirotrichea
+3	Environmental Unknown
+3	Environmental Unknown
+4	Environmental Unknown
+41	Environmental Unknown
+1	Environmental Unknown
+7	Unknown
+34	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	Pseudo-nitzschia	Pseudo-nitzschia cuspidata
+23	Environmental Unknown
+7	Eukaryota	Ciliophora	Prostomatea	Prorodontida	Plagiocampidae	Plagiocampa	Plagiocampa sp.
+192	Environmental Unknown
+2	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	Chaetoceros	Chaetoceros debilis
+46	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Rhizosoleniales	Rhizosoleniaceae	Guinardia
+2	Unknown
+16	Eukaryota	Ciliophora	Spirotrichea
+2	Unknown
+4	Eukaryota	Cercozoa	Thecofilosea	Cryomonadida	Protaspidae	Cryothecomonas
+4	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Rhizosoleniales	Rhizosoleniaceae	Rhizosolenia
+3	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Mamiellaceae	Mamiella
+63	Environmental Unknown
+4	Eukaryota	Haptista	Haptophyta	Phaeocystales	Phaeocystaceae	Phaeocystis
+2	Eukaryota	Haptista	Haptophyta	Prymnesiales	Prymnesiaceae	Prymnesium
+11	Environmental Unknown
+6	Environmental Unknown
+3	Environmental Unknown
+1	Environmental Unknown
+42	Environmental Unknown
+5	Environmental Unknown
+1	Eukaryota	Picozoa	Picomonadea	Picomonadida	Picomonadidae	Picomonas	Picomonas judraskeda
+2	Eukaryota	Cercozoa	Thecofilosea	Cryomonadida	Protaspidae	Cryothecomonas
+57	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Mamiellaceae	Micromonas
+30	Eukaryota	Bacillariophyta	Mediophyceae	Hemiaulales	Hemiaulaceae	Eucampia
+8	Unknown
+1	Environmental Unknown
+2	Environmental Unknown
+51	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales
+2	Eukaryota	Cercozoa	Thecofilosea	Tectofilosida
+1	Unknown
+17	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	Thalassiosira	Thalassiosira minuscula
+22	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	Chaetoceros	Chaetoceros cinctus
+6	Environmental Unknown
+9	Eukaryota	Arthropoda	Hexanauplia	Cyclopoida	Oithonidae	Oithona
+3032	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae
+24	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Rhizosoleniales	Rhizosoleniaceae	Proboscia
+9	Unknown
+18	Environmental Unknown
+2	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	Chaetoceros	Chaetoceros didymus
+9	Environmental Unknown
+38	Eukaryota	Bacillariophyta	Mediophyceae	Hemiaulales	Hemiaulaceae	Cerataulina	Cerataulina pelagica
+110	Environmental Unknown
+4	Environmental Unknown
+1	Eukaryota	Ciliophora	Litostomatea	Haptorida	Didiniidae	Cyclotrichium	Cyclotrichium cyclokaryon
+2	Environmental Unknown
+218	Environmental Unknown
+3	Unknown
+14	Eukaryota	Arthropoda	Hexanauplia	Calanoida
+51	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Mamiellaceae	Micromonas
+6	Eukaryota	Haptista	Haptophyta	Prymnesiales	Chrysochromulinaceae	Chrysochromulina	Chrysochromulina sp. NIES-1333
+382	Environmental Unknown
+126	Environmental Unknown
+4	Environmental Unknown
+33	Eukaryota	Bacillariophyta	Mediophyceae	Hemiaulales	Hemiaulaceae	Hemiaulus
+104	Environmental Unknown
+2	Environmental Unknown
+12	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	Pseudo-nitzschia
+9	Unknown
+2	Eukaryota	Ciliophora	Phyllopharyngea	Endogenida	Acinetidae	Acineta	Acineta flava
+203	Environmental Unknown
+62	Unknown
+9	Eukaryota	Cnidaria	Scyphozoa	Semaeostomeae	Pelagiidae
+2	Environmental Unknown
+21	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Rhizosoleniales	Rhizosoleniaceae	Rhizosolenia	Rhizosolenia setigera
+7	Environmental Unknown
+7	Environmental Unknown
+47	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	Skeletonema
+14	Environmental Unknown
+146	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus
+17	Environmental Unknown
+10	Environmental Unknown
+2	Environmental Unknown
+28	Environmental Unknown
+3	Environmental Unknown
+14	Eukaryota	Cercozoa	Thecofilosea	Cryomonadida	Protaspidae	Cryothecomonas	Cryothecomonas longipes
+4	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae
+6	Environmental Unknown
+4	Environmental Unknown
+15	Environmental Unknown
+12	Environmental Unknown
+6	Environmental Unknown
+14	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	Chaetoceros

@@ -1,0 +1,228 @@
+Chloropicon	2302914
+Mytilidae	6547
+Coscinodiscales	216785
+Thalassiosira	35127
+Spirotrichea	33829
+Bathycoccus prasinos	41875
+Synchaeta	204744
+Thalassiosira hispida	1155186
+Trebouxia	13786
+Apatococcus	904362
+Chloroparvula pacifica	1883388
+Thalassiosiraceae	29202
+Thiriotia sp. MS-2015	1629645
+Ustilaginaceae	5268
+Strobilidiidae	181619
+Thalassiosira tenera	291031
+Ostreococcus	70447
+Fragilariopsis	186035
+Pectinaria granulata	283781
+Phaeocystis	33656
+Cyclotella	29203
+Chaetocerotales	265576
+Eugregarinorida	35087
+Exobasidium	5406
+Chlorophyta	3041
+Pseudo-nitzschia cuspidata	237455
+Minidiscus comicus	1230409
+Coscinodiscus	33641
+Chaetoceros radicans	515473
+Guinardia	216800
+Lankesteria hesperidiiformis	1638945
+Micromonas	38832
+Micromonas	543311
+Hexanauplia	72037
+Thecofilosea	1004930
+Thalassiosirales	33847
+Thalassiosira minuscula	385413
+Chaetoceros cinctus	1973196
+Oithona	136190
+Cerataulina pelagica	1003031
+Odontella	2838
+Odontella	332376
+Hyphodontia rimosissima	406828
+Thalassiosira hendeyi	337443
+Sabellaria alveolata	251482
+Protomyces	27331
+Actiniaria	6103
+Lankesteria abbotti	340204
+Paracalanus	163471
+Styelidae	7721
+Lankesteria	103772
+Lankesteria	340203
+Pseudocercospora fijiensis	1873960
+Pseudo-nitzschia	41953
+Chaetoceros elegans	1937694
+Ditylum brightwellii	49249
+Tintinnida	200604
+Chaetoceros cf. lauderi	2569856
+Ditrichocorycaeus anglicus	1582896
+Pseudo-nitzschia heimii	476441
+Pseudo-nitzschia pungens	37318
+Cylindrotheca closterium	2856
+Ploima	84394
+Cryothecomonas longipes	151027
+Cryothecomonas	151025
+Leegaardiella sp.	2022002
+Leegaardiella sp. LS803	1925001
+Eucampia	49251
+Pterosperma cristatum	38836
+Salpingella sp.	1969917
+Spiophanes cf. norrisi VVP-2018	2079786
+Cyclotrichium cyclokaryon	696133
+Prasinoderma singulare	676789
+Rhizosolenia setigera	3005
+Skeletonema	2842
+Pelagostrobilidium	273906
+Oikopleura	34763
+Rhizosolenia delicatula	1244696
+Calanidae	6835
+Chthamalidae	37897
+Cercozoa	136419
+Lynnella semiglobulosa	696186
+Chaetoceros	49237
+Clytia gracilis	252669
+Leptocylindrus convexus	1398153
+Rhizosoleniaceae	33845
+Naviculaceae	67474
+Salpingella	513280
+Chrysochromulina strobilus	696961
+Pyramimonas australis	132611
+Tintinnopsis	180939
+Phyllodoce lineata	1436077
+Cryothecomonas aestivalis	151026
+Owenia fusiformis	6347
+Chrysochromulina simplex	412158
+Asteromphalus sp. TN-2014	1529363
+Sessilia	116167
+Cryomonadida	589444
+Mesodinium	283646
+Chaetoceros debilis	122233
+Fragilariaceae	33856
+Prymnesium	35143
+Pleurobrachiidae	86008
+Prorodontida	6001
+Eukaryota	2759
+Imbricatea	1736114
+Chaetoceros sp. UNC1414	1936264
+Thalassionemataceae	38755
+Proboscia	216776
+Chaetoceros didymus	49238
+Mesodiniidae	283645
+Coscinodiscus sp. TN-2014	1529365
+Hemiaulus	426649
+Tiarina	693139
+Choreotrichida	200605
+Phialina	497728
+Monodinium sp. HCB-2005	382710
+Bacteriastrum	426670
+Plagiocampa sp.	1982027
+Rhizosolenia	3004
+Mamiella	41876
+Picomonas judraskeda	1315715
+Tectofilosida	2603933
+Calanoida	6833
+Chrysochromulina sp. NIES-1333	407208
+Acineta flava	1003325
+Pelagiidae	6146
+Chaetoceros decipiens	655751
+Pyramimonas	36882
+Sagittidae	34753
+Guinardia striata	1514137
+Lauderia annulata	382366
+Thalassiosira oceanica	159749
+Acartia danae	545071
+Oikopleura sp. cf. dioica-TTGS-2	201967
+Haptolina brevifila	156173
+Actinocyclus sp. 1 MPA-2013	1335100
+Thalassiosira anguste-lineata	337180
+Lobata	27921
+Tetraselmis	3164
+Pseudoplatyophrya nana	88570
+Pseudochlorella	63681
+Conoidasida	1280412
+Blidingia	63413
+Metschnikowia	27320
+Malassezia globosa	76773
+Cylindrotheca	2852
+Clausocalanus furcatus	149001
+Brachionus calyciflorus	104777
+Thalassiosira sp.	1891026
+Pleurosigma planktonicum	265560
+Dolichomastigales	1525213
+Eutintinnus tubulosus	1049800
+Ciliophora	5878
+Pleosporales	92860
+Pseudo-nitzschia fukuyoi	1388885
+Cephaloidophora cf. communis	947086
+Strombidinopsis	141413
+Cystofilobasidium capitatum	5412
+Chaetoceros sp. CDP22	2082239
+Heterolobosea	5752
+Harpacticoida	41212
+Trebouxiaceae	2507902
+Archigregarinorida	1280411
+Verrucariaceae	146292
+Paradiniida	2686029
+Polychaeta	6341
+Rhizosolenia robusta	265547
+Ventricleftida	1938500
+Haptolina	1090112
+Dactyliosolen sp. Ubatuba	1785164
+Pterocystis sp.	1982029
+Chlorarachniophyceae	29197
+Prymnesium polylepis	72548
+Euglenozoa	33682
+Haslea	67475
+Clytia	13436
+Cryothecomonas sp. APCC MC5-1Cryo	741088
+Stephanopyxis turris	515487
+Porpostoma notata	881006
+Sertulariidae	86619
+Petricola lapicida	345464
+Haptophyta	2830
+Pseudosolenia calcar-avis	1334975
+Chaetoceros cf. wighamii	1764850
+Picozoa	419944
+Askenasia	457373
+Sigalion spinosus	328601
+Kefersteinia cirrata	272732
+Uebelmesseromyces harderi	109966
+Polypodiopsida	241806
+Paraschneideria metamorphosa	650286
+Staurastrum	31317
+Cyclotrichida	197907
+Anomalocera	310561
+Phaeocystales	418919
+Rhizophydium	60186
+Stephanopyxis	3006
+Pyramimonadales	38834
+Obelia dichotoma	37520
+Bryopsida	3208
+Bryopsida	3214
+Spionida	46589
+Calocalanus sp. 2 AC-2013	1281432
+Peritromus faurei	541016
+Fragilariopsis sp.	2315413
+Stellarima microtrias	188541
+Hypocreales	5125
+Siphonophorae	42759
+Pseudocalanus	119371
+Ascomycota	4890
+Melosirales	33841
+Philasterida	198613
+Montacutidae	1071984
+Ampharete	394738
+Chromidina sp. #S50	1825904
+Macoma	52799
+Asteraceae	4210
+Nannochloris	3187
+Veneroida	6580
+Leegaardiella	1925000
+Harpacticus	512227
+Viruses	10239
+Clathrozoon wilsoni	1608542
+Chaetoceros cf. lorenzianus IT-Dia51	1390973
+Philasteridae	197859
+Coscinodiscophyceae	33836
+Askenasia sp. LWW2010032604	1348343

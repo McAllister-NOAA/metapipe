@@ -1,0 +1,665 @@
+ASV_1	SPECIES	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_10	SPECIES	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_1000	NO TAXID ASSIGNMENT
+ASV_1001	NOCONFIDENCE	1227941	Eukaryota;Bacillariophyta;Bacillariophyceae;Bacillariales;Bacillariaceae;Hantzschia;Hantzschia sp. CCAP 1030/1
+ASV_1002	NO TAXID ASSIGNMENT
+ASV_1003	NO TAXID ASSIGNMENT
+ASV_1004	NO TAXID ASSIGNMENT
+ASV_1005	NO TAXID ASSIGNMENT
+ASV_1007	NOCONFIDENCE	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_1008	ORDER	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_1009	NO TAXID ASSIGNMENT
+ASV_1010	NO TAXID ASSIGNMENT
+ASV_1011	NO TAXID ASSIGNMENT
+ASV_1012	NO TAXID ASSIGNMENT
+ASV_1013	NO TAXID ASSIGNMENT
+ASV_1014	NO TAXID ASSIGNMENT
+ASV_1015	NO TAXID ASSIGNMENT
+ASV_1016	NO TAXID ASSIGNMENT
+ASV_1017	NOCONFIDENCE	2026621	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_1018	NO TAXID ASSIGNMENT
+ASV_1019	NOCONFIDENCE	2049438	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Cephaloidophoridae;Cephaloidophora;Cephaloidophora oradareae
+ASV_102	SPECIES	1679438, 547557	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_1020	NO TAXID ASSIGNMENT
+ASV_1021	NO TAXID ASSIGNMENT
+ASV_1022	NO TAXID ASSIGNMENT
+ASV_1023	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_1024	NO TAXID ASSIGNMENT
+ASV_1026	NO TAXID ASSIGNMENT
+ASV_1027	NO TAXID ASSIGNMENT
+ASV_103	SPECIES	732115, 285985, 433501	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_104	NOCONFIDENCE	119757	Eukaryota;Endomyxa;@@;@@;@@;@@;@@
+ASV_105	GENUS	2591690	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_106	SPECIES	89963	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_108	NOCONFIDENCE	261842	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_109	SPECIES	2571262, 1912850, 77931, 437763	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_11	NOCONFIDENCE	2203274	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Aggregatidae;Pseudoklossia;Pseudoklossia pectinis
+ASV_110	ORDER	1654606, 1132520	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_112	SPECIES	1641413	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_114	SPECIES	244963	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_116	SPECIES	261845	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_119	GENUS	2047754, 476099	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_12	SPECIES	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_120	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_123	SPECIES	1407008	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_124	SPECIES	1333877	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_126	ORDER	298604, 393032, 406516	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_129	ORDER	281614	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_130	SPECIES	651450	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_131	SPECIES	1982032	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_133	SPECIES	39455	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_134	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+ASV_139	SPECIES	77931, 1273570, 437766	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_145	SPECIES	1010450	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_148	SPECIES	327389	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_150	ORDER	573649	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_154	NOCONFIDENCE	2037922	Eukaryota;Cercozoa;@@;@@;@@;@@;@@
+ASV_156	SPECIES	1010547, 1010437	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_158	SPECIES	340371, 340370	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_16	SPECIES	1122278, 107758, 66471	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_162	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_165	SPECIES	143670, 2292165, 106543, 1695222, 1691974, 71861, 1652117, 1655535, 1655529, 1239451, 631048, 858356, 284798;284799;284802, 284797	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_166	SPECIES	281611	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_168	SPECIES	418113	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_17	NOCONFIDENCE	1118043	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Eimeriidae;Margolisiella;Margolisiella islandica
+ASV_170	ORDER	652710	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_175	SPECIES	89963, 244960, 244961	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_176	NOCONFIDENCE	573649	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_179	NOCONFIDENCE	573649	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_180	SPECIES	407301, 225107	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_181	SPECIES	89963	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_182	SPECIES	1982030	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_183	SPECIES	244962	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_185	NOCONFIDENCE	629762	Eukaryota;Cercozoa;@@;@@;@@;@@;@@
+ASV_186	NOCONFIDENCE	1167625	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_187	SPECIES	2957, 2126442	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_190	SPECIES	407301	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_191	ORDER	1167625	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_192	NOCONFIDENCE	573649	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_196	SPECIES	1010462, 1010430	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_199	ORDER	393032, 406516	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_201	SPECIES	1864606	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_202	SPECIES	35687, 214821	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_203	SPECIES	1864604, 1010447	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_207	GENUS	1654606, 1132520	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_208	NOCONFIDENCE	136180	Eukaryota;Arthropoda;Hexanauplia;Calanoida;Acartiidae;Acartia;Acartia tonsa
+ASV_209	GENUS	1654606, 1132520	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_21	SPECIES	2957, 1689149, 584794, 1407009, 43686, 1239449, 407301, 298366	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_210	SPECIES	237452, 237449	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_212	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+ASV_213	SPECIES	1010547, 1010437	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_216	SPECIES	1864621	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_217	SPECIES	1010457, 1010435	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_218	SPECIES	2613926, 1186237, 904677	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_219	SPECIES	651451, 652710	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_221	GENUS	44440	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_222	SPECIES	2590415, 640130, 407301	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_223	SPECIES	1982032	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_224	SPECIES	433500	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_227	GENUS	2576346	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_229	ORDER	1167625	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_23	SPECIES	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_230	SPECIES	1333877	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_231	NOCONFIDENCE	1932427, 1563420	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_233	SPECIES	2578210, 66468	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_234	NO TAXID ASSIGNMENT
+ASV_235	NOCONFIDENCE	2923	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_236	NOCONFIDENCE	1348415	Eukaryota;Ciliophora;Phyllopharyngea;Dysteriida;Hartmannulidae;Brooklynella;Brooklynella sinensis
+ASV_237	ORDER	2762	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_238	SPECIES	427755	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_239	NOCONFIDENCE	573649	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_24	GENUS	1654606, 1132523, 1132520, 1132524	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_242	NOCONFIDENCE	388226	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_243	SPECIES	1079765	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_244	SPECIES	651451	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_246	ORDER	1610580, 1140381, 66473	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_247	NOCONFIDENCE	380132	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_248	SPECIES	261845	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_249	GENUS	1654606, 1132520	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_250	SPECIES	66471	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_251	NOCONFIDENCE	1282893, 652711, 651451, 237449, 258031	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_253	SPECIES	237449	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_255	SPECIES	261184, 65670	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_259	NOCONFIDENCE	380132	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_26	SPECIES	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_260	SPECIES	1123717, 289378, 310565	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_262	SPECIES	244962	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_263	SPECIES	77931	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_266	SPECIES	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_269	SPECIES	1035524	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_27	SPECIES	1294207, 230420	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_270	NOCONFIDENCE	271680	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_273	SPECIES	1010465	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_274	NOCONFIDENCE	2340796	Eukaryota;Ciliophora;Prostomatea;Prorodontida;@@;@@;@@
+ASV_275	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+ASV_276	SPECIES	66473	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_279	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_282	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_283	GENUS	1982030	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_285	GENUS	89963, 1736631	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_287	NOCONFIDENCE	573649	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_289	NO TAXID ASSIGNMENT
+ASV_29	SPECIES	160611, 66471	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_290	NOCONFIDENCE	2037922	Eukaryota;Cercozoa;@@;@@;@@;@@;@@
+ASV_292	SPECIES	39450, 237470	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_293	SPECIES	1604865	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_296	ORDER	2026621	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_297	SPECIES	387435, 298604	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_298	GENUS	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_299	NOCONFIDENCE	262777	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_3	ORDER	1167625	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_30	ORDER	457367	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_300	ORDER	573649	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_305	NOCONFIDENCE	2340796	Eukaryota;Ciliophora;Prostomatea;Prorodontida;@@;@@;@@
+ASV_306	NOCONFIDENCE	1335110	Eukaryota;Bacillariophyta;Coscinodiscophyceae;Coscinodiscales;Coscinodiscaceae;Coscinodiscus;Coscinodiscus sp. 1 MPA-2013
+ASV_307	SPECIES	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_308	SPECIES	407301	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_309	NOCONFIDENCE	1629645	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia sp. MS-2015
+ASV_311	GENUS	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_312	GENUS	1519423	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_314	ORDER	1928008	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_315	SPECIES	44056	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_316	SPECIES	1798950	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_317	NOCONFIDENCE	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_320	NOCONFIDENCE	2037922	Eukaryota;Cercozoa;@@;@@;@@;@@;@@
+ASV_321	GENUS	35682	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_323	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_324	NOCONFIDENCE	748992	Eukaryota;Arthropoda;Hexanauplia;Calanoida;Acartiidae;Acartia;Acartia hongi
+ASV_325	SPECIES	39453	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_327	ORDER	1654606, 1132520	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_328	ORDER	2662319	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_329	SPECIES	1282893, 271692, 258031	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_33	SPECIES	650052	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_330	SPECIES	244962	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_331	SPECIES	1167876	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_333	NO TAXID ASSIGNMENT
+ASV_334	ORDER	1864604, 1010447	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_335	NOCONFIDENCE	281614	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_336	SPECIES	89963	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_337	SPECIES	650052	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_339	SPECIES	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_343	SPECIES	2026621	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_344	SPECIES	1816782, 1524187, 1524186, 627963;1816783, 549348, 549345;1516112, 549349, 549347, 549346, 549343, 549342, 368449, 215587, 33676	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_345	SPECIES	1955561, 1276173, 1274397, 1276030, 1276066, 1273161, 1276039, 1155554, 37642, 293210, 37475	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_348	ORDER	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_349	NOCONFIDENCE	1010462, 1010430	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_35	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_351	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_355	SPECIES	1864621	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_358	SPECIES	2496629, 1123717, 72677, 237471, 427755	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_359	SPECIES	1010465	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_36	SPECIES	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_361	SPECIES	89963, 1905834, 1655547, 139025, 407301, 66473, 319230, 2920, 454270, 107757, 2959, 284793	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_362	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_367	ORDER	281609	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_376	NOCONFIDENCE	1425173	Eukaryota;Ciliophora;Nassophorea;Nassulida;Colpodidiidae;Apocolpodidium;Apocolpodidium etoschense
+ASV_378	SPECIES	40986, 1659217, 378505	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_380	SPECIES	1010547, 1010437	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_381	NOCONFIDENCE	633638	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_385	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_387	SPECIES	42100, 9720, 9515, 81572, 1280, 9657, 9606, 9555, 9838, 10090, 9595, 9731, 61853, 90247, 32536, 116960, 310752, 34886, 9940, 93162, 30522, 34884, 9483, 9544, 9601, 9593, 9598, 286419, 9565, 72004, 10141, 9685, 9544;9565, 1965090, 9986, 9823, 1437454, 9749, 9678;36723;61383, 34880, 10029, 89462, 99174, 94643, 9874, 9541, 10116, 10047, 9365, 9361, 9796, 9606;9986, 473034, 9925	Eukaryota;Chordata;Mammalia;Artiodactyla;Phocoenidae;Phocoena;Phocoena sinus	Eukaryota;Chordata;Mammalia;Carnivora;Phocidae;Phoca;Phoca vitulina	Eukaryota;Chordata;Mammalia;Primates;Cebidae;Sapajus;Sapajus apella	Eukaryota;Chordata;Mammalia;Primates;Hylobatidae;Hylobates;Hylobates moloch	Bacteria;Firmicutes;Bacilli;Bacillales;Staphylococcaceae;Staphylococcus;Staphylococcus aureus	Eukaryota;Chordata;Mammalia;Carnivora;Mustelidae;Lutra;Lutra lutra	Eukaryota;Chordata;Mammalia;Primates;Hominidae;Homo;Homo sapiens	Eukaryota;Chordata;Mammalia;Primates;Cercopithecidae;Papio;Papio anubis	Eukaryota;Chordata;Mammalia;Artiodactyla;Camelidae;Camelus;Camelus dromedarius	Eukaryota;Chordata;Mammalia;Rodentia;Muridae;Mus;Mus musculus	Eukaryota;Chordata;Mammalia;Primates;Hominidae;Gorilla;Gorilla gorilla	Eukaryota;Chordata;Mammalia;Artiodactyla;Delphinidae;Globicephala;Globicephala melas	Eukaryota;Chordata;Mammalia;Primates;Hylobatidae;Nomascus;Nomascus leucogenys	Eukaryota;Chordata;Mammalia;Artiodactyla;Delphinidae;Lagenorhynchus;Lagenorhynchus obliquidens	Eukaryota;Chordata;Mammalia;Carnivora;Felidae;Acinonyx;Acinonyx jubatus	Eukaryota;Chordata;Mammalia;Carnivora;Ursidae;Ursus;Ursus arctos	Eukaryota;Chordata;Mammalia;Artiodactyla;Balaenopteridae;Balaenoptera;Balaenoptera acutorostrata	Eukaryota;Chordata;Mammalia;Carnivora;Otariidae;Eumetopias;Eumetopias jubatus	Eukaryota;Chordata;Mammalia;Artiodactyla;Bovidae;Ovis;Ovis aries	Eukaryota;Chordata;Mammalia;Rodentia;Sciuridae;Marmota;Marmota flaviventris	Eukaryota;Chordata;Mammalia;Artiodactyla;Bovidae;Bos;Bos indicus x Bos taurus	Eukaryota;Chordata;Mammalia;Carnivora;Otariidae;Callorhinus;Callorhinus ursinus	Eukaryota;Chordata;Mammalia;Primates;Cebidae;Callithrix;Callithrix jacchus	Eukaryota;Chordata;Mammalia;Primates;Cercopithecidae;Macaca;Macaca mulatta	Eukaryota;Chordata;Mammalia;Primates;Hominidae;Pongo;Pongo abelii	Eukaryota;Chordata;Mammalia;Primates;Hominidae;Gorilla;Gorilla gorilla	Eukaryota;Chordata;Mammalia;Primates;Hominidae;Pan;Pan troglodytes	Eukaryota;Chordata;Mammalia;Carnivora;Canidae;Canis;Canis lupus	Eukaryota;Chordata;Mammalia;Primates;Cercopithecidae;Theropithecus;Theropithecus gelada	Eukaryota;Chordata;Mammalia;Artiodactyla;Bovidae;Bos;Bos mutus	Eukaryota;Chordata;Mammalia;Rodentia;Caviidae;Cavia;Cavia porcellus	Eukaryota;Chordata;Mammalia;Carnivora;Felidae;Felis;Felis catus	Eukaryota;Chordata;Mammalia;Primates;Cercopithecidae;Macaca;Macaca mulatta	Eukaryota;Chordata;Mammalia;Primates;Cercopithecidae;Theropithecus;Theropithecus gelada	Eukaryota;Annelida;Polychaeta;Phyllodocida;Tomopteridae;Tomopteris;Tomopteris sp. Tsp24882	Eukaryota;Chordata;Mammalia;Lagomorpha;Leporidae;Oryctolagus;Oryctolagus cuniculus	Eukaryota;Chordata;Mammalia;Artiodactyla;Suidae;Sus;Sus scrofa	Eukaryota;Nematoda;Enoplea;Mermithida;Mermithidae;Hexamermis;Hexamermis albicans	Eukaryota;Chordata;Mammalia;Artiodactyla;Monodontidae;Delphinapterus;Delphinapterus leucas	Eukaryota;Chordata;Mammalia;Carnivora;Hyaenidae;Crocuta;Crocuta crocuta	Eukaryota;Chordata;Mammalia;Carnivora;Mustelidae;Mustela;Mustela erminea	Eukaryota;Chordata;Mammalia;Carnivora;Felidae;Lynx;Lynx canadensis	Eukaryota;Chordata;Mammalia;Carnivora;Canidae;Nyctereutes;Nyctereutes procyonoides	Eukaryota;Chordata;Mammalia;Rodentia;Cricetidae;Cricetulus;Cricetulus griseus	Eukaryota;Chordata;Mammalia;Artiodactyla;Bovidae;Bubalus;Bubalus bubalis	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Sarcocystidae;Besnoitia;Besnoitia jellisoni	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Sarcocystidae;Besnoitia;Besnoitia besnoiti	Eukaryota;Chordata;Mammalia;Artiodactyla;Cervidae;Odocoileus;Odocoileus virginianus	Eukaryota;Chordata;Mammalia;Primates;Cercopithecidae;Macaca;Macaca fascicularis	Eukaryota;Chordata;Mammalia;Rodentia;Muridae;Rattus;Rattus norvegicus	Eukaryota;Chordata;Mammalia;Rodentia;Muridae;Meriones;Meriones unguiculatus	Eukaryota;Chordata;Mammalia;Eulipotyphla;Erinaceidae;Erinaceus;Erinaceus europaeus	Eukaryota;Chordata;Mammalia;Cingulata;Dasypodidae;Dasypus;Dasypus novemcinctus	Eukaryota;Chordata;Mammalia;Perissodactyla;Equidae;Equus;Equus caballus	Eukaryota;Chordata;Mammalia;Primates;Hominidae;Homo;Homo sapiens	Eukaryota;Chordata;Mammalia;Lagomorpha;Leporidae;Oryctolagus;Oryctolagus cuniculus	Eukaryota;Chordata;Mammalia;Eulipotyphla;Erinaceidae;Paraechinus;Paraechinus aethiopicus	Eukaryota;Chordata;Mammalia;Artiodactyla;Bovidae;Capra;Capra hircus	
+ASV_388	SPECIES	89963, 106539, 160612	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_39	SPECIES	89963	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_391	NOCONFIDENCE	1297756	Eukaryota;Ciliophora;Phyllopharyngea;Dysteriida;Plesiotrichopidae;Pithites;Pithites vorax
+ASV_394	SPECIES	77931, 195071, 696411	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_395	ORDER	1524181, 1524180, 1524179, 363907, 87105	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_396	SPECIES	1157692, 299206	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_398	ORDER	1655520, 1655519	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_399	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_4	SPECIES	39450, 237470	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_40	SPECIES	289378, 310565	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_400	SPECIES	39450, 237470	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_401	SPECIES	2920	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_403	NOCONFIDENCE	89963	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_404	NOCONFIDENCE	298604	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_405	SPECIES	1010487;1010569, 1010567;1010568, 1010543, 1010507, 1010474;1010503;1010513;1010526, 1010531, 1010537	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_406	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_407	NOCONFIDENCE	2037922	Eukaryota;Cercozoa;@@;@@;@@;@@;@@
+ASV_408	GENUS	230411, 230410	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_409	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_41	SPECIES	1226012, 2945, 1764932, 72677	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_410	SPECIES	1010465	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_411	NOCONFIDENCE	1629645	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia sp. MS-2015
+ASV_412	ORDER	298604	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_414	SPECIES	39450, 237470	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_415	NO TAXID ASSIGNMENT
+ASV_416	NOCONFIDENCE	997027	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Uradiophoridae;Heliospora;Heliospora cf. longissima
+ASV_417	GENUS	1654606, 1132520	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_418	ORDER	407301	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_419	ORDER	88552, 1010471	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_42	SPECIES	230419	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_421	NOCONFIDENCE	380132	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_422	NOCONFIDENCE	672931	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Gregarinidae;@@;@@
+ASV_423	SPECIES	1010439	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_427	NOCONFIDENCE	1864604, 1010447	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_428	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_429	NOCONFIDENCE	985833	Eukaryota;Imbricatea;@@;@@;@@;@@;@@
+ASV_430	ORDER	100861	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_433	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_434	SPECIES	88552, 1294205, 860588	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_437	SPECIES	1982022	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_439	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_441	NO TAXID ASSIGNMENT
+ASV_442	SPECIES	1982032	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_443	SPECIES	363326, 1124241, 1124235	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_444	SPECIES	2126440, 692279, 644177, 644174, 644175, 203191, 644164, 644165, 644180, 644167, 644169, 644179, 644181, 644170, 644173, 994786, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_445	NO TAXID ASSIGNMENT
+ASV_447	SPECIES	293646	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_449	NOCONFIDENCE	207946	Eukaryota;Arthropoda;Hexanauplia;Calanoida;Acartiidae;Acartia;Acartia omorii
+ASV_450	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_451	SPECIES	1982022	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_452	NOCONFIDENCE	1618018	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_455	SPECIES	1196157	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_457	NOCONFIDENCE	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_458	SPECIES	2592171, 464990, 77926, 478131, 77927, 1511720, 478129, 77925	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_459	ORDER	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_460	NOCONFIDENCE	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_462	NO TAXID ASSIGNMENT
+ASV_464	SPECIES	1864612	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_465	SPECIES	407301	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_467	ORDER	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_469	SPECIES	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_471	ORDER	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_472	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_473	SPECIES	339963	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_476	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_478	SPECIES	1010556, 1010533, 1010473;1010490;1010542	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_479	SPECIES	1286077, 1286078, 703023	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_483	SPECIES	1798950	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_488	GENUS	1655520, 1655519	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_490	SPECIES	1982032	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_491	SPECIES	459534	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_494	SPECIES	1603439	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_495	NOCONFIDENCE	696133	Eukaryota;Ciliophora;Litostomatea;Haptorida;Didiniidae;Cyclotrichium;Cyclotrichium cyclokaryon
+ASV_498	NOCONFIDENCE	2037922	Eukaryota;Cercozoa;@@;@@;@@;@@;@@
+ASV_500	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+ASV_501	SPECIES	2026621	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_503	GENUS	1864614	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_504	GENUS	1010434, 1010425	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_505	SPECIES	27292, 4932, 559292, 114526, 114525, 114524, 27291, 4931, 1987369, 1080349, 55601, 1294332, 1294330, 1294329, 1294328, 1294327, 1294326, 1294325, 1294324, 1294323, 1294322, 1294321, 1294320, 1294319, 1294318, 1294317, 1294316, 1294315, 1294314, 1294313, 1294312, 1294311, 1294310, 947044, 468558, 947042, 1294309, 1294308, 1294307, 1294306, 1294305, 1294304, 1294303, 1294388, 1294387, 1294386, 1294385, 1294384, 1294383, 1294382, 1294381, 1294380, 1294379, 1294378, 1294377, 1294376, 1294375, 1294374, 1294373, 1294372, 1294371, 1294370, 1294369, 1294368, 1294367, 1294366, 1294365, 1294364, 1294363, 1294362, 1294361, 1294360, 1294359, 1294358, 1294357, 1294356, 1294355, 1294354, 1294353, 1294352, 1294351, 1294350, 1294349, 1294348, 1294347, 1294346, 1294345, 1294344, 1294343, 1294342, 1294341, 1294340, 1294339, 1294338, 1294337, 1294336, 1294335, 1294334, 1294333, 1293430, 1292971, 1296266, 4934, 1524957, 4932;580240, 28985, 1294331, 4932;559292, 684751, 676026, 676025, 676024, 676023, 643680, 226125, 32630, 114524;114525, 4932;209285;559292, 4931;27291	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces pastorianus	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cariocanus	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces mikatae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces kudriavzevii	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces paradoxus	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces bayanus	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces jurei	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces eubayanus	Bacteria;Proteobacteria;Gammaproteobacteria;Vibrionales;Vibrionaceae;Vibrio;Vibrio anguillarum	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Lachancea;Lachancea kluyveri	Environmental Unknown;@@;@@;@@;@@;@@;@@	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Kluyveromyces;Kluyveromyces lactis	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces sp. XJ-CW-65Y	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces sp. CW4.4	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces sp. CW3.9	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces sp. CW3.6	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces sp. CW3.5	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces paradoxus	Environmental Unknown;@@;@@;@@;@@;@@;@@	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces kudriavzevii	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces mikatae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Sordariomycetes;Sordariales;Chaetomiaceae;Chaetomium;Chaetomium thermophilum	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces cerevisiae	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces bayanus	Eukaryota;Ascomycota;Saccharomycetes;Saccharomycetales;Saccharomycetaceae;Saccharomyces;Saccharomyces paradoxus	
+ASV_506	NO TAXID ASSIGNMENT
+ASV_507	NOCONFIDENCE	2094265	Eukaryota;Apicomplexa;Conoidasida;Neogregarinorida;Ophryocystidae;Apicystis;Apicystis sp.
+ASV_508	NOCONFIDENCE	281614	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_509	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_51	SPECIES	2592189, 2303294, 2303293	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_510	SPECIES	1054399	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_511	ORDER	363326, 1124241, 1124235	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_512	SPECIES	35687	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_515	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+ASV_516	ORDER	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_517	SPECIES	91992	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_518	SPECIES	376353	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_519	NO TAXID ASSIGNMENT
+ASV_52	SPECIES	237449	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_520	NO TAXID ASSIGNMENT
+ASV_521	SPECIES	2591690	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_524	NO TAXID ASSIGNMENT
+ASV_525	SPECIES	160611	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_526	GENUS	120299	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_527	NOCONFIDENCE	629764	Eukaryota;Cercozoa;Thecofilosea;Ventricleftida;@@;@@;@@
+ASV_528	NO TAXID ASSIGNMENT
+ASV_529	NOCONFIDENCE	393032, 406516	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_532	GENUS	749231	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_533	GENUS	2026621	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_535	NOCONFIDENCE	2945	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_536	NOCONFIDENCE	1170544	Eukaryota;Ciliophora;Phyllopharyngea;Dysteriida;Dysteriidae;Trochilia;Trochilia petrani
+ASV_537	SPECIES	697907, 2571260, 1511721, 354587, 697909	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_538	ORDER	261184, 1659216, 65670	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_539	SPECIES	1982032	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_54	SPECIES	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_541	ORDER	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_543	SPECIES	1864614	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_544	NOCONFIDENCE	1484059, 1306402	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Hepatozoidae;Hepatozoon;Hepatozoon sp.	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Hepatozoidae;Hepatozoon;Hepatozoon sp. ex rattlesnake BR-2012	
+ASV_548	ORDER	1618016	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_549	NO TAXID ASSIGNMENT
+ASV_55	GENUS	1654606, 1132520	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_550	SPECIES	281610	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_551	SPECIES	39450, 237470	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_553	GENUS	261184, 65670	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_555	ORDER	1010487;1010569, 1010567;1010568, 1010543, 1010507, 1010474;1010503;1010513;1010526	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_556	NOCONFIDENCE	1629645	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia sp. MS-2015
+ASV_557	NO TAXID ASSIGNMENT
+ASV_559	GENUS	1010505	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_561	NOCONFIDENCE	1573495	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_563	ORDER	380130	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_564	GENUS	2576346	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_565	NOCONFIDENCE	2049438	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Cephaloidophoridae;Cephaloidophora;Cephaloidophora oradareae
+ASV_567	ORDER	298604	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_569	SPECIES	89963	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_57	SPECIES	271679	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_570	SPECIES	261843	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_572	SPECIES	2920	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_573	NOCONFIDENCE	2044563	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_574	ORDER	2591690	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_575	NO TAXID ASSIGNMENT
+ASV_576	SPECIES	1010461, 1010454	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_577	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_579	NOCONFIDENCE	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_58	NOCONFIDENCE	997027	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Uradiophoridae;Heliospora;Heliospora cf. longissima
+ASV_580	ORDER	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_582	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_584	SPECIES	91992	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_585	ORDER	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_586	NOCONFIDENCE	492103	Eukaryota;Endomyxa;Ascetosporea;Paradiniida;@@;@@;@@
+ASV_587	SPECIES	388226	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_588	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_589	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+ASV_590	SPECIES	1982030	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_591	SPECIES	1167876	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_596	SPECIES	1123717	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_597	NO TAXID ASSIGNMENT
+ASV_599	SPECIES	2590415, 89963, 407301, 1486022, 640130, 60595	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_6	SPECIES	89963, 244960, 244961	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_60	SPECIES	119094	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_601	SPECIES	2496629, 72677, 237471	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_602	SPECIES	2496629, 72677, 237471	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_607	ORDER	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_61	SPECIES	2926, 1126604, 1126602, 1126601, 1041877, 1041877;1126602;1126604, 1041877;1126604, 1041877;1126601;1126602;1126604	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_611	SPECIES	39450, 237470	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_612	NOCONFIDENCE	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_614	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_615	ORDER	254430	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_616	SPECIES	1283838, 72019, 1283837, 1283839	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_618	NOCONFIDENCE	2049438	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Cephaloidophoridae;Cephaloidophora;Cephaloidophora oradareae
+ASV_619	NO TAXID ASSIGNMENT
+ASV_622	SPECIES	2294036	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_625	NO TAXID ASSIGNMENT
+ASV_627	NO TAXID ASSIGNMENT
+ASV_629	SPECIES	1816782, 1524187, 1524186, 627963;1816783, 549348, 549345;1516112, 549349, 549347, 549346, 549343, 549342, 368449, 215587, 33676	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_63	SPECIES	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_630	NO TAXID ASSIGNMENT
+ASV_632	GENUS	160623	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_633	SPECIES	407301	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_634	GENUS	2303287, 1290334, 66473, 407301, 257771;260685, 200894, 257771	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_638	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_639	SPECIES	1918381	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_64	SPECIES	410738	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_641	ORDER	79894	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_642	GENUS	95528	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_644	SPECIES	324623	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_646	NOCONFIDENCE	672929	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Lecudinidae;Lecudina;Lecudina phyllochaetopteri
+ASV_647	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_649	SPECIES	705413, 1760868, 1341612, 1798043, 1408142	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_65	SPECIES	2926, 2932, 1471208, 1126604, 1126602, 1126603, 1126601, 1041877, 1041877;1126601;1126602;1126603;1126604, 1126609, 1126608, 1126610, 1126608;1126610, 1126605;1126607;1126608;1126609;1126610	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_650	SPECIES	43935, 246124, 2880	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_651	SPECIES	1864614	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_653	NOCONFIDENCE	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_654	ORDER	1167625	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_655	GENUS	2591690	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_656	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_658	SPECIES	246121	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_659	NO TAXID ASSIGNMENT
+ASV_660	SPECIES	1864615	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_661	NOCONFIDENCE	2049438	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Cephaloidophoridae;Cephaloidophora;Cephaloidophora oradareae
+ASV_663	SPECIES	230412, 230409	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_664	NO TAXID ASSIGNMENT
+ASV_666	SPECIES	697907, 2571260, 1511721, 354587, 697909	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_667	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_67	NO TAXID ASSIGNMENT
+ASV_670	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_673	NO TAXID ASSIGNMENT
+ASV_675	ORDER	172824	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_676	NOCONFIDENCE	87298	Eukaryota;Apicomplexa;@@;@@;@@;@@;@@
+ASV_677	GENUS	632150, 633638	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_679	NOCONFIDENCE	380131	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_680	NO TAXID ASSIGNMENT
+ASV_681	ORDER	66473	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_682	SPECIES	47934, 584866, 146760, 150622, 566462, 481301, 120300, 150597, 150623	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_685	NO TAXID ASSIGNMENT
+ASV_686	GENUS	1654606, 1132520	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_687	NOCONFIDENCE	2115823	Eukaryota;Bacillariophyta;Fragilariophyceae;Licmophorales;Licmophoraceae;Licmophora;Licmophora sp.
+ASV_69	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+ASV_690	NOCONFIDENCE	686724, 686723	Eukaryota;Cercozoa;@@;@@;@@;@@;@@	Eukaryota;Cercozoa;@@;@@;@@;@@;@@	
+ASV_691	ORDER	1641413, 66473	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_694	GENUS	1294207, 230420	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_695	SPECIES	1965466	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_7	SPECIES	261184, 65670	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_70	NOCONFIDENCE	1118043	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Eimeriidae;Margolisiella;Margolisiella islandica
+ASV_702	NO TAXID ASSIGNMENT
+ASV_703	SPECIES	732115, 285985, 433501	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_704	ORDER	1864614	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_707	NOCONFIDENCE	2666306	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_709	NO TAXID ASSIGNMENT
+ASV_712	NO TAXID ASSIGNMENT
+ASV_713	GENUS	1167876	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_715	ORDER	66473	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_716	SPECIES	89963	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_718	SPECIES	2026621	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_719	NOCONFIDENCE	997027	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Uradiophoridae;Heliospora;Heliospora cf. longissima
+ASV_72	SPECIES	363325	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_720	NOCONFIDENCE	2049438	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Cephaloidophoridae;Cephaloidophora;Cephaloidophora oradareae
+ASV_722	ORDER	81531, 218848	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_723	GENUS	44440	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_725	NO TAXID ASSIGNMENT
+ASV_728	NOCONFIDENCE	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_729	SPECIES	1193136	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_730	GENUS	35684	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_732	NOCONFIDENCE	281611	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_736	NO TAXID ASSIGNMENT
+ASV_739	NOCONFIDENCE	2107311	Eukaryota;Bacillariophyta;Coscinodiscophyceae;Chaetocerotales;Chaetocerotaceae;Chaetoceros;Chaetoceros sp. Na17B2
+ASV_74	SPECIES	407301, 66473	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_741	ORDER	407301	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_742	ORDER	1611287	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_743	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_745	ORDER	465777, 475233	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_746	GENUS	114254	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_747	SPECIES	2682161, 2992, 703082	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_749	NO TAXID ASSIGNMENT
+ASV_75	ORDER	393032, 406516	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_750	NOCONFIDENCE	2055951	Eukaryota;Ciliophora;Phyllopharyngea;Chlamydodontida;Chlamydodontidae;Chlamydodon;Chlamydodon bourlandi
+ASV_752	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_753	ORDER	1051737	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_754	ORDER	573649	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_756	NO TAXID ASSIGNMENT
+ASV_757	ORDER	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_760	SPECIES	1155437, 1155434, 1104436, 483369, 189818	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_761	GENUS	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_762	ORDER	407301	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_763	ORDER	644166	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_764	GENUS	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_765	NOCONFIDENCE	380132	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_766	NO TAXID ASSIGNMENT
+ASV_767	NOCONFIDENCE	999464	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_768	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+ASV_77	SPECIES	271679	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_770	ORDER	365608	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_771	GENUS	88552, 1010471	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_774	NOCONFIDENCE	1297756	Eukaryota;Ciliophora;Phyllopharyngea;Dysteriida;Plesiotrichopidae;Pithites;Pithites vorax
+ASV_777	GENUS	98070	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_778	NO TAXID ASSIGNMENT
+ASV_779	NO TAXID ASSIGNMENT
+ASV_78	SPECIES	650053	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_780	NO TAXID ASSIGNMENT
+ASV_781	NO TAXID ASSIGNMENT
+ASV_782	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_783	NO TAXID ASSIGNMENT
+ASV_784	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_785	NO TAXID ASSIGNMENT
+ASV_786	NOCONFIDENCE	1282893, 89963, 652711, 651451, 237449, 258031	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_787	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+ASV_789	SPECIES	35682	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_79	SPECIES	2920	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_790	ORDER	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_791	NOCONFIDENCE	298604	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_792	NO TAXID ASSIGNMENT
+ASV_793	NOCONFIDENCE	340690	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Adeleidae;Adelina;Adelina dimidiata
+ASV_794	ORDER	1864604, 1010447	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_795	NOCONFIDENCE	2115823	Eukaryota;Bacillariophyta;Fragilariophyceae;Licmophorales;Licmophoraceae;Licmophora;Licmophora sp.
+ASV_796	NO TAXID ASSIGNMENT
+ASV_797	ORDER	2676190, 66473	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_80	SPECIES	271679	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_801	ORDER	749231	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_802	NOCONFIDENCE	2172886, 1547532, 1547520, 305846, 1263721	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_804	NOCONFIDENCE	2662319	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_805	SPECIES	1798950	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_806	GENUS	95528	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_808	SPECIES	1051737	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_810	NO TAXID ASSIGNMENT
+ASV_811	NO TAXID ASSIGNMENT
+ASV_812	NO TAXID ASSIGNMENT
+ASV_814	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_816	ORDER	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_817	GENUS	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_818	NO TAXID ASSIGNMENT
+ASV_819	ORDER	1775955	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_82	SPECIES	407301	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_820	NO TAXID ASSIGNMENT
+ASV_821	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_822	NO TAXID ASSIGNMENT
+ASV_823	GENUS	114254	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_824	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_825	NOCONFIDENCE	1680827	Archaea;Euryarchaeota;Candidatus Poseidoniia;Candidatus Poseidoniales;Candidatus Thalassarchaeaceae;Candidatus Thalassarchaeum;Candidatus Thalassoarchaea mediterranii
+ASV_826	NO TAXID ASSIGNMENT
+ASV_827	GENUS	1167876	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_828	NO TAXID ASSIGNMENT
+ASV_83	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_830	NO TAXID ASSIGNMENT
+ASV_831	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
+ASV_835	NO TAXID ASSIGNMENT
+ASV_836	NO TAXID ASSIGNMENT
+ASV_838	NO TAXID ASSIGNMENT
+ASV_839	GENUS	2578210, 66468	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_84	SPECIES	271692	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_840	NOCONFIDENCE	672931	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Gregarinidae;@@;@@
+ASV_841	ORDER	644166	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_842	GENUS	261843	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_844	NOCONFIDENCE	1167625	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_845	NO TAXID ASSIGNMENT
+ASV_846	NOCONFIDENCE	2037922	Eukaryota;Cercozoa;@@;@@;@@;@@;@@
+ASV_847	NO TAXID ASSIGNMENT
+ASV_85	SPECIES	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_850	NO TAXID ASSIGNMENT
+ASV_852	NO TAXID ASSIGNMENT
+ASV_853	ORDER	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_854	NOCONFIDENCE	1683278	Eukaryota;Ciliophora;Nassophorea;@@;@@;@@;@@
+ASV_855	GENUS	1714380, 1606541, 1411661, 722754;1714387	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_856	NO TAXID ASSIGNMENT
+ASV_857	NOCONFIDENCE	1043733, 686738, 687160, 686737	Eukaryota;Cercozoa;@@;@@;@@;@@;@@	Eukaryota;Cercozoa;@@;@@;@@;@@;@@	Eukaryota;Cercozoa;@@;@@;@@;@@;@@	Eukaryota;Cercozoa;@@;@@;@@;@@;@@	
+ASV_859	GENUS	2219862, 1225972	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_86	ORDER	1798950	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_860	SPECIES	281612	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_861	NOCONFIDENCE	261184, 65670	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_862	NOCONFIDENCE	1129381	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_864	SPECIES	1982022	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_865	NO TAXID ASSIGNMENT
+ASV_866	NO TAXID ASSIGNMENT
+ASV_867	ORDER	89963	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_868	ORDER	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_869	NO TAXID ASSIGNMENT
+ASV_870	GENUS	1524181, 1524180, 1524179, 363907, 87105	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_871	NO TAXID ASSIGNMENT
+ASV_872	SPECIES	1196157	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_873	NO TAXID ASSIGNMENT
+ASV_874	NO TAXID ASSIGNMENT
+ASV_875	NO TAXID ASSIGNMENT
+ASV_876	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_878	ORDER	2676190, 66473	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_879	NO TAXID ASSIGNMENT
+ASV_880	NOCONFIDENCE	1118043	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Eimeriidae;Margolisiella;Margolisiella islandica
+ASV_882	NOCONFIDENCE	29190	Eukaryota;Foraminifera;@@;@@;@@;@@;@@
+ASV_883	NO TAXID ASSIGNMENT
+ASV_885	ORDER	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_886	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_888	NO TAXID ASSIGNMENT
+ASV_889	ORDER	261184, 65670	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_891	NO TAXID ASSIGNMENT
+ASV_892	NOCONFIDENCE	1167625	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_894	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_895	SPECIES	35677, 35677;44463	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_897	NOCONFIDENCE	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_898	NO TAXID ASSIGNMENT
+ASV_899	NOCONFIDENCE	1230094	Eukaryota;Ciliophora;Nassophorea;Microthoracida;Discotrichidae;Discotricha;Discotricha papillifera
+ASV_900	NOCONFIDENCE	1297756	Eukaryota;Ciliophora;Phyllopharyngea;Dysteriida;Plesiotrichopidae;Pithites;Pithites vorax
+ASV_902	NO TAXID ASSIGNMENT
+ASV_903	SPECIES	1283838, 72019, 1283837, 1283839	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_904	NO TAXID ASSIGNMENT
+ASV_905	ORDER	393878	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_906	NOCONFIDENCE	1905723, 2315413, 39449, 2364126, 2303287, 1290334, 35672, 257771;260685, 39450, 257771	Environmental Unknown;@@;@@;@@;@@;@@;@@	Eukaryota;Bacillariophyta;Bacillariophyceae;Bacillariales;Bacillariaceae;Fragilariopsis;Fragilariopsis sp.	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_907	SPECIES	1573495	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_909	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_91	SPECIES	89963, 1905834, 1655547, 139025, 160611, 2920, 454270, 284793	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_910	ORDER	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_911	NOCONFIDENCE	1297743	Eukaryota;Ciliophora;Phyllopharyngea;Chlamydodontida;Chlamydodontidae;Chlamydodon;Chlamydodon obliquus
+ASV_912	SPECIES	1294206	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_913	SPECIES	66473	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_915	NOCONFIDENCE	66473	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_916	NO TAXID ASSIGNMENT
+ASV_92	SPECIES	1196156, 1127127, 1127109, 1127117, 1127115, 1127218, 1127108, 1127211, 703030, 703029, 703024, 278115	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_920	NO TAXID ASSIGNMENT
+ASV_921	ORDER	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_922	NOCONFIDENCE	261184, 65670	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_923	ORDER	1973086	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_924	NO TAXID ASSIGNMENT
+ASV_925	NOCONFIDENCE	2650746	Eukaryota;Ciliophora;Phyllopharyngea;Chlamydodontida;Chlamydodontidae;Chlamydodon;Chlamydodon pararoseus
+ASV_926	NO TAXID ASSIGNMENT
+ASV_927	NOCONFIDENCE	1226012, 2945, 1764932, 72677	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_928	NO TAXID ASSIGNMENT
+ASV_929	NO TAXID ASSIGNMENT
+ASV_93	GENUS	1798950	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_930	NOCONFIDENCE	261184, 65670	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_931	NO TAXID ASSIGNMENT
+ASV_932	NO TAXID ASSIGNMENT
+ASV_933	NO TAXID ASSIGNMENT
+ASV_934	NO TAXID ASSIGNMENT
+ASV_935	NO TAXID ASSIGNMENT
+ASV_936	GENUS	420641, 420555, 98070	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_937	NO TAXID ASSIGNMENT
+ASV_938	NOCONFIDENCE	526559	Eukaryota;Ciliophora;Phyllopharyngea;Dysteriida;Hartmannulidae;Trichopodiella;Trichopodiella faurei
+ASV_939	NO TAXID ASSIGNMENT
+ASV_94	SPECIES	2966	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_941	NO TAXID ASSIGNMENT
+ASV_942	NO TAXID ASSIGNMENT
+ASV_943	NO TAXID ASSIGNMENT
+ASV_944	NO TAXID ASSIGNMENT
+ASV_945	NO TAXID ASSIGNMENT
+ASV_947	NO TAXID ASSIGNMENT
+ASV_949	NO TAXID ASSIGNMENT
+ASV_95	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_950	NO TAXID ASSIGNMENT
+ASV_951	NO TAXID ASSIGNMENT
+ASV_952	NO TAXID ASSIGNMENT
+ASV_954	ORDER	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_955	ORDER	66473	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_956	NO TAXID ASSIGNMENT
+ASV_957	ORDER	271692	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_958	NO TAXID ASSIGNMENT
+ASV_959	ORDER	644166	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_961	NO TAXID ASSIGNMENT
+ASV_962	NO TAXID ASSIGNMENT
+ASV_964	NO TAXID ASSIGNMENT
+ASV_965	GENUS	230411, 230410	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_966	ORDER	1654606, 1132520	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_967	NO TAXID ASSIGNMENT
+ASV_968	NO TAXID ASSIGNMENT
+ASV_969	ORDER	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_97	SPECIES	2920, 376364, 35672	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_970	NO TAXID ASSIGNMENT
+ASV_971	NO TAXID ASSIGNMENT
+ASV_972	NOCONFIDENCE	1691399	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_973	NO TAXID ASSIGNMENT
+ASV_974	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_976	NO TAXID ASSIGNMENT
+ASV_977	NO TAXID ASSIGNMENT
+ASV_978	NO TAXID ASSIGNMENT
+ASV_979	NOCONFIDENCE	261184, 65670	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_98	SPECIES	2957, 1655546, 1744892, 1872691	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_980	NO TAXID ASSIGNMENT
+ASV_981	NO TAXID ASSIGNMENT
+ASV_982	NO TAXID ASSIGNMENT
+ASV_983	NO TAXID ASSIGNMENT
+ASV_984	NO TAXID ASSIGNMENT
+ASV_985	NO TAXID ASSIGNMENT
+ASV_986	SPECIES	95528	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_987	ORDER	420641, 420555	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_988	GENUS	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_989	NOCONFIDENCE	748992	Eukaryota;Arthropoda;Hexanauplia;Calanoida;Acartiidae;Acartia;Acartia hongi
+ASV_990	ORDER	333133	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_991	ORDER	2316663	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_992	NO TAXID ASSIGNMENT
+ASV_993	ORDER	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_994	NOCONFIDENCE	1335110	Eukaryota;Bacillariophyta;Coscinodiscophyceae;Coscinodiscales;Coscinodiscaceae;Coscinodiscus;Coscinodiscus sp. 1 MPA-2013
+ASV_995	ORDER	1524183	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_996	SPECIES	1051737	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_997	NO TAXID ASSIGNMENT
+ASV_998	NOCONFIDENCE	2126440, 692279, 644177, 644174, 203191, 644167, 644169, 644179, 644173, 66465	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
+ASV_999	ORDER	1226012, 2945, 1764932, 1610580, 1140381, 72677	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	

@@ -1,0 +1,11 @@
+Eukaryota (eucaryotes)	2759
+Chlorophyta (green algae)	3041
+Bryopsida (mosses)	3208
+Ascomycota (ascomycetes)	4890
+Ciliophora (ciliates)	5878
+Actiniaria (sea anemones)	6103
+Polychaeta (polychaetes)	6341
+Coscinodiscophyceae (centric diatoms)	33836
+Obelia dichotoma (sea thread hydroid)	37520
+Chthamalidae (star barnacles)	37897
+Siphonophorae (siphonophores)	42759
