@@ -20,19 +20,13 @@ dada_trimRight=0
 dada_trimLeft=0
 ###
 
-desiredTaxaDepth=
-
 ####################################################
 ##T/F parameters
 ####################################################
-forceMerge=F
-deseqRarefaction=F
-filterOutContaminants=F
-filterInTaxaOfInterest=F
-controlPos=F
-controlNeg=F
-replicates=F
-chemData=F
+forceMerge=FALSE
+deseqRarefaction=FALSE
+filterOutContaminants=FALSE
+filterInTaxaOfInterest=FALSE
 
 
 ####################################################
@@ -40,11 +34,3 @@ chemData=F
 ####################################################
 blastMode=mostEnvOUT #options: allIN,allEnvOUT,mostEnvOUT
 
-
-
-
-
-
-
-
-#readLength=300 #bp

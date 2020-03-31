@@ -47,7 +47,7 @@
 12	Environmental Unknown
 240	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Rhizosoleniales	Rhizosoleniaceae	Guinardia
 8	Environmental Unknown
-15	Unknown
+15	Eukaryota	Ciliophora	Litostomatea	Cyclotrichida
 14	Environmental Unknown
 4	Unknown
 125	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	Fragilariopsis

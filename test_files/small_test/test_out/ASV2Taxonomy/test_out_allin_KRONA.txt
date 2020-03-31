@@ -137,7 +137,7 @@ MP_18cp45	ASV_162	17	Eukaryota	Cercozoa	Thecofilosea	Cryomonadida	Protaspidae	Cr
 MP_18cp45	ASV_163	17	Eukaryota	Ciliophora	Spirotrichea	Choreotrichida	Leegaardiellidae	Leegaardiella	Leegaardiella sp.	
 MP_18cp45	ASV_164	8	Environmental Unknown							
 MP_18cp46	ASV_164	8	Environmental Unknown							
-MP_18cp46	ASV_165	15	Unknown							
+MP_18cp46	ASV_165	15	Eukaryota	Ciliophora	Litostomatea	Cyclotrichida				
 MP_18cp45	ASV_166	14	Unknown							
 MP_18cp46	ASV_167	14	Environmental Unknown							
 MP_18cp44	ASV_168	3	Unknown							

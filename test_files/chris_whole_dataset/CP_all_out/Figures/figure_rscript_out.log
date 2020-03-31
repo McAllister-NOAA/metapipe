@@ -1,0 +1,63 @@
+Loading required package: maps
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Registered S3 methods overwritten by 'adehabitatMA':
+  method                       from
+  print.SpatialPixelsDataFrame sp  
+  print.SpatialPixels          sp  
+
+Attaching package: ‘marmap’
+
+The following object is masked from ‘package:grDevices’:
+
+    as.raster
+
+
+Attaching package: ‘janitor’
+
+The following objects are masked from ‘package:stats’:
+
+    chisq.test, fisher.test
+
+Loading required package: magrittr
+Warning message:
+funs() is soft deprecated as of dplyr 0.8.0
+Please use a list of either functions or lambdas: 
+
+  # Simple named list: 
+  list(mean = mean, median = median)
+
+  # Auto named with `tibble::lst()`: 
+  tibble::lst(mean, median)
+
+  # Using lambdas
+  list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+This warning is displayed once per session. 
+null device 
+          1 
+Querying NOAA database ...
+This may take seconds to minutes, depending on grid size
+Building bathy matrix ...
+Warning message:
+Ignoring unknown parameters: colour, size 
+null device 
+          1 
+Warning message:
+Ignoring unknown parameters: colour, size 
+null device 
+          1 
+pdf 
+  2 
+pdf 
+  2 
+pdf 
+  2 

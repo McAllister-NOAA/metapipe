@@ -1,4 +1,4 @@
-ASV_10	NO TAXID ASSIGNMENT
+ASV_10	NOCONFIDENCE	1118043	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Eimeriidae;Margolisiella;Margolisiella islandica
 ASV_100	SPECIES	410738	Environmental Unknown;@@;@@;@@;@@;@@;@@
 ASV_101	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
 ASV_103	SPECIES	1641413	Environmental Unknown;@@;@@;@@;@@;@@;@@
@@ -18,7 +18,7 @@ ASV_122	SPECIES	2592189, 2303294, 2303293	Environmental Unknown;@@;@@;@@;@@;@@;@
 ASV_123	SPECIES	1010462, 1010430	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
 ASV_124	NOCONFIDENCE	271680	Environmental Unknown;@@;@@;@@;@@;@@;@@
 ASV_125	NOCONFIDENCE	380132	Environmental Unknown;@@;@@;@@;@@;@@;@@
-ASV_13	ORDER	1806893	Environmental Unknown;@@;@@;@@;@@;@@;@@
+ASV_13	ORDER	457367	Environmental Unknown;@@;@@;@@;@@;@@;@@
 ASV_130	NOCONFIDENCE	1629645	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia sp. MS-2015
 ASV_131	SPECIES	77931	Environmental Unknown;@@;@@;@@;@@;@@;@@
 ASV_132	SPECIES	407301	Environmental Unknown;@@;@@;@@;@@;@@;@@
@@ -39,8 +39,7 @@ ASV_159	SPECIES	88552, 1294205, 860588	Environmental Unknown;@@;@@;@@;@@;@@;@@	E
 ASV_160	NOCONFIDENCE	947098	Eukaryota;Apicomplexa;Conoidasida;Eugregarinorida;Porosporidae;Thiriotia;Thiriotia pugettiae
 ASV_161	ORDER	1610580, 1140381, 66473	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
 ASV_164	SPECIES	44056	Environmental Unknown;@@;@@;@@;@@;@@;@@
-ASV_165	NOCONFIDENCE	693143	Eukaryota;Ciliophora;Prostomatea;Prorodontida;Placidae;Placus;Placus salinus
-ASV_166	NOCONFIDENCE	2072404	Eukaryota;Cercozoa;Thecofilosea;Tectofilosida;@@;@@;@@
+ASV_166	NOCONFIDENCE	2037922	Eukaryota;Cercozoa;@@;@@;@@;@@;@@
 ASV_167	SPECIES	1955561, 1276173, 1274397, 1276030, 1276066, 1273161, 1276039, 1155554, 37642, 293210, 37475	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
 ASV_168	NOCONFIDENCE	119757	Eukaryota;Endomyxa;@@;@@;@@;@@;@@
 ASV_169	GENUS	35682	Environmental Unknown;@@;@@;@@;@@;@@;@@
@@ -108,7 +107,7 @@ ASV_40	SPECIES	237449	Environmental Unknown;@@;@@;@@;@@;@@;@@
 ASV_42	SPECIES	88552	Environmental Unknown;@@;@@;@@;@@;@@;@@
 ASV_46	SPECIES	89963, 244960, 244961	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
 ASV_47	SPECIES	2957, 1689149, 584794, 1407009, 43686, 1239449, 407301, 298366	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	Environmental Unknown;@@;@@;@@;@@;@@;@@	
-ASV_5	NO TAXID ASSIGNMENT
+ASV_5	NOCONFIDENCE	2203274	Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Aggregatidae;Pseudoklossia;Pseudoklossia pectinis
 ASV_52	SPECIES	1453980	Environmental Unknown;@@;@@;@@;@@;@@;@@
 ASV_53	SPECIES	650053	Environmental Unknown;@@;@@;@@;@@;@@;@@
 ASV_56	SPECIES	271679	Environmental Unknown;@@;@@;@@;@@;@@;@@

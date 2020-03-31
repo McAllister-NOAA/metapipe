@@ -15,7 +15,7 @@ adapter is now no longer anchored by default.) To get results consist
 with the old behavior, you need to anchor the 5' adapter explicitly as
 in '-a ^ADAPTER1...ADAPTER2'.
 Processing reads on 16 cores in paired-end mode ...
-Finished in 0.94 s (22 us/read; 2.68 M reads/minute).
+Finished in 0.88 s (21 us/read; 2.86 M reads/minute).
 
 === Summary ===
 
@@ -365,7 +365,7 @@ adapter is now no longer anchored by default.) To get results consist
 with the old behavior, you need to anchor the 5' adapter explicitly as
 in '-a ^ADAPTER1...ADAPTER2'.
 Processing reads on 16 cores in paired-end mode ...
-Finished in 1.18 s (21 us/read; 2.92 M reads/minute).
+Finished in 1.23 s (21 us/read; 2.81 M reads/minute).
 
 === Summary ===
 
@@ -689,7 +689,7 @@ adapter is now no longer anchored by default.) To get results consist
 with the old behavior, you need to anchor the 5' adapter explicitly as
 in '-a ^ADAPTER1...ADAPTER2'.
 Processing reads on 16 cores in paired-end mode ...
-Finished in 1.35 s (19 us/read; 3.18 M reads/minute).
+Finished in 1.38 s (19 us/read; 3.12 M reads/minute).
 
 === Summary ===
 

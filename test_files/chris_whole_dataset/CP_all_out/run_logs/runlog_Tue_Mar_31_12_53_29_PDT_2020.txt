@@ -1,0 +1,184 @@
+
+Start of run:
+Tue Mar 31 11:19:20 PDT 2020
+
+Running Cutadapt: Tue Mar 31 11:19:21 PDT 2020
+Finished Cutadapt: Tue Mar 31 11:20:28 PDT 2020
+Sample	Passing Reads	Passing bp
+MP_18cp2	97.7%	86.3%
+MP_18cp24	96.1%	83.6%
+MP_18cp30	97.4%	85.9%
+MP_18cp35	97.1%	85.7%
+MP_18cp1	97.3%	85.7%
+MP_18cp3	97.9%	86.4%
+MP_18cp4	97.9%	86.4%
+MP_18cp13	97.4%	85.6%
+MP_18cp25	96.9%	85.6%
+MP_18cp5	97.4%	85.9%
+MP_18cp14	97.4%	85.9%
+MP_18cp22	98.0%	86.7%
+MP_18cp26	96.9%	85.4%
+MP_18cp28	97.7%	85.9%
+MP_18cp9	97.4%	86.0%
+MP_18cp15	97.2%	85.9%
+MP_18cp29	96.2%	84.7%
+MP_18cp31	96.0%	84.7%
+MP_18cp32	96.9%	85.6%
+MP_18cp10	97.4%	85.9%
+MP_18cp20	98.1%	86.5%
+MP_18cp27	97.2%	85.6%
+MP_18cp36	96.9%	85.3%
+MP_18cp37	67.0%	57.0%
+MP_18cp7	97.3%	86.0%
+MP_18cp16	97.5%	86.2%
+MP_18cp21	97.4%	85.9%
+MP_18cp33	96.9%	85.5%
+MP_18cp34	97.2%	85.8%
+MP_18cp8	97.7%	86.2%
+MP_18cp19	98.0%	86.6%
+MP_18cp44	91.3%	80.1%
+MP_18cp45	97.4%	85.8%
+MP_18cp46	97.7%	86.4%
+MP_18cp6	97.7%	86.3%
+MP_18cp18	97.9%	86.5%
+MP_18cp12	97.7%	86.3%
+MP_18cp40	95.8%	84.1%
+MP_18cp41	95.8%	84.2%
+MP_18cp42	97.1%	85.7%
+MP_18cp43	95.6%	83.9%
+MP_18cp11	97.8%	86.3%
+MP_18cp17	97.8%	86.2%
+MP_18cp23	96.9%	84.6%
+MP_18cp38	64.9%	55.7%
+MP_18cp39	83.3%	72.3%
+MP_18cp48_neg	22.6%	11.9%
+MP_18cp47_pos	30.0%	26.4%
+
+Running DADA2: Tue Mar 31 11:20:28 PDT 2020
+Trim and filter in DADA2...
+
+DADA2 Filtering results:
+Sample	% Reads Passing
+MP_18cp2_R1_trimmed.fq.gz 77.8466
+MP_18cp24_R1_trimmed.fq.gz 74.5232
+MP_18cp30_R1_trimmed.fq.gz 77.0313
+MP_18cp35_R1_trimmed.fq.gz 78.3171
+MP_18cp1_R1_trimmed.fq.gz 76.5852
+MP_18cp3_R1_trimmed.fq.gz 75.2334
+MP_18cp4_R1_trimmed.fq.gz 77.6707
+MP_18cp13_R1_trimmed.fq.gz 81.8122
+MP_18cp25_R1_trimmed.fq.gz 77.6516
+MP_18cp5_R1_trimmed.fq.gz 76.8837
+MP_18cp14_R1_trimmed.fq.gz 78.3169
+MP_18cp22_R1_trimmed.fq.gz 75.6606
+MP_18cp26_R1_trimmed.fq.gz 73.3443
+MP_18cp28_R1_trimmed.fq.gz 77.4651
+MP_18cp9_R1_trimmed.fq.gz 80.4825
+MP_18cp15_R1_trimmed.fq.gz 77.5534
+MP_18cp29_R1_trimmed.fq.gz 79.1854
+MP_18cp31_R1_trimmed.fq.gz 76.1419
+MP_18cp32_R1_trimmed.fq.gz 73.7158
+MP_18cp10_R1_trimmed.fq.gz 79.5451
+MP_18cp20_R1_trimmed.fq.gz 78.4723
+MP_18cp27_R1_trimmed.fq.gz 75.9919
+MP_18cp36_R1_trimmed.fq.gz 78.9864
+MP_18cp37_R1_trimmed.fq.gz 75.2454
+MP_18cp7_R1_trimmed.fq.gz 74.9279
+MP_18cp16_R1_trimmed.fq.gz 80.0983
+MP_18cp21_R1_trimmed.fq.gz 80.0752
+MP_18cp33_R1_trimmed.fq.gz 78.6579
+MP_18cp34_R1_trimmed.fq.gz 79.5139
+MP_18cp8_R1_trimmed.fq.gz 74.2193
+MP_18cp19_R1_trimmed.fq.gz 74.3694
+MP_18cp44_R1_trimmed.fq.gz 79.1055
+MP_18cp45_R1_trimmed.fq.gz 77.9222
+MP_18cp46_R1_trimmed.fq.gz 76.9105
+MP_18cp6_R1_trimmed.fq.gz 63.7867
+MP_18cp18_R1_trimmed.fq.gz 74.2262
+MP_18cp12_R1_trimmed.fq.gz 80.589
+MP_18cp40_R1_trimmed.fq.gz 75.8153
+MP_18cp41_R1_trimmed.fq.gz 78.7214
+MP_18cp42_R1_trimmed.fq.gz 79.7347
+MP_18cp43_R1_trimmed.fq.gz 78.3744
+MP_18cp11_R1_trimmed.fq.gz 75.6304
+MP_18cp17_R1_trimmed.fq.gz 75.7011
+MP_18cp23_R1_trimmed.fq.gz 74.7046
+MP_18cp38_R1_trimmed.fq.gz 73.3344
+MP_18cp39_R1_trimmed.fq.gz 73.7935
+MP_18cp48_neg_R1_trimmed.fq.gz 8.67257
+MP_18cp47_pos_R1_trimmed.fq.gz 73.5368
+
+Parameters to modify:
+minLen,rm.phix,truncQ,maxEE-primer1,maxEE-primer2,trimRight,trimLeft
+Current settings:
+120,TRUE,2,2,2,0,0
+
+Learning error, Dereplication, Merge, and ASVs in DADA2...
+Please be patient, may take a while. Messages printed to Rscript log.
+
+
+FINAL DADA2 STATS
+Sample	%Reads Retained
+MP_18cp2 68.4
+MP_18cp24 65.6
+MP_18cp30 71.2
+MP_18cp35 63.3
+MP_18cp1 69.6
+MP_18cp3 70.7
+MP_18cp4 72.6
+MP_18cp13 76.5
+MP_18cp25 72.2
+MP_18cp5 68.1
+MP_18cp14 67.4
+MP_18cp22 68.6
+MP_18cp26 62.4
+MP_18cp28 70.4
+MP_18cp9 69.5
+MP_18cp15 48.9
+MP_18cp29 72.1
+MP_18cp31 65
+MP_18cp32 60.8
+MP_18cp10 71.6
+MP_18cp20 70.3
+MP_18cp27 70.6
+MP_18cp36 73
+MP_18cp37 67.1
+MP_18cp7 56.4
+MP_18cp16 75.1
+MP_18cp21 75
+MP_18cp33 69
+MP_18cp34 63.1
+MP_18cp8 58.4
+MP_18cp19 41.2
+MP_18cp44 65.3
+MP_18cp45 54.4
+MP_18cp46 51.8
+MP_18cp6 38.8
+MP_18cp18 55
+MP_18cp12 73
+MP_18cp40 60.1
+MP_18cp41 72.3
+MP_18cp42 70.6
+MP_18cp43 71.9
+MP_18cp11 64.1
+MP_18cp17 59.8
+MP_18cp23 42.9
+MP_18cp38 57.4
+MP_18cp39 59.5
+MP_18cp48_neg 6.7
+MP_18cp47_pos 52.9
+
+Running BLASTn: Tue Mar 31 12:02:31 PDT 2020
+
+Reformatting BLAST output: Tue Mar 31 12:12:23 PDT 2020
+
+
+Running ASV-2-Taxonomy Script: Tue Mar 31 12:12:24 PDT 2020
+
+Reformatted taxon strings created. Check and edit if you wish. Proceed? [any]
+Continuing!
+/Users/mcallister/software/scripts/github/metapipe/assets/convert_line_endings.py:33: DeprecationWarning: 'U' mode is deprecated
+  with open(sys.argv[1], 'U') as f:
+Writing CP_all_out_master_krona.html...
+Writing CP_all_out_wholeKRONA.html...
+YOU MADE IT!

@@ -136,7 +136,7 @@
 17	Eukaryota	Ciliophora	Spirotrichea	Choreotrichida	Leegaardiellidae	Leegaardiella	Leegaardiella sp.
 8	Environmental Unknown
 8	Environmental Unknown
-15	Unknown
+15	Eukaryota	Ciliophora	Litostomatea	Cyclotrichida
 14	Unknown
 14	Environmental Unknown
 3	Unknown

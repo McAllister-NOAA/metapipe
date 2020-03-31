@@ -1,0 +1,49 @@
+
+Start of run:
+Tue Mar 31 11:05:33 PDT 2020
+
+Running Cutadapt: Tue Mar 31 11:05:34 PDT 2020
+Finished Cutadapt: Tue Mar 31 11:05:37 PDT 2020
+Sample	Passing Reads	Passing bp
+MP_18cp44	91.3%	80.1%
+MP_18cp45	97.4%	85.8%
+MP_18cp46	97.7%	86.4%
+
+Running DADA2: Tue Mar 31 11:05:37 PDT 2020
+Trim and filter in DADA2...
+
+DADA2 Filtering results:
+Sample	% Reads Passing
+MP_18cp44_R1_trimmed.fq.gz 79.1055
+MP_18cp45_R1_trimmed.fq.gz 77.9222
+MP_18cp46_R1_trimmed.fq.gz 76.9105
+
+Parameters to modify:
+minLen,rm.phix,truncQ,maxEE-primer1,maxEE-primer2,trimRight,trimLeft
+Current settings:
+120,TRUE,2,2,2,0,0
+
+Learning error, Dereplication, Merge, and ASVs in DADA2...
+Please be patient, may take a while. Messages printed to Rscript log.
+
+
+FINAL DADA2 STATS
+Sample	%Reads Retained
+MP_18cp44 63.9
+MP_18cp45 53.5
+MP_18cp46 51.1
+
+Running BLASTn: Tue Mar 31 11:08:08 PDT 2020
+
+Reformatting BLAST output: Tue Mar 31 11:12:13 PDT 2020
+
+
+Running ASV-2-Taxonomy Script: Tue Mar 31 11:12:14 PDT 2020
+
+Reformatted taxon strings created. Check and edit if you wish. Proceed? [any]
+Continuing!
+/Users/mcallister/software/scripts/github/metapipe/assets/convert_line_endings.py:33: DeprecationWarning: 'U' mode is deprecated
+  with open(sys.argv[1], 'U') as f:
+Writing test_out_master_krona.html...
+Writing test_out_wholeKRONA.html...
+YOU MADE IT!
