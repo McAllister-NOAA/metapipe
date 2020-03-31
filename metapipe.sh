@@ -11,11 +11,15 @@
 #Will need nt and taxonomydmp - run prepscript beforehand
 #Can provide own blastn output on whatever database. Must be formatted -outfmt '6 qseqid pident length staxids'
 
+#TODO will need a better catch checking if sample names from metadata file match read sample names.
+
+
 unset parameterfilepath
 unset samplemetafilepath
 unset readfolderpath
 unset outdirectory
 unset optionalUserBLASTResult
+unset figureparamfilepath
 
 workingdirectory=`pwd`
 
@@ -34,10 +38,11 @@ pflag=0
 sflag=0
 rflag=0
 oflag=0
+fflag=0
 blastflag=FALSE
 bypassflag=FALSE
 
-while getopts ":p:s:r:o:b:y" opt; do
+while getopts ":p:s:r:o:b:f:y" opt; do
   case ${opt} in
     p ) pflag=1
         parameterfilepath=$OPTARG #metapipe_config.txt (see README)
@@ -51,6 +56,9 @@ while getopts ":p:s:r:o:b:y" opt; do
     o ) oflag=1
         outdirectory=$OPTARG #Location for output files
       ;;
+    f ) fflag=1
+        figureparamfilepath=$OPTARG #Location of figure config file (see README)
+      ;;
     b ) blastflag=TRUE
         optionalUserBLASTResult=$OPTARG #Location of user blastn input (optional)
       ;;
@@ -59,6 +67,7 @@ while getopts ":p:s:r:o:b:y" opt; do
     \? ) echo "Invalid option: -$OPTARG"
          echo "Usage: metapipe.sh" #Invalid option provided
          echo "       -p Config File"
+         echo "       -f Figure config file"
          echo "       -s Sample metadata file"
          echo "       -r Read folder"
          echo "       -o Output directory"
@@ -70,6 +79,7 @@ while getopts ":p:s:r:o:b:y" opt; do
     : ) echo "Option is missing an argument: -$OPTARG"
         echo "Usage: metapipe.sh" #Arg for a called option not provided
         echo "       -p Config File"
+        echo "       -f Figure config file"
         echo "       -s Sample metadata file"
         echo "       -r Read folder"
         echo "       -o Output directory"
@@ -85,6 +95,7 @@ shift $((OPTIND -1))
 if [ $OPTIND -eq 1 ]
   then echo "Usage: metapipe.sh" #No options passed
         echo "       -p Config File"
+        echo "       -f Figure config file"
         echo "       -s Sample metadata file"
         echo "       -r Read folder"
         echo "       -o Output directory"
@@ -94,10 +105,11 @@ if [ $OPTIND -eq 1 ]
         exit
     fi
 
-if [[ $pflag -eq 0 || $sflag -eq 0 || $rflag -eq 0 || $oflag -eq 0 ]]
-  then echo "All options except -b are required."
+if [[ $pflag -eq 0 || $sflag -eq 0 || $rflag -eq 0 || $oflag -eq 0 || $fflag -eq 0 ]]
+  then echo "All options except -b and -y are required."
         echo "Usage: metapipe.sh" #Missing required options
         echo "       -p Config File"
+        echo "       -f Figure config file"
         echo "       -s Sample metadata file"
         echo "       -r Read folder"
         echo "       -o Output directory"
@@ -122,8 +134,9 @@ echo
 unset primerF
 unset primerR
 unset ampliconSize
-unset desiredTaxaDepth
 unset systemmemoryMB
+unset locationNTdatabase
+unset speciesGenusCutoffs
 unset dada_minlength
 unset dada_phix
 unset dada_trunQ
@@ -135,12 +148,6 @@ unset forceMerge
 unset deseqRarefaction
 unset filterOutContaminants
 unset filterInTaxaOfInterest
-unset controlPos
-unset controlNeg
-unset replicates
-unset chemData
-unset locationNTdatabase
-unset speciesGenusCutoffs
 unset blastMode
 
 source $parameterfilepath
@@ -157,6 +164,7 @@ cutadaptFinished=FALSE
 dada2_Finished=FALSE
 blastFinished=FALSE
 taxonomyscriptFinished=FALSE
+figuresFinished=FALSE
 
 if [ -d "${outdirectory}" ]; then
   configcompare1=`cat ${parameterfilepath}`
@@ -195,6 +203,9 @@ cd ${workingdirectory}
 
 #Create ordered sample name file
 cat ${samplemetafilepath} | cut -f1 | grep -v "Sample" | sed -E 's/[^A-Za-z0-9_]/_/g' | sed -E 's/^/MP_/' > ${outdirectory}/sample_order.txt
+
+#Create sample metadata file with identical manipulation of sample names for downstream R work
+cat ${samplemetafilepath} | awk 'FNR==NR {gsub("[^a-zA-Z0-9]", "_", $1)} 1' OFS="\t" | sed -e '2,$ s/^/MP_/' | grep -v "^MP_$" > ${outdirectory}/sample_metadata_forR.txt
 
 ##########################################################################################
 ##########################################################################################
@@ -499,16 +510,53 @@ else
 
 fi
 
+##########################################################################################
+##
+##    File cleanup
+##
+##########################################################################################
+rm -f ${outdirectory}/cutadapt/*_trimmed.fq.gz
+gzip -q -9 ${outdirectory}/blast_results/ASV_blastn_nt.btab
+
+##########################################################################################
+##
+##    FIGURES & ANALYSIS
+##
+##########################################################################################
+unset filterPercent
+unset desiredTaxaDepth
+unset controlPos
+unset controlNeg
+unset replicates
+unset sites
+unset chemData
+
+source $figureparamfilepath
+
+cp $figureparamfilepath ${outdirectory}/figure_config_file.txt
+
+#TODO Check previous and current config files and skip this if finished. Likely will want this to be more granular.
+
+if [[ "${figuresFinished}" = "TRUE" ]]; then
+  echo "Figure creation from prior run"
+else
+  if [ -d "${outdirectory}/Figures" ]; then
+    rm -r ${outdirectory}/Figures
+    mkdir ${outdirectory}/Figures
+  else
+    mkdir ${outdirectory}/Figures
+  fi
+  
+#Maps
+Rscript --vanilla ${metapipedir}/assets/maps.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_NO_UNKNOWNS_barchart.txt $filterPercent \
+    1>> ${workingdirectory}/${outdirectory}/Figures/figure_rscript_out.log 2>&1
 
 
 
 
 
 
-
-
-
-
+fi
 
 
 echo "YOU MADE IT!"
