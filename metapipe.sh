@@ -27,7 +27,7 @@ unset metapipedir
 unset tempprogdir
 tempprogdir=`which metapipe.sh`
 metapipedir=`echo $tempprogdir | sed -E 's/\/metapipe\.sh$//'`
-
+myInvocation="$(printf %q "$BASH_SOURCE")$((($#)) && printf ' %q' "$@")"
 
 ##########################################################################################
 ##
@@ -196,6 +196,9 @@ exec &> >(tee -a ${outdirectory}/run.log)
 echo
 echo "Start of run:"
 date
+echo
+echo "Invoked script options:"
+echo "$myInvocation"
 echo
 
 #Clean raw read files to remove illegal characters
