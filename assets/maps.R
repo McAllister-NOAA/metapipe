@@ -274,10 +274,9 @@ m_pies <- ggplot(data = world_of_interest, aes(x=long, y=lat)) +
         panel.background = element_rect(fill = "aliceblue"))
 
 pies_legend <- get_legend(m_pies)
-pies_legend <- as_ggplot(pies_legend)
 
 pdf(file='mapPies_legend.pdf')
-pies_legend
+as_ggplot(pies_legend)
 dev.off()
 
 m_pies <- m_pies + theme(legend.position='none')

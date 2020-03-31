@@ -121,11 +121,6 @@ if [[ $pflag -eq 0 || $sflag -eq 0 || $rflag -eq 0 || $oflag -eq 0 || $fflag -eq
 ##########################################################################################
 ##########################################################################################
 
-echo
-echo "Start of run:"
-date
-echo
-
 ##########################################################################################
 ##
 ##    Get program config file options
@@ -184,12 +179,24 @@ if [ -d "${outdirectory}" ]; then
     exit
   fi
   source ${outdirectory}/progress.txt
+  mkdir -p ${outdirectory}/run_logs
+  currenttime=`date | sed -E 's/[^A-Za-z0-9_]/_/g'`
+  mv ${outdirectory}/run.log ${outdirectory}/run_logs/runlog_${currenttime}.txt
+  touch ${outdirectory}/run.log
 else
   mkdir ${outdirectory}
   touch ${outdirectory}/progress.txt
+  touch ${outdirectory}/run.log
   cp ${parameterfilepath} ${outdirectory}/config_file.txt
   cp ${samplemetafilepath} ${outdirectory}/sample_metadata.txt
 fi
+
+exec &> >(tee -a ${outdirectory}/run.log)
+
+echo
+echo "Start of run:"
+date
+echo
 
 #Clean raw read files to remove illegal characters
 cd ${readfolderpath}
@@ -551,7 +558,7 @@ else
 Rscript --vanilla ${metapipedir}/assets/maps.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_NO_UNKNOWNS_barchart.txt $filterPercent \
     1>> ${workingdirectory}/${outdirectory}/Figures/figure_rscript_out.log 2>&1
 
-
+rm -f ${workingdirectory}/${outdirectory}/Figures/Rplot*
 
 
 
