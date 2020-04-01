@@ -508,7 +508,8 @@ else
     echo "Continuing!"
   fi
   
-  ${metapipedir}/assets/convert_line_endings.py ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt #Deprecated 'U' option. TODO find replacement
+  cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt | tr '\r' '\n' | tr -s '\n' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+  mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
   
   cd ${outdirectory}/ASV2Taxonomy
   perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt \
