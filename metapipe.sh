@@ -55,6 +55,7 @@ while getopts ":p:s:r:o:b:f:y" opt; do
       ;;
     o ) oflag=1
         outdirectory=$OPTARG #Location for output files
+        outdirectory=`echo $outdirectory | sed -E 's/\/$//'`
       ;;
     f ) fflag=1
         figureparamfilepath=$OPTARG #Location of figure config file (see README)
@@ -543,6 +544,13 @@ else
   perl ${metapipedir}/assets/merge_on_taxonomy.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv
   cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv
   rm ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+  mkdir ${outdirectory}/ASV2Taxonomy/KRONA_plots
+  mkdir ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs
+  mv ${outdirectory}/ASV2Taxonomy/MP* ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs/
+  mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_wholeKRONA.txt ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs/${outdirectory}_samplesSummedKRONA.txt
+  mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_master_krona.html ${outdirectory}/ASV2Taxonomy/KRONA_plots/
+  mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_wholeKRONA.html ${outdirectory}/ASV2Taxonomy/KRONA_plots/${outdirectory}_samplesSummedKRONA.html
+  mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_allin_KRONA.txt ${outdirectory}/ASV2Taxonomy/${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt
   
   echo "taxonomyscriptFinished=TRUE" >> ${outdirectory}/progress.txt
 
@@ -586,6 +594,12 @@ else
   else
     mkdir ${outdirectory}/Figures
   fi
+  if [ -d "${outdirectory}/processed_tables" ]; then
+    rm -r ${outdirectory}/processed_tables
+    mkdir ${outdirectory}/processed_tables
+  else
+    mkdir ${outdirectory}/processed_tables
+  fi
   
 #Maps
 Rscript --vanilla ${metapipedir}/assets/maps.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_NO_UNKNOWNS_barchart.txt $filterPercent \
@@ -593,18 +607,20 @@ Rscript --vanilla ${metapipedir}/assets/maps.R ${workingdirectory}/${outdirector
 
 rm -f ${workingdirectory}/${outdirectory}/Figures/Rplot*
 
-#Tables
-mkdir ${outdirectory}/Figures/processed_tables
 mkdir ${outdirectory}/Figures/normalized
 mkdir ${outdirectory}/Figures/nonnormalized
+
+
+#Tables
 if [[ "${controlPos}" = "TRUE" || "${controlNeg}" = "TRUE" ]]; then
   controlspresent=TRUE
 else
   controlspresent=FALSE
 fi
 
-Rscript --vanilla ${metapipedir}/assets/process_tables.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $filterPercent $controlspresent $filterLowQualSamples $filterPercentLowQualSamples ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv $sites $replicates
-perl ${metapipedir}/assets/filter_lowabundance_taxa.pl -a ${outdirectory}/Figures/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt -p $filterPercent > ${outdirectory}/Figures/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2Other.txt
+Rscript --vanilla ${metapipedir}/assets/process_tables.R ${workingdirectory}/${outdirectory} ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $filterPercent $controlspresent $filterLowQualSamples $filterPercentLowQualSamples ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv $sites $replicates \
+  1>> ${workingdirectory}/${outdirectory}/processed_tables/table_rscript_out.log 2>&1
+perl ${metapipedir}/assets/filter_lowabundance_taxa.pl -a ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt -p $filterPercent > ${outdirectory}/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2zzOther.txt
 
 fi
 

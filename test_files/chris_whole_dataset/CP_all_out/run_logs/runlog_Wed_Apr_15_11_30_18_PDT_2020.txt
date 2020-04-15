@@ -1,6 +1,6 @@
 
 Start of run:
-Wed Apr 15 11:34:33 PDT 2020
+Wed Apr 15 11:25:44 PDT 2020
 
 Invoked script options:
 /Users/mcallister/software/scripts/github/metapipe/metapipe.sh -p CP_all_out/config_file.txt -f CP_all_out/figure_config_file.txt -s CP_all_out/sample_metadata.txt -r reads_dir -o CP_all_out -y
@@ -9,7 +9,7 @@ Cutadapt from prior run
 DADA2 from prior run
 BLASTn from prior run
 
-Running ASV-2-Taxonomy Script: Wed Apr 15 11:34:33 PDT 2020
+Running ASV-2-Taxonomy Script: Wed Apr 15 11:25:45 PDT 2020
 Automatically reformatting taxonkit hierarchy...
 Original reformatted taxonkit out stored at CP_all_out/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
 Continuing!

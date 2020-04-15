@@ -1,0 +1,41 @@
+
+Start of run:
+Wed Apr 15 11:02:55 PDT 2020
+
+Invoked script options:
+/Users/mcallister/software/scripts/github/metapipe/metapipe.sh -p CP_all_out/config_file.txt -f CP_all_out/figure_config_file.txt -s CP_all_out/sample_metadata.txt -r reads_dir -o CP_all_out -y
+
+Cutadapt from prior run
+DADA2 from prior run
+BLASTn from prior run
+ASV-2-Taxonomy Script results from prior run
+cp: CP_all_out/figure_config_file.txt and CP_all_out/figure_config_file.txt are identical (not copied).
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Warning message:
+funs() is soft deprecated as of dplyr 0.8.0
+Please use a list of either functions or lambdas: 
+
+  # Simple named list: 
+  list(mean = mean, median = median)
+
+  # Auto named with `tibble::lst()`: 
+  tibble::lst(mean, median)
+
+  # Using lambdas
+  list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+This warning is displayed once per session. 
+Warning message:
+Setting row names on a tibble is deprecated. 
+Warning message:
+Setting row names on a tibble is deprecated. 
+YOU MADE IT!
