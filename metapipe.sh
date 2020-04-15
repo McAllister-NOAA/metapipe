@@ -467,8 +467,6 @@ else
   Rscript --vanilla ${metapipedir}/assets/reformat_blast.R ${workingdirectory}/${outdirectory}/blast_results $insertSize \
       1>> ${workingdirectory}/${outdirectory}/blast_results/blastreformatting_rscript_out.log 2>&1
   
-  #TODO consider gzip of btab file after reformat
-  
   echo
   
   echo "blastFinished=TRUE" >> ${outdirectory}/progress.txt
@@ -499,24 +497,53 @@ else
   taxonkit lineage ${outdirectory}/ASV2Taxonomy/taxids.txt | awk '$2!=""' > ${outdirectory}/ASV2Taxonomy/taxonkit_out.txt
   taxonkit reformat ${outdirectory}/ASV2Taxonomy/taxonkit_out.txt | cut -f1,3 > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
   
-  echo
-  echo "Reformatted taxon strings created. Check and edit if you wish. Proceed? [any]"
-  read mainmenuinput
-  if [[ "$mainmenuinput" = "y" ]]; then
-    echo "Continuing!"
-  else
+  if [[ "$bypassflag" = "FALSE" ]]; then
+    echo
+    echo "Reformatted taxon strings created. Options:"
+    echo "Continue without changes [c]"
+    echo "Manually edit file and replace in same location with identical file structure [m]"
+    echo "    (Make choice when file is modified and you are ready to proceed)"
+    echo "Automatically fill gaps in reformatted taxonkit hierarchy [a]"
+    read mainmenuinput
+    if [[ "$mainmenuinput" = "c" || "$mainmenuinput" = "C" ]]; then
+      echo "Continuing!"
+    elif [[ "$mainmenuinput" = "m" || "$mainmenuinput" = "M" ]]; then
+      echo "Continuing!"
+      cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt | tr '\r' '\n' | tr -s '\n' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+    elif [[ "$mainmenuinput" = "a" || "$mainmenuinput" = "A" ]]; then
+      echo "Reformatting..."
+      echo "Original reformatted taxonkit out stored at ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt"
+      perl ${metapipedir}/assets/fillIn_taxonkit.pl -i ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
+      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+      echo "Continuing!"
+    else
+      echo "Invalid selection, exiting"
+      exit
+    fi
+  elif [[ "$bypassflag" = "TRUE" ]]; then
+    echo "Automatically reformatting taxonkit hierarchy..."
+    echo "Original reformatted taxonkit out stored at ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt"
+    perl ${metapipedir}/assets/fillIn_taxonkit.pl -i ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+    mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
+    mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
     echo "Continuing!"
   fi
-  
-  cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt | tr '\r' '\n' | tr -s '\n' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
-  mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
-  
+    
   cd ${outdirectory}/ASV2Taxonomy
   perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt \
       -t reformatted_taxonkit_out.txt -f $speciesGenusCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
-  
+  cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
+  #TODO: cleanup outputs and directory from my asv to taxonomy script
+  #TODO: it would be nice to get some stats on how many ASVs could be classified to species, genus, family, etc.
   cd ${workingdirectory}
-
+  cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt | cut -f1 | sed -E 's/$/	/' > ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+  cat ${outdirectory}/dada2/ASVs_counts.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv
+  perl ${metapipedir}/assets/merge_on_taxonomy.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv
+  cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv
+  rm ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+  
   echo "taxonomyscriptFinished=TRUE" >> ${outdirectory}/progress.txt
 
 fi
@@ -541,6 +568,8 @@ unset controlNeg
 unset replicates
 unset sites
 unset chemData
+unset filterLowQualSamples
+unset filterPercentLowQualSamples
 
 source $figureparamfilepath
 
@@ -564,8 +593,18 @@ Rscript --vanilla ${metapipedir}/assets/maps.R ${workingdirectory}/${outdirector
 
 rm -f ${workingdirectory}/${outdirectory}/Figures/Rplot*
 
+#Tables
+mkdir ${outdirectory}/Figures/processed_tables
+mkdir ${outdirectory}/Figures/normalized
+mkdir ${outdirectory}/Figures/nonnormalized
+if [[ "${controlPos}" = "TRUE" || "${controlNeg}" = "TRUE" ]]; then
+  controlspresent=TRUE
+else
+  controlspresent=FALSE
+fi
 
-
+Rscript --vanilla ${metapipedir}/assets/process_tables.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $filterPercent $controlspresent $filterLowQualSamples $filterPercentLowQualSamples ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv $sites $replicates
+perl ${metapipedir}/assets/filter_lowabundance_taxa.pl -a ${outdirectory}/Figures/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt -p $filterPercent > ${outdirectory}/Figures/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2Other.txt
 
 fi
 

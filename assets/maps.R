@@ -8,7 +8,7 @@ args <- commandArgs(trailingOnly = TRUE)
 #args[3]<-TRUE #whether or not there are replicates (and thus identical coordinates)
 #args[4]<-FALSE #whether or not there are site labels in sample metadata
 #args[5]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/ASV2Taxonomy/CP_all_out_NO_UNKNOWNS_barchart.txt"
-#args[6]<-0.5 #Percent filter setting for pies and barcharts
+#args[6]<-5 #Percent filter setting for pies and barcharts
 ########################################
 library("ggplot2")
 library("mapdata")
@@ -71,6 +71,7 @@ regions_of_interest <- select(world_filt, region)
 collapse <- regions_of_interest %>% group_by(region) %>% summarise_all(funs(toString(unique(.))))
 region_string <- sapply(collapse, as.character)
 world_of_interest <- map_data("world2Hires", region = c(region_string))
+#TODO: Might need to add default of USA, in cases where no land mass is within field
 
 ### Simple map with data points
 m <- ggplot(data = world_of_interest, aes(x=long, y=lat)) +
@@ -244,6 +245,7 @@ lat_mid <- max_lat - (min_lat_dim/2)
 pie_scale <- (min_dim + 0.5) * 5 
 
 plasma_pal <- c(viridis::plasma(n = number_observations - 1), "lightgrey")
+##TODO: What if there isn't an other
 
 legend_title <- paste("Taxonomic Group (>", filter_percent, "%)", sep = "")
 

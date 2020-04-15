@@ -44,15 +44,15 @@ my @file_sample_headers;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #IMPORT ASV count table info
-open(IN1, "<$options{a}") or die "\n\nNADA $options{a} file!!\n\n";
+open(IN1, "<$options{a}") or die "\n\nThere is no $options{a} file!!\n\n";
 my @asv_dat = <IN1>; close(IN1);
 my $sample_header = shift(@asv_dat);
 @file_sample_headers = split('\t', $sample_header);
 my @new_array_headers;
-foreach my $stupidheaders (@file_sample_headers)
-	{	my $value = $stupidheaders;
-		chomp($stupidheaders);
-		push(@new_array_headers, $stupidheaders);	
+foreach my $userheaders (@file_sample_headers)
+	{	my $value = $userheaders;
+		chomp($userheaders);
+		push(@new_array_headers, $userheaders);	
 	}
 @file_sample_headers = @new_array_headers;
 foreach my $line (@asv_dat)
@@ -68,7 +68,7 @@ foreach my $line (@asv_dat)
 
 #IMPORT SAMPLE ORDER (if applicable)
 if ($options{o})
-	{	open(SAMP, "<$options{o}") or die "\n\nNADA $options{o} file!!\n\n";
+	{	open(SAMP, "<$options{o}") or die "\n\nThere is no $options{o} file!!\n\n";
 		my @usersampleorder = <SAMP>; close(SAMP);
 		foreach my $i (@usersampleorder)
 			{	chomp($i);
@@ -90,7 +90,7 @@ foreach my $i (sort keys %ASV)
 
 
 #IMPORT DADA2 taxonomy output
-open(IN2, "<$options{s}") or die "\n\nNADA $options{s} file!!\n\n";
+open(IN2, "<$options{s}") or die "\n\nThere is no $options{s} file!!\n\n";
 my @dada_dat = <IN2>; close(IN2); shift(@dada_dat);
 foreach my $line (@dada_dat)
 	{	chomp($line);
@@ -117,7 +117,7 @@ foreach my $line (@dada_dat)
 	}
 
 #IMPORT reformatted taxonkit taxonomy out
-open(IN3, "<$options{t}") or die "\n\nNADA $options{t} file!!\n\n";
+open(IN3, "<$options{t}") or die "\n\nThere is no $options{t} file!!\n\n";
 my @taxon_dat = <IN3>; close(IN3);
 foreach my $lines (@taxon_dat)
 	{	chomp($lines);
@@ -130,7 +130,7 @@ foreach my $lines (@taxon_dat)
 	}
 
 #IMPORT common names
-open(INT, "<$options{c}") or die "\n\nNADA $options{c} file!!\n\n";
+open(INT, "<$options{c}") or die "\n\nThere is no $options{c} file!!\n\n";
 my @commondat = <INT>; close(INT);
 foreach my $linet (@commondat)
 	{	chomp($linet);
@@ -148,7 +148,7 @@ foreach my $linet (@commondat)
 my @ignore_array;
 my $ignore_ASV_string;
 if ($options{d})
-	{	open(IGNORE, "<$options{d}") or die "\n\nNADA $options{d} file!!\n\n";
+	{	open(IGNORE, "<$options{d}") or die "\n\nThere is no $options{d} file!!\n\n";
 		my @igdat = <IGNORE>; close(IGNORE);
 		foreach my $linei (@igdat)
 			{	chomp($linei);
@@ -497,13 +497,25 @@ foreach my $i (0..$#sample_headers)
 
 open(OUT, ">".$options{n}."_allin_KRONA.txt");
 open(WHOLEKRONA, ">".$options{n}."_wholeKRONA.txt");
+open(ASVTAX, ">".$options{n}."_asvTaxonomyTable.txt");
+print ASVTAX "ASV\tKingdom\tPhylum\tClass\tOrder\tFamily\tGenus\tSpecies\n";
 print OUT "Sample\tASV\tcount\tKingdom\tPhylum\tClass\tOrder\tFamily\tGenus\tSpecies\t(common name)\n";
 foreach my $i (sort keys %ASV)
-	{	foreach my $j (0..$#sample_headers)
+	{   my $taxput = $ASV{$i}{'finaltaxachoice'};
+		my @taxputs = split(';', $taxput);
+        print ASVTAX "$i";
+        foreach my $l (@taxputs) {
+			print ASVTAX "\t$l";}
+		if ($#taxputs < 6)
+			{	my $actualtaxdepth = $#taxputs + 1;
+				foreach my $printtab ($actualtaxdepth..6)
+					{	print ASVTAX "\tNA";
+					}
+			}
+        print ASVTAX "\n";
+        foreach my $j (0..$#sample_headers)
 			{	my $hello = $sample_headers[$j];
 				chomp($hello);
-				my $taxput = $ASV{$i}{'finaltaxachoice'};
-				my @taxputs = split(';', $taxput);
 				unless ($ASV{$i}{$sample_headers[$j]} == 0)
 				{
 				print OUT "$sample_headers[$j]\t";
@@ -536,6 +548,7 @@ foreach my $i (sort keys %ASV)
 	}
 close(OUT);
 close(WHOLEKRONA);
+close(ASVTAX);
 
 foreach my $i (0..$#sample_headers)
 	{	my $sample = $sample_headers[$i];
@@ -546,15 +559,28 @@ foreach my $i (0..$#sample_headers)
 if ($options{d}) {
 open(OUT_IG, ">".$options{n}."_IGNORE_allin_KRONA.txt");
 print OUT_IG "Sample\tASV\tcount\tKingdom\tPhylum\tClass\tOrder\tFamily\tGenus\tSpecies\t(common name)\n";
+open(ASVTAX_IG, ">".$options{n}."_IGNORE_asvTaxonomyTable.txt");
+print ASVTAX_IG "ASV\tKingdom\tPhylum\tClass\tOrder\tFamily\tGenus\tSpecies\n";
 foreach my $i (sort keys %ASV)
 	{	unless ($ignore_ASV_string =~ m/_${i}_/)
 		{
+        
+        my $taxput = $ASV{$i}{'finaltaxachoice'};
+		my @taxputs = split(';', $taxput);
+        print ASVTAX_IG "$i";
+        foreach my $l (@taxputs) {
+			print ASVTAX_IG "\t$l";}
+		if ($#taxputs < 6)
+			{	my $actualtaxdepth = $#taxputs + 1;
+				foreach my $printtab ($actualtaxdepth..6)
+					{	print ASVTAX_IG "\t";
+					}
+			}
+        print ASVTAX_IG "\n";
 		foreach my $j (0..$#sample_headers)
 			{	my $hello = $sample_headers[$j];
 				chomp($hello);
 				my $hello_ig = $hello."_IGNORE";
-				my $taxput = $ASV{$i}{'finaltaxachoice'};
-				my @taxputs = split(';', $taxput);
 				unless ($ASV{$i}{$sample_headers[$j]} == 0)
 				{
 				print OUT_IG "$sample_headers[$j]\t";
@@ -584,6 +610,7 @@ foreach my $i (sort keys %ASV)
 		}
 	}
 close(OUT_IG);
+close(ASVTAX_IG);
 
 foreach my $i (0..$#sample_headers)
 	{	my $sample = $sample_headers[$i];
@@ -640,7 +667,7 @@ if ($options{d})
 
 open(TAXAOUT, ">".$options{n}."_unique_terminaltaxa.txt");
 foreach my $i (@uniq_bartaxa)
-	{	unless($i eq "Unknown" || $i eq "Environmental Unknown"){
+	{	unless($i eq "Unknown" || $i eq "Environmental Unknown" || $i =~ m/__/){
 		print TAXAOUT "$i\n";}
 	}
 close(TAXAOUT);
@@ -653,9 +680,11 @@ my %CommonName_Term;
 foreach my $line (@commonname_last_dat)
 	{	chomp($line);
 		my @line_split = split('\t', $line);
-		my $taxid_clean = $line_split[1];
-		chomp($taxid_clean);
-		$CommonName_Term{$taxid_clean}{'name'} = $line_split[0];
+		if (exists $line_split[1])
+            {my $taxid_clean = $line_split[1];
+            chomp($taxid_clean);
+            $CommonName_Term{$taxid_clean}{'name'} = $line_split[0];
+            }
 	}
 open(COT, ">".$options{n}."_taxid_to_commonname_ALL.txt");
 foreach my $linet (@commondat)
@@ -688,9 +717,9 @@ foreach my $i (@uniq_bartaxa)
 	}
 print BARCHART "\n";
 foreach my $j (0..$#sample_headers)
-	{	my $whyme = $sample_headers[$j];
-		chomp($whyme);
-		print BARCHART "$whyme\t";
+	{	my $barsampleheader = $sample_headers[$j];
+		chomp($barsampleheader);
+		print BARCHART "$barsampleheader\t";
 		my %BARCHART;
 		foreach my $i (sort keys %ASV)
 			{	unless ($ASV{$i}{$sample_headers[$j]} == 0)
@@ -731,9 +760,9 @@ foreach my $i (@uniq_bartaxa_ig)
 	}
 print BARCHART_ig "\n";
 foreach my $j (0..$#sample_headers)
-	{	my $whyme = $sample_headers[$j];
-		chomp($whyme);
-		print BARCHART_ig "$whyme\t";
+	{	my $barsampleheader = $sample_headers[$j];
+		chomp($barsampleheader);
+		print BARCHART_ig "$barsampleheader\t";
 		my %BARCHART;
 		foreach my $i (sort keys %ASV)
 			{	unless ($ASV{$i}{$sample_headers[$j]} == 0 || $ignore_ASV_string =~ m/_${i}_/)
@@ -803,9 +832,9 @@ foreach my $i (@uniq_bartaxa)
 	}
 print NOUNKNOWN "\n";
 foreach my $j (0..$#sample_headers)
-	{	my $whyme = $sample_headers[$j];
-		chomp($whyme);
-		print NOUNKNOWN "$whyme\t";
+	{	my $barsampleheader = $sample_headers[$j];
+		chomp($barsampleheader);
+		print NOUNKNOWN "$barsampleheader\t";
 		my %BARCHART;
 		foreach my $i (sort keys %ASV)
 			{	unless ($ASV{$i}{$sample_headers[$j]} == 0)

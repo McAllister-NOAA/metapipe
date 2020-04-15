@@ -1,7 +1,17 @@
+Ceratiaceae	39451
+Warnowia sp.	1679438
+Gyrodinium	60594
 Chloropicon	2302914
+Teleaulax	77930
+Syndiniales	88547
+Torodinium robustum	1641413
 Mytilidae	6547
 Coscinodiscales	216785
+Amoebophrya	88551
 Thalassiosira	35127
+Biecheleriopsis adriatica	1407008
+Dinophyceae	2864
+Warnowia sp. BSL-2009a	651450
 Spirotrichea	33829
 Bathycoccus prasinos	41875
 Synchaeta	204744
@@ -9,58 +19,96 @@ Thalassiosira hispida	1155186
 Trebouxia	13786
 Apatococcus	904362
 Chloroparvula pacifica	1883388
+Strombidium cf. basimorphum	655474
 Thalassiosiraceae	29202
+Gonyaulacales	40984
+Lepidodinium	66470
 Thiriotia sp. MS-2015	1629645
+Gymnodiniales	2953
 Ustilaginaceae	5268
+Heterocapsa rotundata	89963
+Pentapharsodinium sp.	1982030
 Strobilidiidae	181619
+Strombidium sp. ZS-2015	1719758
 Thalassiosira tenera	291031
 Ostreococcus	70447
-Fragilariopsis	186035
+Euduboscquella	1132512
+Gymnodiniaceae	66801
+Eukaryota	2759
 Pectinaria granulata	283781
 Phaeocystis	33656
+Heterocapsa	2918
+Strombidium capitatum	1606869
+Pedinellales	35680
 Cyclotella	29203
 Chaetocerotales	265576
 Eugregarinorida	35087
+Prorocentrum	2944
 Exobasidium	5406
-Chlorophyta	3041
+Pycnococcaceae	41878
+Alexandrium affine	39453
+Chytriodinium roseum	650052
 Pseudo-nitzschia cuspidata	237455
+Strombidium conicum	641206
 Minidiscus comicus	1230409
 Coscinodiscus	33641
 Chaetoceros radicans	515473
 Guinardia	216800
 Lankesteria hesperidiiformis	1638945
+Scrippsiella	54902
+Amoebophrya sp. ex Prorocentrum micans	230419
 Micromonas	38832
 Micromonas	543311
 Hexanauplia	72037
-Thecofilosea	1004930
-Thalassiosirales	33847
+Ebria tripartita	361426
 Thalassiosira minuscula	385413
 Chaetoceros cinctus	1973196
 Oithona	136190
+Thraustochytriaceae	33674
 Cerataulina pelagica	1003031
 Odontella	2838
 Odontella	332376
 Hyphodontia rimosissima	406828
+Tripos furca	119094
+Alexandrium	2924
+Sphaeroforma	72018
 Thalassiosira hendeyi	337443
 Sabellaria alveolata	251482
 Protomyces	27331
+Blastodinium contortum	363325
 Actiniaria	6103
 Lankesteria abbotti	340204
+Polykrikos kofoidii	271679
+Chytriodinium affine	650053
 Paracalanus	163471
+Karlodinium veneficum	407301
 Styelidae	7721
 Lankesteria	103772
 Lankesteria	340203
+Dissodinium pseudolunula	271692
 Pseudocercospora fijiensis	1873960
+Strombidium caudispina	1607871
+Chimonodinium	1041879
+Pseudotontonia sp. JG-2011a	1295631
+Gyrodinium helveticum	244963
 Pseudo-nitzschia	41953
 Chaetoceros elegans	1937694
+Thoracosphaeraceae	1691972
 Ditylum brightwellii	49249
 Tintinnida	200604
+Cosmoeca ventricosa	1864606
+Spirotontonia grandis	641227
 Chaetoceros cf. lauderi	2569856
+Oblongichytrium sp.	1982032
+Azadinium	632149
 Ditrichocorycaeus anglicus	1582896
 Pseudo-nitzschia heimii	476441
+Teleaulax amphioxeia	77931
 Pseudo-nitzschia pungens	37318
 Cylindrotheca closterium	2856
 Ploima	84394
+Pentapharsodinium	66472
+Peridiniales	2910
 Cryothecomonas longipes	151027
 Cryothecomonas	151025
 Leegaardiella sp.	2022002
@@ -68,161 +116,274 @@ Leegaardiella sp. LS803	1925001
 Eucampia	49251
 Pterosperma cristatum	38836
 Salpingella sp.	1969917
+Protoperidinium depressum	376353
 Spiophanes cf. norrisi VVP-2018	2079786
 Cyclotrichium cyclokaryon	696133
 Prasinoderma singulare	676789
+Pfiesteria shumwayae	410738
 Rhizosolenia setigera	3005
 Skeletonema	2842
+Amoebophrya sp. ex Cochlodinium polykrikoides	1453980
 Pelagostrobilidium	273906
 Oikopleura	34763
 Rhizosolenia delicatula	1244696
+Protoperidinium pellucidum	261845
 Calanidae	6835
 Chthamalidae	37897
-Cercozoa	136419
+Alexandrium minutum	39455
 Lynnella semiglobulosa	696186
 Chaetoceros	49237
 Clytia gracilis	252669
 Leptocylindrus convexus	1398153
 Rhizosoleniaceae	33845
 Naviculaceae	67474
+Protoperidinium divergens	281611
 Salpingella	513280
+Kareniaceae	1003176
+Gyrodinium rubrum	244962
 Chrysochromulina strobilus	696961
 Pyramimonas australis	132611
 Tintinnopsis	180939
+Crinolina isefiordensis	1864621
+Warnowiaceae	651389
 Phyllodoce lineata	1436077
 Cryothecomonas aestivalis	151026
+Proterythropsis sp. BSL-2009a	651451
 Owenia fusiformis	6347
 Chrysochromulina simplex	412158
 Asteromphalus sp. TN-2014	1529363
+Spiniferites ramosus	1973086
 Sessilia	116167
+Aureococcus anophagefferens	44056
+Cercozoa	136419
+Apedinella	35681
 Cryomonadida	589444
+Paraphysomonas	36769
+Amoebophrya sp.	88552
 Mesodinium	283646
 Chaetoceros debilis	122233
 Fragilariaceae	33856
 Prymnesium	35143
+Strombidium tropicum	1607872
 Pleurobrachiidae	86008
-Prorodontida	6001
-Eukaryota	2759
-Imbricatea	1736114
+Azadinium caudatum	1129410
+Hexasterias problematica	2340796
+Katablepharis japonica	339963
+Thaumatomonadida	188944
 Chaetoceros sp. UNC1414	1936264
 Thalassionemataceae	38755
 Proboscia	216776
+Dictyocha speculum	35687
 Chaetoceros didymus	49238
+Pirum	1292363
 Mesodiniidae	283645
+Saprolegniales	4763
+Protoperidinium conicum	261843
+Protoperidinium thulesense	388226
 Coscinodiscus sp. TN-2014	1529365
 Hemiaulus	426649
 Tiarina	693139
+Ectocarpus	2879
 Choreotrichida	200605
 Phialina	497728
 Monodinium sp. HCB-2005	382710
+Apedinella radians	35682
+Arthracanthida	85460
+Noctiluca scintillans	2966
+Syndinium	340369
+Calliacantha natans	1864604
+Karlodinium	157684
+Oblongichytrium sp. BAFCcult 3519	1079765
 Bacteriastrum	426670
+Florenciellales	590977
 Plagiocampa sp.	1982027
 Rhizosolenia	3004
 Mamiella	41876
 Picomonas judraskeda	1315715
+Gonyaulax polygramma	293646
 Tectofilosida	2603933
+Durinskia	400754
 Calanoida	6833
 Chrysochromulina sp. NIES-1333	407208
 Acineta flava	1003325
 Pelagiidae	6146
+Incisomonas	1328948
+Haliphthoros	135472
+Brandtodinium nutricula	1333877
 Chaetoceros decipiens	655751
 Pyramimonas	36882
 Sagittidae	34753
 Guinardia striata	1514137
 Lauderia annulata	382366
 Thalassiosira oceanica	159749
+Thraustochytrida	2699528
+Takayama	241422
+Fragilariopsis	186035
+Haliphthoros sp.	1798950
+Acanthoecida	1924739
 Acartia danae	545071
 Oikopleura sp. cf. dioica-TTGS-2	201967
 Haptolina brevifila	156173
+Hemiselmis	77924
 Actinocyclus sp. 1 MPA-2013	1335100
 Thalassiosira anguste-lineata	337180
 Lobata	27921
 Tetraselmis	3164
 Pseudoplatyophrya nana	88570
+Heterocapsa niei	2920
+Pseudotontonia simplicidens	641229
+Suessiaceae	89955
+Olpidiopsis	416807
+Chattonella	44439
+Scrippsiella sp. SCKS 0701	427755
 Pseudochlorella	63681
-Conoidasida	1280412
+Blastodinium	363324
+Scrippsiella sweeneyae	160611
+Quadruspinospora sp. JMD-2019a	2587264
 Blidingia	63413
+Pleurocladia lacustris	246121
 Metschnikowia	27320
+Lagenidiales	4800
 Malassezia globosa	76773
+Pyrocystales	2970
 Cylindrotheca	2852
+Strombidiidae	60004
 Clausocalanus furcatus	149001
 Brachionus calyciflorus	104777
-Thalassiosira sp.	1891026
+Paulsenella vonstoschii	327389
+Katablepharidaceae	339961
 Pleurosigma planktonicum	265560
+Didymoeca costata	459534
 Dolichomastigales	1525213
+Incisomonas marina	1167876
+Pleurasiga reynoldsii	1864615
 Eutintinnus tubulosus	1049800
 Ciliophora	5878
-Pleosporales	92860
+Dothideomycetes	147541
+Protoperidinium denticulatum	281610
+Polykrikos sp. EP-2016a	1918381
+Paulinella chromatophora	39717
 Pseudo-nitzschia fukuyoi	1388885
 Cephaloidophora cf. communis	947086
 Strombidinopsis	141413
 Cystofilobasidium capitatum	5412
 Chaetoceros sp. CDP22	2082239
-Heterolobosea	5752
+Allovahlkampfia sp. strain SO/1P	500012
 Harpacticoida	41212
+Blastodiniales	79895
+Chimonodinium lomnickii	1041880
 Trebouxiaceae	2507902
 Archigregarinorida	1280411
+Amphidoma languida	1123717
 Verrucariaceae	146292
 Paradiniida	2686029
-Polychaeta	6341
+Margalefidinium fulvescens	418113
+Protodrilus sp. 1 KW107	1462463
+Pentapharsodinium tyrrhenicum	66473
 Rhizosolenia robusta	265547
+Pirsonia	230408
 Ventricleftida	1938500
 Haptolina	1090112
+Diaphanoeca undulata	1864612
 Dactyliosolen sp. Ubatuba	1785164
 Pterocystis sp.	1982029
-Chlorarachniophyceae	29197
+Minorisa sp. SRT705	2109570
+Pleurasiga	1864613
 Prymnesium polylepis	72548
-Euglenozoa	33682
+Hemistasia phaeocysticola	1503927
+Saccocirrus sonomacus	1435238
+Quadricilia	2037921
+Pelagomonas calceolata	35677
 Haslea	67475
+Dictyocha	35686
 Clytia	13436
 Cryothecomonas sp. APCC MC5-1Cryo	741088
+Bigyra	2683628
 Stephanopyxis turris	515487
+Lithomelissa setosa	1054399
 Porpostoma notata	881006
 Sertulariidae	86619
+Triparma pacifica	91992
 Petricola lapicida	345464
 Haptophyta	2830
 Pseudosolenia calcar-avis	1334975
+Falcomonas	95527
+Hexasterias	2340793
+Lepidodinium viride	66471
 Chaetoceros cf. wighamii	1764850
+Pleurasiga minima	1864614
 Picozoa	419944
 Askenasia	457373
+Craspedida	1924738
 Sigalion spinosus	328601
 Kefersteinia cirrata	272732
 Uebelmesseromyces harderi	109966
+Protoperidinium	261839
+Pseudotontonia	641224
+Wangodinium sinense	2294036
 Polypodiopsida	241806
 Paraschneideria metamorphosa	650286
+Thalassiosirales	33847
 Staurastrum	31317
+Salpingoeca sp. Thailand	1051737
 Cyclotrichida	197907
+Bicosoeca kenaiensis	1603439
+Adenoides	160622
 Anomalocera	310561
+Cryptophyceae	3027
 Phaeocystales	418919
+Falcomonas daucoides	95528
+Chromulinales	96792
 Rhizophydium	60186
 Stephanopyxis	3006
 Pyramimonadales	38834
 Obelia dichotoma	37520
+Levanderina fissa	1573495
 Bryopsida	3208
 Bryopsida	3214
 Spionida	46589
 Calocalanus sp. 2 AC-2013	1281432
+Katablepharis remigera	324623
 Peritromus faurei	541016
-Fragilariopsis sp.	2315413
+Amoebophrya sp. ex Alexandrium sp.	1294206
 Stellarima microtrias	188541
+Cercomonadida	188941
+Parallelostrombidium conicum	1144756
 Hypocreales	5125
 Siphonophorae	42759
 Pseudocalanus	119371
 Ascomycota	4890
+Hexacontium sp. KE-2014	1604865
+Heteracon sp. Ant21	1286078
 Melosirales	33841
 Philasterida	198613
+Oblongichytrida	2699530
 Montacutidae	1071984
+Polychaeta	6341
+Strombidium	60005
 Ampharete	394738
 Chromidina sp. #S50	1825904
 Macoma	52799
+Triparmaceae	722751
 Asteraceae	4210
-Nannochloris	3187
+Protoperidinium leonis	281612
+Trebouxiophyceae	75966
 Veneroida	6580
 Leegaardiella	1925000
 Harpacticus	512227
-Viruses	10239
+Myoviridae	10662
 Clathrozoon wilsoni	1608542
 Chaetoceros cf. lorenzianus IT-Dia51	1390973
+Rhizidiomyces	114253
+Chrysoxys	98069
+Ebria	361425
+Protoperidinium monovelum	1193136
+Pseudopedinella	35683
+Synura	2991
+Ichthyophonida	198625
 Philasteridae	197859
+Chromulinaceae	98651
 Coscinodiscophyceae	33836
+Dinophysis	47933
 Askenasia sp. LWW2010032604	1348343
+Mataza sp. SIOpierMataz1	1545445

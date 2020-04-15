@@ -1,4 +1,4 @@
-Sample	lat	long	replicates	controls	groupA	group B	fake_pH	fake_O2
+Sample	lat	long	replicates	controls	groupA	groupB	fake_pH	fake_O2
 MP_18cp2	48.1663	-124.756833	CANS	NA	1	near	6.7	150
 MP_18cp24	48.1663	-124.756833	CANS	NA	1	near	6.7	150
 MP_18cp30	48.1663	-124.756833	CANS	NA	1	near	6.7	150
@@ -45,5 +45,5 @@ MP_18cp17	47.353133	-124.488733	CE42	NA	5	offshore	7	250
 MP_18cp23	47.353133	-124.488733	CE42	NA	5	offshore	7	250
 MP_18cp38	47.353133	-124.488733	CE42	NA	5	offshore	7	250
 MP_18cp39	47.353133	-124.488733	CE42	NA	5	offshore	7	250
-MP_18cp48_neg	NA	NA	NA	negative	NA	NA	NA	NA
-MP_18cp47_pos	NA	NA	NA	positive	NA	NA	NA	NA
+MP_18cp48_neg	NA	NA	negative	negative	NA	NA	NA	NA
+MP_18cp47_pos	NA	NA	positive	positive	NA	NA	NA	NA

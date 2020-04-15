@@ -1,6 +1,7 @@
 ##This is the MetaPipe figure config file
 ###Figure options:
 filterPercent=5
+filterPercentLowQualSamples=10
 desiredTaxaDepth=
 
 ###
@@ -9,3 +10,4 @@ controlNeg=TRUE
 replicates=TRUE
 sites=FALSE
 chemData=FALSE
+filterLowQualSamples=TRUE
