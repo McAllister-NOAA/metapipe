@@ -224,12 +224,6 @@ if (sitelabelFlag == TRUE) { #Will expect "sites" column
   rep_group <- as.data.frame(t(rep_group))
   rep_group <- tibble::rownames_to_column(rep_group, "x")
   write.table(rep_group, "ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund_groupedBySites.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
-  
-  sample_repgroup <- sample_metadata
-  sample_repgroup <- sample_repgroup %>% select(-Sample)
-  sample_repgroup <- sample_repgroup %>% group_by(sites) %>%
-    summarise_all(funs(toString(unique(.)))) %>% rename(Sample = sites)
-  write.table(sample_repgroup, "sample_metadata_NOUNKNOWNS_collapsedOnTaxonomy_percentabund_groupedBySites.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 }
 
 if (replicateFlag == TRUE) { #Will expect "replicates" column

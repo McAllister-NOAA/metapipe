@@ -144,10 +144,10 @@ foreach my $line (@uselater)
             {   print "zzOther\t"; 
             }
         if ($TAX{"s_".$data[7]}{'display'} eq "TRUE" || $TAX{"s_".$data[7]}{'display'} eq "NA")
-            {   print "$data[7]\t";
+            {   print "$data[7]";
             }
         if ($TAX{"s_".$data[7]}{'display'} eq "FALSE")
-            {   print "zzOther\t"; 
+            {   print "zzOther"; 
             }
         print "\n";
     }

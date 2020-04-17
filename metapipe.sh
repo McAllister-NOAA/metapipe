@@ -622,7 +622,52 @@ Rscript --vanilla ${metapipedir}/assets/process_tables.R ${workingdirectory}/${o
   1>> ${workingdirectory}/${outdirectory}/processed_tables/table_rscript_out.log 2>&1
 perl ${metapipedir}/assets/filter_lowabundance_taxa.pl -a ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt -p $filterPercent > ${outdirectory}/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2zzOther.txt
 
+if [[ "${controlspresent}" = "TRUE" ]]; then
+    if [[ "${filterLowQualSamples}" = "TRUE" ]]; then
+      compareproc1=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_controlsRemoved.tsv`
+      compareproc2=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_lowEffortSamplesRemoved.tsv`
+      compareproc3=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_controlsRemoved.tsv`
+      compareproc4=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv`
+    
+      if [[ "${compareproc1}" = "${compareproc2}" ]]; then
+        echo "Low quality sample filtering ON, but none met criteria to be removed"
+        filterLowQualSamples=FALSE
+        rm ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_lowEffortSamplesRemoved.tsv
+      fi
+      if [[ "${compareproc3}" = "${compareproc4}" ]]; then
+        rm ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv
+      fi
+    fi
+else #CONTROLSPRESENT = FALSE
+    if [[ "${filterLowQualSamples}" = "TRUE" ]]; then
+      compareproc1=`cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv`
+      compareproc2=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_lowEffortSamplesRemoved.tsv`
+      compareproc3=`cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv`
+      compareproc4=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv`
+    
+      if [[ "${compareproc1}" = "${compareproc2}" ]]; then
+        echo "Low quality sample filtering ON, but none met criteria to be removed"
+        filterLowQualSamples=FALSE
+        rm ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_lowEffortSamplesRemoved.tsv
+      fi
+      if [[ "${compareproc3}" = "${compareproc4}" ]]; then
+        rm ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv
+      fi
+    fi
 fi
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+fi #Final fi for if Figures folder present statement
 
 
 echo "YOU MADE IT!"
