@@ -711,6 +711,8 @@ unless (scalar(@commonnamebartaxa) == 0)
 	}
 
 open(BARCHART, ">".$options{n}."_barchart.txt");
+open(BARCHART_forR, ">".$options{n}."_barchart_forR.txt");
+print BARCHART_forR "Value\tSample\tTerminalTaxa\n";
 print BARCHART "Sample\t";
 foreach my $i (@uniq_bartaxa)
 	{	print BARCHART "$i\t";
@@ -740,6 +742,7 @@ foreach my $j (0..$#sample_headers)
 					{	if ($uniq_taxa eq $k)
 							{	$hit = 1;
 								print BARCHART "$BARCHART{$k}\t";
+                                print BARCHART_forR "$BARCHART{$k}\t$sample_headers[$j]\t$uniq_taxa\n";
 							}
 					}
 				if ($hit == 0)

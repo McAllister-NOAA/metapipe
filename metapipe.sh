@@ -569,15 +569,23 @@ gzip -q -9 ${outdirectory}/blast_results/ASV_blastn_nt.btab
 ##    FIGURES & ANALYSIS
 ##
 ##########################################################################################
-unset filterPercent
-unset desiredTaxaDepth
-unset controlPos
-unset controlNeg
-unset replicates
-unset sites
-unset chemData
-unset filterLowQualSamples
-unset filterPercentLowQualSamples
+#Defaults, user can override:
+filterPercent=5
+filterLowQualSamples="FALSE"
+filterPercentLowQualSamples=30
+removeNA="FALSE"
+providedTaxaOfInterest="FALSE"
+taxaOfInterestFile="NULL"
+taxaOfInterestLevel="NULL"
+#Interpreted from sample metadata file:
+controlPos="FALSE"
+controlNeg="FALSE"
+replicates="FALSE"
+sites="FALSE"
+chemData="FALSE"
+controlspresent="FALSE"
+groupsDefinedFlag="FALSE"
+locationChemHeaders="NULL"
 
 source $figureparamfilepath
 
@@ -601,22 +609,63 @@ else
     mkdir ${outdirectory}/processed_tables
   fi
   
+#Interpret sample metadata file for inputs:
+highestgroupnum=0
+rm -f ${workingdirectory}/${outdirectory}/chem_headers.txt
+
+for ((f=1; f<=`awk '{print NF}' ${workingdirectory}/${outdirectory}/sample_metadata.txt | sort -nu | tail -n 1`; f++))
+  do cat ${workingdirectory}/${outdirectory}/sample_metadata.txt | cut -f${f} > ${workingdirectory}/${outdirectory}/temp
+    header=`head -n 1 ${workingdirectory}/${outdirectory}/temp`
+    if [[ "$header" = "Sample" || "$header" = "lat" || "$header" = "long" ]]; then
+      continue
+      elif [[ "$header" = "replicates" ]]; then
+      replicates="TRUE"
+      elif [[ "$header" = "sites" ]]; then
+      sites="TRUE"
+      elif [[ "$header" = "controls" ]]; then
+      controlspresent="TRUE"
+      positiveCount=`cat ${workingdirectory}/${outdirectory}/temp | grep -c "positive"`
+      negativeCount=`cat ${workingdirectory}/${outdirectory}/temp | grep -c "negative"`
+      if [[ $positiveCount -ge 1 ]]; then
+        controlPos="TRUE"
+      fi
+      if [[ $negativeCount -ge 1 ]]; then
+        controlNeg="TRUE"
+      fi
+      elif [[ "$header" =~ "group" ]]; then
+      groupsDefinedFlag="TRUE"
+      numGrp=`echo $header | sed -E 's/group//'`
+      if [[ $numGrp -gt $highestgroupnum ]]; then
+        highestgroupnum=$numGrp
+      fi
+    else
+      chemData="TRUE"
+      echo $header >> ${workingdirectory}/${outdirectory}/chem_headers.txt
+      locationChemHeaders="${workingdirectory}/${outdirectory}/chem_headers.txt"
+    fi
+  done
+  rm ${workingdirectory}/${outdirectory}/temp
+  numberGroupsDefined=$highestgroupnum
+
+#echo "Replicates: $replicates"
+#echo "Sites: $sites"
+#echo "Controls: $controlspresent"
+#echo "Positive Control: $controlPos"
+#echo "Negative Control: $controlNeg"
+#echo "Groups called: $groupsDefinedFlag"
+#echo "Number of groups: $numberGroupsDefined"
+#echo "Chem data: $chemData"
+#echo "Location: $locationChemHeaders"
+
 #Maps
-Rscript --vanilla ${metapipedir}/assets/maps.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_NO_UNKNOWNS_barchart.txt $filterPercent \
-    1>> ${workingdirectory}/${outdirectory}/Figures/figure_rscript_out.log 2>&1
+mkdir ${outdirectory}/Figures/01_Maps
+Rscript --vanilla ${metapipedir}/assets/maps.R ${workingdirectory}/${outdirectory}/Figures/01_Maps ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_NO_UNKNOWNS_barchart.txt $filterPercent \
+    1>> ${workingdirectory}/${outdirectory}/Figures/01_Maps/maps_rscript_out.log 2>&1
 
-rm -f ${workingdirectory}/${outdirectory}/Figures/Rplot*
-
-mkdir ${outdirectory}/Figures/normalized
-mkdir ${outdirectory}/Figures/nonnormalized
-
+rm -f ${workingdirectory}/${outdirectory}/Figures/01_Maps/Rplot*
 
 #Tables
-if [[ "${controlPos}" = "TRUE" || "${controlNeg}" = "TRUE" ]]; then
-  controlspresent=TRUE
-else
-  controlspresent=FALSE
-fi
+perl ${metapipedir}/assets/barchart_filterLowAbund.pl -i ${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR.txt -f $filterPercent > ${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR_filtLowAbund_zzOther.txt
 
 Rscript --vanilla ${metapipedir}/assets/process_tables.R ${workingdirectory}/${outdirectory} ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $filterPercent $controlspresent $filterLowQualSamples $filterPercentLowQualSamples ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv $sites $replicates \
   1>> ${workingdirectory}/${outdirectory}/processed_tables/table_rscript_out.log 2>&1
@@ -655,16 +704,80 @@ else #CONTROLSPRESENT = FALSE
       fi
     fi
 fi
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+for f in ${workingdirectory}/${outdirectory}/processed_tables/sample_metadata*; do cat $f | sed -E 's/, /_/g' > ${f}_mod; mv ${f}_mod $f; done
+
+#Phyloseq figures
+mkdir -p ${outdirectory}/Figures/02_Barcharts/read_count
+mkdir -p ${outdirectory}/Figures/02_Barcharts/relative_abundance
+mkdir -p ${outdirectory}/Figures/03_Heatmaps/ASV_based
+mkdir -p ${outdirectory}/Figures/03_Heatmaps/Taxonomy_merge_based
+mkdir -p ${outdirectory}/Figures/04_Alpha_Diversity/ASV_based
+mkdir -p ${outdirectory}/Figures/04_Alpha_Diversity/Taxonomy_merge_based
+mkdir -p ${outdirectory}/Figures/05_Ordination/ASV_based/read_count
+mkdir -p ${outdirectory}/Figures/05_Ordination/ASV_based/relative_abundance
+mkdir -p ${outdirectory}/Figures/05_Ordination/Taxonomy_merge_based/read_count
+mkdir -p ${outdirectory}/Figures/05_Ordination/Taxonomy_merge_based/relative_abundance
+mkdir -p ${outdirectory}/Figures/05_Ordination/Taxonomy_merge_based/filterInclude_TOSPECIES_only/read_count
+mkdir -p ${outdirectory}/Figures/05_Ordination/Taxonomy_merge_based/filterInclude_TOSPECIES_only/relative_abundance
+mkdir -p ${outdirectory}/Figures/06_Network/ASV_based/read_count
+mkdir -p ${outdirectory}/Figures/06_Network/ASV_based/relative_abundance
+mkdir -p ${outdirectory}/Figures/06_Network/Taxonomy_merge_based/read_count
+mkdir -p ${outdirectory}/Figures/06_Network/Taxonomy_merge_based/relative_abundance
+mkdir -p ${outdirectory}/Figures/07_Rarefaction_Curves
+mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/02_Barcharts/read_count
+mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/02_Barcharts/relative_abundance
+mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/03_Heatmaps/ASV_based
+mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/03_Heatmaps/Taxonomy_merge_based
+mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/06_Network/ASV_based/read_count
+mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/06_Network/ASV_based/relative_abundance
+mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/06_Network/Taxonomy_merge_based/read_count
+mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/06_Network/Taxonomy_merge_based/relative_abundance
+
+Rscript --vanilla ${metapipedir}/assets/phyloseq.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory} ${outdirectory} $controlspresent $filterLowQualSamples $replicates $sites $filterPercent $removeNA $providedTaxaOfInterest $groupsDefinedFlag $numberGroupsDefined $taxaOfInterestLevel $taxaOfInterestFile $chemData $locationChemHeaders \
+  1>> ${workingdirectory}/${outdirectory}/Figures/phyloseq_rscript_out.log 2>&1
+
+rm -f ${workingdirectory}/${outdirectory}/Figures/02_Barcharts/read_count/Rplots.pdf
+
+Rscript --vanilla ${metapipedir}/assets/barchart_terminaltaxa.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR.txt ${workingdirectory}/${outdirectory}/sample_order.txt ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR_filtLowAbund_zzOther.txt \
+ 1>> ${workingdirectory}/${outdirectory}/Figures/phyloseq_rscript_out.log 2>&1
+
+rm -f ${workingdirectory}/${outdirectory}/Figures/02_Barcharts/relative_abundance/Rplots.pdf
+
+#Replicate presence/absence abundance (presence in multiple replicates as sign of abundance)
+#
+#if [[ "${replicates}" = "TRUE" ]]; then
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#fi
+#
+
+
+
+
+
   
   
 fi #Final fi for if Figures folder present statement

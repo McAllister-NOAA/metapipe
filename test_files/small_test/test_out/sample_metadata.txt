@@ -1,4 +1,0 @@
-Sample	lat	long	replicates	controls	groupA	group B	fake_pH	fake_O2
-18cp44	47.594567	-124.497067	CL42	NA	4	offshore	6.9	250
-18cp45	47.594567	-124.497067	CL42	NA	4	offshore	6.9	250
-18cp46	47.594567	-124.497067	CL42	NA	4	offshore	6.9	250
