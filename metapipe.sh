@@ -744,6 +744,14 @@ Rscript --vanilla ${metapipedir}/assets/barchart_terminaltaxa.R ${workingdirecto
 
 rm -f ${workingdirectory}/${outdirectory}/Figures/02_Barcharts/relative_abundance/Rplots.pdf
 
+mkdir -p ${outdirectory}/Figures/09_EnvironmentFit_Ordination/ASV_based
+mkdir -p ${outdirectory}/Figures/09_EnvironmentFit_Ordination/Taxonomy_merge_based
+Rscript --vanilla ${metapipedir}/assets/environment_fit_ordination.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_percentabund.tsv ${workingdirectory}/${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites $chemData $locationChemHeaders \
+  1>> ${workingdirectory}/${outdirectory}/Figures/envfit_rscript_out.log 2>&1
+
+
+
+
 #Replicate presence/absence abundance (presence in multiple replicates as sign of abundance)
 #
 #if [[ "${replicates}" = "TRUE" ]]; then

@@ -92,7 +92,7 @@ m
 dev.off()
 
 ### Bathymetric map with data points
-
+tryCatch({
 if (min_long-0.5 < 0 & max_long+0.5 > 0) {
   antimeridian <- TRUE
 } else if (min_long-0.5 > 0 & max_long+0.5 < 0) {
@@ -120,7 +120,7 @@ m_bath <- autoplot.bathy(bathymap, geom = c("c", "r"), colour = "white", size = 
   theme(panel.grid.major = element_line(color = gray(.5), linetype = "dashed", size = 0.1))
 
 pdf(file='mapBathy_datapoints.pdf')
-m_bath
+print(m_bath)
 dev.off()
 
 m_bath_sanslegend <- autoplot.bathy(bathymap, geom = c("c", "r"), colour = "white", size = 0.1, coast = TRUE) + 
@@ -132,9 +132,9 @@ m_bath_sanslegend <- autoplot.bathy(bathymap, geom = c("c", "r"), colour = "whit
         legend.position = "none")
 
 pdf(file='mapBathy_sanslegend_datapoints.pdf')
-m_bath_sanslegend
+print(m_bath_sanslegend)
 dev.off()
-
+}, error=function(e){message(e)})
 #############Simple map with data points and pie charts
 
 #####Find repel coordinates

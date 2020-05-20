@@ -47,8 +47,10 @@ chemDataFlag <- as.logical(args[15])
 
 filter_percent <- as.numeric(args[8]) #Taxa below this were filtered to zzOther
 
+if (chemDataFlag == TRUE) {
 chem_headers <- read.delim(as.character(args[16]), header=FALSE, stringsAsFactors=FALSE)
 chem_headers <- as.vector(chem_headers)
+}
 
 ##################################
 #
