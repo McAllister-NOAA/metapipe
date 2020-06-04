@@ -11,9 +11,6 @@
 #Will need nt and taxonomydmp - run prepscript beforehand
 #Can provide own blastn output on whatever database. Must be formatted -outfmt '6 qseqid pident length staxids'
 
-#TODO will need a better catch checking if sample names from metadata file match read sample names.
-
-
 unset parameterfilepath
 unset samplemetafilepath
 unset readfolderpath
@@ -140,11 +137,8 @@ unset dada_maxEE1
 unset dada_maxEE2
 unset dada_trimRight
 unset dada_trimLeft
-unset forceMerge
-unset deseqRarefaction
-unset filterOutContaminants
-unset filterInTaxaOfInterest
 unset blastMode
+removeASVsFILE=NULL
 
 source $parameterfilepath
 
@@ -290,8 +284,7 @@ else
 
 fi
 
-#TODO: What to do with samples where ALL reads are filtered out? Will it produce an error?
-#TODO: May consider removing intermediate fastq.gz files after they are used. They take up a lot of space.
+#TODO: Deal with samples where ALL reads filtered?
 
 ##########################################################################################
 ##
@@ -369,24 +362,93 @@ else
   cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
   mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
   
-  ##TODO:
-  #HOW TO FORCE CONTINUE WITHOUT MERGE?
-  #should we allow option for changing minOverlap? (right now set to 20bp, which seems reasonable, don't want chimeras)
-  #Optional rerun with deseq for rarefaction
+  #TODO: minOverlap currently set to 20bp, which seems reasonable. Option for change?
   
   echo
   echo "FINAL DADA2 STATS"
+  echo "Note: Please check for a failed merge of forward/reverse sequences"
   echo "Sample	%Reads Retained"
   awk 'NR>1 { print $1, $8 }' ${workingdirectory}/${outdirectory}/dada2/ReadTrimSummary.txt
   if [[ "$bypassflag" = "FALSE" ]]; then
     echo
-    echo "Do you wish to Proceed? [y/n]"
+    echo "Do you wish to Proceed? [y/n/m]"
+    echo "Use [m] for continuing after a failed merge"
     read mainmenuinput
     if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
       echo "Continuing!"
     elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
       echo "You have chosen to exit"
       exit
+    elif [[ "$mainmenuinput" = "m" || "$mainmenuinput" = "M" ]]; then
+      echo "You have chosen to bypass a failed merge"
+      echo "Please select either [F/for/forward] or [R/rev/reverse] reads:"
+      read mainmenuinput
+      if [[ "$mainmenuinput" = "forward" || "$mainmenuinput" = "F" || "$mainmenuinput" = "f" || "$mainmenuinput" = "for" ]]; then
+        echo
+        echo "Learning error, Dereplication, Merge, and ASVs in DADA2 for FORWARD reads..."
+        echo "Please be patient, may take a while. Messages printed to Rscript log."
+        echo
+        Rscript --vanilla ${metapipedir}/assets/dada2_step2_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB forward \
+            1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+  
+        cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
+        mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
+        
+        touch ${outdirectory}/dada2/00_MERGEFAILED_ForwardReadsOnly_usedFor_ASVs_EOM
+        
+        echo
+        echo "FORWARD DADA2 STATS"
+        echo "Sample	%Reads Retained"
+        awk 'NR>1 { print $1, $6 }' ${workingdirectory}/${outdirectory}/dada2/ReadTrimSummary_mergeFailed_ForwardReadOnly.txt
+        
+        echo
+        echo "Do you wish to Proceed? [y/n]"
+        read mainmenuinput
+        if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
+          echo "Continuing!"
+        elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
+          echo "You have chosen to exit"
+          exit
+        else
+          echo "Invalid selection, exiting"
+          exit
+        fi
+        
+      elif [[ "$mainmenuinput" = "reverse" || "$mainmenuinput" = "rev" || "$mainmenuinput" = "r" || "$mainmenuinput" = "R" ]]; then
+        echo
+        echo "Learning error, Dereplication, Merge, and ASVs in DADA2 for REVERSE reads..."
+        echo "Please be patient, may take a while. Messages printed to Rscript log."
+        echo
+        Rscript --vanilla ${metapipedir}/assets/dada2_step2_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB reverse \
+            1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+  
+        cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
+        mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
+        
+        touch ${outdirectory}/dada2/00_MERGEFAILED_ReverseReadsOnly_usedFor_ASVs_EOM
+        
+        echo
+        echo "REVERSE DADA2 STATS"
+        echo "Sample	%Reads Retained"
+        awk 'NR>1 { print $1, $6 }' ${workingdirectory}/${outdirectory}/dada2/ReadTrimSummary_mergeFailed_ReverseReadOnly.txt
+        
+        echo
+        echo "Do you wish to Proceed? [y/n]"
+        read mainmenuinput
+        if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
+          echo "Continuing!"
+        elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
+          echo "You have chosen to exit"
+          exit
+        else
+          echo "Invalid selection, exiting"
+          exit
+        fi
+        
+      else
+        echo "Invalid selection, exiting"
+        exit
+      fi
     else
       echo "Invalid selection, exiting"
       exit
@@ -486,6 +548,11 @@ else
   if [ -d "${outdirectory}/ASV2Taxonomy" ]; then
     rm -r ${outdirectory}/ASV2Taxonomy
     mkdir ${outdirectory}/ASV2Taxonomy
+    if [[ "$removeASVsFILE" != "NULL" ]]; then
+      mv ${outdirectory}/dada2/ASVs_unfiltered.fa ${outdirectory}/dada2/ASVs.fa
+      mv ${outdirectory}/dada2/ASVs_counts_unfiltered.tsv ${outdirectory}/dada2/ASVs_counts.tsv
+      #WILL THROW AN ERROR: If you run with removeASVsFILE given then remove that parameter without moving the *unfiltered* back to their original names.
+    fi
   else
     mkdir ${outdirectory}/ASV2Taxonomy
   fi
@@ -532,26 +599,92 @@ else
     echo "Continuing!"
   fi
     
-  cd ${outdirectory}/ASV2Taxonomy
-  perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt \
-      -t reformatted_taxonkit_out.txt -f $speciesGenusCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
-  cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
-  #TODO: cleanup outputs and directory from my asv to taxonomy script
-  #TODO: it would be nice to get some stats on how many ASVs could be classified to species, genus, family, etc.
-  cd ${workingdirectory}
-  cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt | cut -f1 | sed -E 's/$/	/' > ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
-  cat ${outdirectory}/dada2/ASVs_counts.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv
-  perl ${metapipedir}/assets/merge_on_taxonomy.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv
-  cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv
-  rm ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
-  mkdir ${outdirectory}/ASV2Taxonomy/KRONA_plots
-  mkdir ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs
-  mv ${outdirectory}/ASV2Taxonomy/MP* ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs/
-  mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_wholeKRONA.txt ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs/${outdirectory}_samplesSummedKRONA.txt
-  mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_master_krona.html ${outdirectory}/ASV2Taxonomy/KRONA_plots/
-  mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_wholeKRONA.html ${outdirectory}/ASV2Taxonomy/KRONA_plots/${outdirectory}_samplesSummedKRONA.html
-  mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_allin_KRONA.txt ${outdirectory}/ASV2Taxonomy/${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt
   
+  if [[ "$removeASVsFILE" = "NULL" ]]; then
+    cd ${outdirectory}/ASV2Taxonomy
+  
+    perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt \
+        -t reformatted_taxonkit_out.txt -f $speciesGenusCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
+    cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
+    cd ${workingdirectory}
+    cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt | cut -f1 | sed -E 's/$/	/' > ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+    cat ${outdirectory}/dada2/ASVs_counts.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv
+    perl ${metapipedir}/assets/merge_on_taxonomy.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv
+    cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv
+    rm ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+    mkdir ${outdirectory}/ASV2Taxonomy/KRONA_plots
+    mkdir ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs
+    mv ${outdirectory}/ASV2Taxonomy/MP* ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs/
+    mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_wholeKRONA.txt ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs/${outdirectory}_samplesSummedKRONA.txt
+    mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_master_krona.html ${outdirectory}/ASV2Taxonomy/KRONA_plots/
+    mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_wholeKRONA.html ${outdirectory}/ASV2Taxonomy/KRONA_plots/${outdirectory}_samplesSummedKRONA.html
+    mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_allin_KRONA.txt ${outdirectory}/ASV2Taxonomy/${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt
+    
+    perl ${metapipedir}/assets/stats.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv -i ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/basic_ASV_taxonomy_stats.txt
+    
+  else
+    cd ${outdirectory}/ASV2Taxonomy
+    
+    perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt -d $removeASVsFILE \
+        -t reformatted_taxonkit_out.txt -f $speciesGenusCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
+    
+    #Move non-filtered files to folder, replace with files from "IGNORING_ASVs" director
+    mkdir unfiltered_files
+    mkdir -p KRONA_plots/KRONA_inputs
+    mv MP* KRONA_plots/KRONA_inputs/
+    mv ${outdirectory}_wholeKRONA.txt KRONA_plots/KRONA_inputs/${outdirectory}_samplesSummedKRONA.txt
+    mv ${outdirectory}_master_krona.html KRONA_plots/
+    mv ${outdirectory}_wholeKRONA.html KRONA_plots/${outdirectory}_samplesSummedKRONA.html
+    mv ${outdirectory}_allin_KRONA.txt ${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt
+    mv KRONA_plots unfiltered_files/
+    mv ${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt unfiltered_files/
+    mv ${outdirectory}_asvTaxonomyTable.txt unfiltered_files/
+    mv ${outdirectory}_barchart_forR.txt unfiltered_files/
+    mv ${outdirectory}_barchart.txt unfiltered_files/
+    mv ${outdirectory}_heatmap_multiASV.txt unfiltered_files/
+    mv ${outdirectory}_NO_UNKNOWNS_barchart.txt unfiltered_files/
+    
+    mkdir -p IGNORING_ASVs/KRONA_plots/KRONA_inputs
+    mv IGNORING_ASVs/MP* IGNORING_ASVs/KRONA_plots/KRONA_inputs/
+    mv IGNORING_ASVs/${outdirectory}_IGNORE_master_krona.html IGNORING_ASVs/KRONA_plots/
+    mv IGNORING_ASVs/${outdirectory}_IGNORE_allin_KRONA.txt ${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt
+    mv IGNORING_ASVs/KRONA_plots ./
+    mv IGNORING_ASVs/${outdirectory}_ASVs_to_IGNORE.txt ./
+    mv IGNORING_ASVs/${outdirectory}_IGNORE_asvTaxonomyTable.txt ./${outdirectory}_asvTaxonomyTable.txt
+    mv IGNORING_ASVs/${outdirectory}_IGNORE_barchart_forR.txt ./${outdirectory}_barchart_forR.txt
+    mv IGNORING_ASVs/${outdirectory}_IGNORE_barchart.txt ./${outdirectory}_barchart.txt
+    mv IGNORING_ASVs/${outdirectory}_IGNORE_heatmap_multiASV.txt ./${outdirectory}_heatmap_multiASV.txt
+    mv IGNORING_ASVs/${outdirectory}_IGNORE_NO_UNKNOWNS_barchart.txt ./${outdirectory}_NO_UNKNOWNS_barchart.txt
+    rmdir IGNORING_ASVs
+    
+    cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
+    cd ${workingdirectory}
+    
+    mv ${outdirectory}/dada2/ASVs.fa ${outdirectory}/dada2/ASVs_unfiltered.fa
+    mv ${outdirectory}/dada2/ASVs_counts.tsv ${outdirectory}/dada2/ASVs_counts_unfiltered.tsv
+    
+    cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_ASVs_to_IGNORE.txt | sed -E 's/$/\$/' > ${outdirectory}/temp
+    grep -A 1 -f ${outdirectory}/temp ${outdirectory}/dada2/ASVs_unfiltered.fa | sed -E 's/$/\$/' > ${outdirectory}/temp2
+    grep -v "^--\$$" ${outdirectory}/temp2 > ${outdirectory}/temp
+    grep -v -f ${outdirectory}/temp ${outdirectory}/dada2/ASVs_unfiltered.fa > ${outdirectory}/dada2/ASVs.fa
+    rm ${outdirectory}/temp
+    rm ${outdirectory}/temp2
+    #Note for potential bug: Will remove the sequence (but not the header) for sequences identical to an ASV in the IGNORE list. 
+    
+    cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_ASVs_to_IGNORE.txt | sed -E 's/$/	/' > ${outdirectory}/temp
+    cat ${outdirectory}/dada2/ASVs_counts_unfiltered.tsv | grep -v -f ${outdirectory}/temp > ${outdirectory}/dada2/ASVs_counts.tsv
+    rm ${outdirectory}/temp
+    
+    cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt | cut -f1 | sed -E 's/$/	/' > ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+    cat ${outdirectory}/dada2/ASVs_counts.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv
+    perl ${metapipedir}/assets/merge_on_taxonomy.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv
+    cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv
+    rm ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+    
+    perl ${metapipedir}/assets/stats.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv -i ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/basic_ASV_taxonomy_stats.txt
+    
+  fi
+
   echo "taxonomyscriptFinished=TRUE" >> ${outdirectory}/progress.txt
 
 fi
@@ -608,6 +741,9 @@ else
   else
     mkdir ${outdirectory}/processed_tables
   fi
+
+cp -r ${outdirectory}/ASV2Taxonomy/KRONA_plots ${outdirectory}/Figures/00_KRONA_plots
+rm -r ${outdirectory}/Figures/00_KRONA_plots/KRONA_inputs
   
 #Interpret sample metadata file for inputs:
 highestgroupnum=0
@@ -667,7 +803,28 @@ rm -f ${workingdirectory}/${outdirectory}/Figures/01_Maps/Rplot*
 #Tables
 perl ${metapipedir}/assets/barchart_filterLowAbund.pl -i ${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR.txt -f $filterPercent > ${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR_filtLowAbund_zzOther.txt
 
-Rscript --vanilla ${metapipedir}/assets/process_tables.R ${workingdirectory}/${outdirectory} ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $filterPercent $controlspresent $filterLowQualSamples $filterPercentLowQualSamples ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv $sites $replicates \
+asv_to_use="ASV_1"
+if [[ "$removeASVsFILE" != "NULL" ]]; then
+  tempcount=1
+  temphitindicator="YES"
+  while [ "$temphitindicator" = "YES" ]; do
+    temphit="NO"
+    while IFS= read -r line; do
+      if [[ "$line" = "ASV_${tempcount}" ]]; then
+        temphit="YES"
+        tempcount=$(expr $tempcount + 1)
+      fi
+    done < $removeASVsFILE
+    if [[ "$temphit" = "YES" ]]; then
+      temphitindicator="YES"
+    else
+      temphitindicator="NO"
+    fi
+  done
+  asv_to_use="ASV_${tempcount}"
+fi
+
+Rscript --vanilla ${metapipedir}/assets/process_tables.R ${workingdirectory}/${outdirectory} ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $filterPercent $controlspresent $filterLowQualSamples $filterPercentLowQualSamples ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv $sites $replicates ${workingdirectory}/${outdirectory}/dada2/ASVs_counts.tsv $asv_to_use \
   1>> ${workingdirectory}/${outdirectory}/processed_tables/table_rscript_out.log 2>&1
 perl ${metapipedir}/assets/filter_lowabundance_taxa.pl -a ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt -p $filterPercent > ${outdirectory}/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2zzOther.txt
 
@@ -677,6 +834,9 @@ if [[ "${controlspresent}" = "TRUE" ]]; then
       compareproc2=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_lowEffortSamplesRemoved.tsv`
       compareproc3=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_controlsRemoved.tsv`
       compareproc4=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv`
+      compareproc5=`cat ${outdirectory}/processed_tables/ASVs_counts_lowEffortSamplesRemoved.tsv`
+      compareproc6=`cat ${outdirectory}/processed_tables/ASVs_counts_controlsRemoved.tsv`
+      
     
       if [[ "${compareproc1}" = "${compareproc2}" ]]; then
         echo "Low quality sample filtering ON, but none met criteria to be removed"
@@ -685,6 +845,9 @@ if [[ "${controlspresent}" = "TRUE" ]]; then
       fi
       if [[ "${compareproc3}" = "${compareproc4}" ]]; then
         rm ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv
+      fi
+      if [[ "${compareproc5}" = "${compareproc6}" ]]; then
+        rm ${outdirectory}/processed_tables/ASVs_counts_lowEffortSamplesRemoved.tsv
       fi
     fi
 else #CONTROLSPRESENT = FALSE
@@ -693,7 +856,9 @@ else #CONTROLSPRESENT = FALSE
       compareproc2=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_lowEffortSamplesRemoved.tsv`
       compareproc3=`cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv`
       compareproc4=`cat ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv`
-    
+      compareproc5=`cat ${outdirectory}/dada2/ASVs_counts.tsv`
+      compareproc6=`cat ${outdirectory}/processed_tables/ASVs_counts_lowEffortSamplesRemoved.tsv`
+      
       if [[ "${compareproc1}" = "${compareproc2}" ]]; then
         echo "Low quality sample filtering ON, but none met criteria to be removed"
         filterLowQualSamples=FALSE
@@ -701,6 +866,9 @@ else #CONTROLSPRESENT = FALSE
       fi
       if [[ "${compareproc3}" = "${compareproc4}" ]]; then
         rm ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv
+      fi
+      if [[ "${compareproc5}" = "${compareproc6}" ]]; then
+        rm ${outdirectory}/processed_tables/ASVs_counts_lowEffortSamplesRemoved.tsv
       fi
     fi
 fi
@@ -725,14 +893,16 @@ mkdir -p ${outdirectory}/Figures/06_Network/ASV_based/relative_abundance
 mkdir -p ${outdirectory}/Figures/06_Network/Taxonomy_merge_based/read_count
 mkdir -p ${outdirectory}/Figures/06_Network/Taxonomy_merge_based/relative_abundance
 mkdir -p ${outdirectory}/Figures/07_Rarefaction_Curves
-mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/02_Barcharts/read_count
-mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/02_Barcharts/relative_abundance
-mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/03_Heatmaps/ASV_based
-mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/03_Heatmaps/Taxonomy_merge_based
-mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/06_Network/ASV_based/read_count
-mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/06_Network/ASV_based/relative_abundance
-mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/06_Network/Taxonomy_merge_based/read_count
-mkdir -p ${outdirectory}/Figures/08_Taxa_of_interest/06_Network/Taxonomy_merge_based/relative_abundance
+if [[ "${providedTaxaOfInterest}" = "TRUE" ]]; then
+mkdir -p ${outdirectory}/Figures/Taxa_of_interest/02_Barcharts/read_count
+mkdir -p ${outdirectory}/Figures/Taxa_of_interest/02_Barcharts/relative_abundance
+mkdir -p ${outdirectory}/Figures/Taxa_of_interest/03_Heatmaps/ASV_based
+mkdir -p ${outdirectory}/Figures/Taxa_of_interest/03_Heatmaps/Taxonomy_merge_based
+mkdir -p ${outdirectory}/Figures/Taxa_of_interest/06_Network/ASV_based/read_count
+mkdir -p ${outdirectory}/Figures/Taxa_of_interest/06_Network/ASV_based/relative_abundance
+mkdir -p ${outdirectory}/Figures/Taxa_of_interest/06_Network/Taxonomy_merge_based/read_count
+mkdir -p ${outdirectory}/Figures/Taxa_of_interest/06_Network/Taxonomy_merge_based/relative_abundance
+fi
 
 Rscript --vanilla ${metapipedir}/assets/phyloseq.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory} ${outdirectory} $controlspresent $filterLowQualSamples $replicates $sites $filterPercent $removeNA $providedTaxaOfInterest $groupsDefinedFlag $numberGroupsDefined $taxaOfInterestLevel $taxaOfInterestFile $chemData $locationChemHeaders \
   1>> ${workingdirectory}/${outdirectory}/Figures/phyloseq_rscript_out.log 2>&1
@@ -744,48 +914,71 @@ Rscript --vanilla ${metapipedir}/assets/barchart_terminaltaxa.R ${workingdirecto
 
 rm -f ${workingdirectory}/${outdirectory}/Figures/02_Barcharts/relative_abundance/Rplots.pdf
 
-mkdir -p ${outdirectory}/Figures/09_EnvironmentFit_Ordination/ASV_based
-mkdir -p ${outdirectory}/Figures/09_EnvironmentFit_Ordination/Taxonomy_merge_based
+mkdir -p ${outdirectory}/Figures/08_EnvironmentFit_Ordination/ASV_based
+mkdir -p ${outdirectory}/Figures/08_EnvironmentFit_Ordination/Taxonomy_merge_based
 Rscript --vanilla ${metapipedir}/assets/environment_fit_ordination.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_percentabund.tsv ${workingdirectory}/${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites $chemData $locationChemHeaders \
-  1>> ${workingdirectory}/${outdirectory}/Figures/envfit_rscript_out.log 2>&1
+  1>> ${workingdirectory}/${outdirectory}/Figures/08_EnvironmentFit_Ordination/envfit_rscript_out.log 2>&1
+
+#Replicate section
+if [[ "${replicates}" = "TRUE" ]]; then
+  mkdir ${outdirectory}/processed_tables/replicate_based_detection
+  if [[ "${controlspresent}" = "TRUE" ]]; then
+    if [[ "${filterLowQualSamples}" = "TRUE" ]]; then
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/processed_tables/ASVs_counts_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_ASVbased_withUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_ASVbased_NoUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_TAXAbased_NoUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/processed_tables/ASVs_counts_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_filtsamples.txt
+
+    fi
+    if [[ "${filterLowQualSamples}" = "FALSE" ]]; then
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/processed_tables/ASVs_counts_controlsRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_ASVbased_withUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_controlsRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_ASVbased_NoUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_controlsRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_TAXAbased_NoUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/processed_tables/ASVs_counts_controlsRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_controlsRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_controlsRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_filtsamples.txt
+    fi
+  fi
+  if [[ "${controlspresent}" = "FALSE" ]]; then
+    if [[ "${filterLowQualSamples}" = "TRUE" ]]; then
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/processed_tables/ASVs_counts_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_ASVbased_withUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_ASVbased_NoUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_TAXAbased_NoUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/processed_tables/ASVs_counts_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_filtsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_lowEffortSamplesRemoved.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_filtsamples.txt
+    fi
+    if [[ "${filterLowQualSamples}" = "FALSE" ]]; then
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/dada2/ASVs_counts.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_ASVbased_withUnknowns_allsamples.txt
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_ASVbased_NoUnknowns_allsamples.txt
+      perl ${metapipedir}/assets/replicate_presence_absence.pl -i ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/presenceabsence_unmarked_TAXAbased_NoUnknowns_allsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/dada2/ASVs_counts.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_allsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_allsamples.txt
+      perl ${metapipedir}/assets/replicate_compRelabund_detection.pl -i ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv -m ${outdirectory}/sample_metadata_forR.txt > ${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_allsamples.txt
+    fi
+  fi
+  mkdir ${outdirectory}/Figures/ReadsVSReplicateDetection
+  if [[ "${controlspresent}" = "FALSE" && "${filterLowQualSamples}" = "FALSE" ]]; then
+  Rscript --vanilla ${metapipedir}/assets/replicate_abundance_boxplot.R ${workingdirectory}/${outdirectory}/Figures/ReadsVSReplicateDetection ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_allsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_allsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_allsamples.txt \
+    1>> ${workingdirectory}/${outdirectory}/Figures/ReadsVSReplicateDetection/violinboxplot_rscript_out.log 2>&1
+  else
+  Rscript --vanilla ${metapipedir}/assets/replicate_abundance_boxplot.R ${workingdirectory}/${outdirectory}/Figures/ReadsVSReplicateDetection ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_filtsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_filtsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_filtsamples.txt \
+    1>> ${workingdirectory}/${outdirectory}/Figures/ReadsVSReplicateDetection/violinboxplot_rscript_out.log 2>&1
+  fi
+  
+
+fi #replicate if
 
 
 
+  
+  
+  
 
-#Replicate presence/absence abundance (presence in multiple replicates as sign of abundance)
-#
-#if [[ "${replicates}" = "TRUE" ]]; then
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#  
-#fi
-#
-
-
-
-
-
+  
+  
   
   
 fi #Final fi for if Figures folder present statement

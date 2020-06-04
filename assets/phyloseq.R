@@ -9127,7 +9127,7 @@ if (taxaofinterestFlag == TRUE) {
   # BARCHARTS
   #
   ########################
-  setwd(paste0(as.character(args[1]), "/08_Taxa_of_interest/02_Barcharts/read_count", sep = ""))
+  setwd(paste0(as.character(args[1]), "/Taxa_of_interest/02_Barcharts/read_count", sep = ""))
   
   for (i in c("Phylum")) {
     if (NAremoveFlag == TRUE) {
@@ -9259,7 +9259,7 @@ if (taxaofinterestFlag == TRUE) {
   }
   
   ###Relative abundance
-  setwd(paste0(as.character(args[1]), "/08_Taxa_of_interest/02_Barcharts/relative_abundance", sep = ""))
+  setwd(paste0(as.character(args[1]), "/Taxa_of_interest/02_Barcharts/relative_abundance", sep = ""))
   standf = function(x) 100*(x / sum(x))
   
   for (i in c("Phylum")) {
@@ -9448,7 +9448,7 @@ if (taxaofinterestFlag == TRUE) {
   # HEATMAPS
   #
   ########################
-  setwd(paste0(as.character(args[1]), "/08_Taxa_of_interest/03_Heatmaps/ASV_based", sep = ""))
+  setwd(paste0(as.character(args[1]), "/Taxa_of_interest/03_Heatmaps/ASV_based", sep = ""))
   standf = function(x) 100*(x / sum(x))
   
   heatmap <- plot_heatmap(phylo3, method = "NMDS", distance = "jaccard", 
@@ -9493,7 +9493,7 @@ if (taxaofinterestFlag == TRUE) {
   }
   
   
-  setwd(paste0(as.character(args[1]), "/08_Taxa_of_interest/03_Heatmaps/Taxonomy_merge_based", sep = ""))
+  setwd(paste0(as.character(args[1]), "/Taxa_of_interest/03_Heatmaps/Taxonomy_merge_based", sep = ""))
   
   heatmap <- plot_heatmap(phylo11, method = "NMDS", distance = "jaccard", 
                           low = "ghostwhite", 
@@ -9541,7 +9541,7 @@ if (taxaofinterestFlag == TRUE) {
   # NETWORK ANALYSIS
   #
   ########################
-  setwd(paste0(as.character(args[1]), "/08_Taxa_of_interest/06_Network/ASV_based/read_count", sep = ""))
+  setwd(paste0(as.character(args[1]), "/Taxa_of_interest/06_Network/ASV_based/read_count", sep = ""))
   
   for (i in 1:9) {
     tryCatch({
@@ -9587,7 +9587,7 @@ if (taxaofinterestFlag == TRUE) {
     }
   }
   
-  setwd(paste0(as.character(args[1]), "/08_Taxa_of_interest/06_Network/ASV_based/relative_abundance", sep = ""))
+  setwd(paste0(as.character(args[1]), "/Taxa_of_interest/06_Network/ASV_based/relative_abundance", sep = ""))
   
   for (i in 1:9) {
     tryCatch({
@@ -9633,7 +9633,7 @@ if (taxaofinterestFlag == TRUE) {
     }
   }
   
-  setwd(paste0(as.character(args[1]), "/08_Taxa_of_interest/06_Network/Taxonomy_merge_based/read_count", sep = ""))
+  setwd(paste0(as.character(args[1]), "/Taxa_of_interest/06_Network/Taxonomy_merge_based/read_count", sep = ""))
   
   for (i in 1:9) {
     tryCatch({
@@ -9679,7 +9679,7 @@ if (taxaofinterestFlag == TRUE) {
     }
   }
   
-  setwd(paste0(as.character(args[1]), "/08_Taxa_of_interest/06_Network/Taxonomy_merge_based/relative_abundance", sep = ""))
+  setwd(paste0(as.character(args[1]), "/Taxa_of_interest/06_Network/Taxonomy_merge_based/relative_abundance", sep = ""))
   
   for (i in 1:9) {
     tryCatch({

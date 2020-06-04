@@ -116,7 +116,7 @@ if (chemDataFlag == TRUE) {
 }
 
 #ASV-based ordination
-setwd(paste0(as.character(args[1]),"/09_EnvironmentFit_Ordination/ASV_based"))
+setwd(paste0(as.character(args[1]),"/08_EnvironmentFit_Ordination/ASV_based"))
 NMDS_ASV <- metaMDS(ASV_percabund, k=2, trymax = 100, trace = F, autotransform = FALSE, distance = "bray")
 NMDS_tab <- as.data.frame(NMDS_ASV$species)
 NMDS_tab <- tibble::rownames_to_column(NMDS_tab, "ASV")
@@ -290,7 +290,7 @@ if (sitelabelFlag == TRUE) {
 }
 
 #Taxonomy-based ordination
-setwd(paste0(as.character(args[1]),"/09_EnvironmentFit_Ordination/Taxonomy_merge_based"))
+setwd(paste0(as.character(args[1]),"/08_EnvironmentFit_Ordination/Taxonomy_merge_based"))
 
 NMDS_TAXA <- metaMDS(TAXA_percabund, k=2, trymax = 100, trace = F, autotransform = FALSE, distance = "bray")
 NMDS_tab <- as.data.frame(NMDS_TAXA$species)

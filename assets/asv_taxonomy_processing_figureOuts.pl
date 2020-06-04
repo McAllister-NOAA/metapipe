@@ -147,6 +147,7 @@ foreach my $linet (@commondat)
 #IMPORT List of ASVs to ingore in output
 my @ignore_array;
 my $ignore_ASV_string;
+my $output_ignore_string;
 if ($options{d})
 	{	open(IGNORE, "<$options{d}") or die "\n\nThere is no $options{d} file!!\n\n";
 		my @igdat = <IGNORE>; close(IGNORE);
@@ -156,7 +157,15 @@ if ($options{d})
 			}
 		foreach my $i (@ignore_array)
 			{	$ignore_ASV_string .= "_".$i."_";
+                $output_ignore_string .= $i.";";
 			}
+        my @ignoreASVarray = split(';', $output_ignore_string);
+        open(ASVsToIG, ">".$options{n}."_ASVs_to_IGNORE.txt");
+        foreach my $igasv (@ignoreASVarray)
+            {   chomp($igasv);
+                print ASVsToIG "$igasv\n";
+            }
+        close(ASVsToIG);
 	}
 
 	
@@ -573,7 +582,7 @@ foreach my $i (sort keys %ASV)
 		if ($#taxputs < 6)
 			{	my $actualtaxdepth = $#taxputs + 1;
 				foreach my $printtab ($actualtaxdepth..6)
-					{	print ASVTAX_IG "\t";
+					{	print ASVTAX_IG "\tNA";
 					}
 			}
         print ASVTAX_IG "\n";
@@ -752,11 +761,14 @@ foreach my $j (0..$#sample_headers)
 		print BARCHART "\n";
 	}
 close(BARCHART);
+close(BARCHART_forR);
 
 
 if ($options{d})
 {
 open(BARCHART_ig, ">".$options{n}."_IGNORE_barchart.txt");
+open(BARCHART_forR_ig, ">".$options{n}."_IGNORE_barchart_forR.txt");
+print BARCHART_forR_ig "Value\tSample\tTerminalTaxa\n";
 print BARCHART_ig "Sample\t";
 foreach my $i (@uniq_bartaxa_ig)
 	{	print BARCHART_ig "$i\t";
@@ -786,6 +798,7 @@ foreach my $j (0..$#sample_headers)
 					{	if ($uniq_taxa eq $k)
 							{	$hit = 1;
 								print BARCHART_ig "$BARCHART{$k}\t";
+                                print BARCHART_forR_ig "$BARCHART{$k}\t$sample_headers[$j]\t$uniq_taxa\n";
 							}
 					}
 				if ($hit == 0)
@@ -795,6 +808,7 @@ foreach my $j (0..$#sample_headers)
 		print BARCHART_ig "\n";
 	}
 close(BARCHART_ig);
+close(BARCHART_forR_ig);
 }
 
 
@@ -870,9 +884,55 @@ foreach my $j (0..$#sample_headers)
 	}
 close(NOUNKNOWN);
 
+if ($options{d})
+{
+open(NOUNKNOWN_ig, ">".$options{n}."_IGNORE_NO_UNKNOWNS_barchart.txt");
+print NOUNKNOWN_ig "Sample\t";
+foreach my $i (@uniq_bartaxa_ig)
+	{	unless ($i eq "Unknown" || $i eq "Environmental Unknown")
+			{	print NOUNKNOWN_ig "$i\t";
+			}
+	}
+print NOUNKNOWN_ig "\n";
+foreach my $j (0..$#sample_headers)
+	{	my $barsampleheader = $sample_headers[$j];
+		chomp($barsampleheader);
+		print NOUNKNOWN_ig "$barsampleheader\t";
+		my %BARCHART;
+		foreach my $i (sort keys %ASV)
+			{	unless ($ASV{$i}{$sample_headers[$j]} == 0 || $ignore_ASV_string =~ m/_${i}_/)
+					{	my $pushchoice = $ASV{$i}{'finaltaxachoice'};
+						chomp($pushchoice);
+						if ($pushchoice =~ m/;/)
+							{	my @splittingthis = split(';', $pushchoice);
+								my $lastassignment = $splittingthis[$#splittingthis];
+								chomp($lastassignment);
+								$BARCHART{$lastassignment} += $ASV{$i}{$sample_headers[$j]};
+							}
+						else {$BARCHART{$pushchoice} += $ASV{$i}{$sample_headers[$j]};}
+					}
+			}
+		foreach my $uniq_taxa (@uniq_bartaxa_ig)
+			{	unless ($uniq_taxa eq "Unknown" || $uniq_taxa eq "Environmental Unknown")
+					{	my $hit = 0;
+						foreach my $k (sort keys %BARCHART)
+							{	if ($uniq_taxa eq $k)
+									{	$hit = 1;
+										print NOUNKNOWN_ig "$BARCHART{$k}\t";
+									}
+							}
+						if ($hit == 0)
+							{	print NOUNKNOWN_ig "0\t";
+							}
+					}
+			}
+		print NOUNKNOWN_ig "\n";
+	}
+close(NOUNKNOWN_ig);
 
+}
 
-##Taxa with shared ASV w/ heatmap?
+##Taxa with shared ASV w/ heatmap
 my %TAXHEAT;
 
 foreach my $i (sort keys %ASV)
@@ -923,6 +983,66 @@ foreach my $i (sort keys %TAXHEAT)
 	}
 close(OUTDEEP1);
 
+
+
+
+
+if ($options{d})
+{
+my %TAXHEAT_ig;
+
+foreach my $i (sort keys %ASV)
+	{   unless ($ignore_ASV_string =~ m/_${i}_/)
+        {
+        my $tax = $ASV{$i}{'finaltaxachoice'};
+		chomp($tax);
+		if ($tax =~ m/;/)
+			{	my @split_tax = split(';', $tax);
+				foreach my $j (0..$#split_tax)
+					{	if (exists $TAXHEAT_ig{$split_tax[$j]})
+							{	$TAXHEAT_ig{$split_tax[$j]}{'asvs'} .= ";".$i;
+							}
+						else
+							{	$TAXHEAT_ig{$split_tax[$j]}{'asvs'} = $i;
+								$TAXHEAT_ig{$split_tax[$j]}{'depth'} = $j + 1;
+							}
+					}
+			}
+		else
+			{	if (exists $TAXHEAT_ig{$tax})
+					{	$TAXHEAT_ig{$tax}{'asvs'} .= ";".$i;
+					}
+				else
+					{	$TAXHEAT_ig{$tax}{'asvs'} = $i;
+						$TAXHEAT_ig{$tax}{'depth'} = 1;
+					}
+			}
+        }
+	}
+
+open(OUTDEEP1_ig, ">".$options{n}."_IGNORE_heatmap_multiASV.txt");
+foreach my $i (sort keys %TAXHEAT_ig)
+	{	if ($TAXHEAT_ig{$i}{'asvs'} =~ m/;/)
+			{	print OUTDEEP1_ig "$i <<Depth ".$TAXHEAT_ig{$i}{'depth'}.">>\tSample\t";
+				my $multiasv = $TAXHEAT_ig{$i}{'asvs'};
+				my @multiasv_split = split(';', $multiasv);
+				foreach my $j (@multiasv_split)
+					{	print OUTDEEP1_ig "$j\t";
+					}
+				print OUTDEEP1_ig "\n";
+				foreach my $k (0..$#sample_headers)
+					{	print OUTDEEP1_ig "$i <<Depth ".$TAXHEAT_ig{$i}{'depth'}.">>\t";
+						print OUTDEEP1_ig "$sample_headers[$k]\t";
+						foreach my $j (@multiasv_split)
+							{	print OUTDEEP1_ig "$ASV{$j}{$sample_headers[$k]}\t";
+							}
+						print OUTDEEP1_ig "\n";
+					}
+			}
+	}
+close(OUTDEEP1_ig);
+
+}
 
 open(UNKNOWNS, ">".$options{n}."_unknown_asvids.txt");
 foreach my $i (sort keys %ASV)
