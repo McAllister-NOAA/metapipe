@@ -2,7 +2,7 @@
 
 #Run from inside the folder where your nt database is held.
 #Run to update nt, taxonomy dmp, and prep files for metapipe.
-#Requires blast+, wget, and taxonoy-tools (https://github.com/pmenzel/taxonomy-tools), all in PATH
+#Requires blast+, wget, and taxonomy-tools (https://github.com/pmenzel/taxonomy-tools), all in PATH
 
 echo
 echo "Updating nt BLAST database..."
