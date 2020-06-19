@@ -142,6 +142,9 @@ removeASVsFILE=NULL
 
 source $parameterfilepath
 
+temp_holder=$speciesGenusCutoffs
+speciesGenusCutoffs=`echo $temp_holder | sed -E 's/^\"//' | sed -E 's/\"$//'`
+
 ##########################################################################################
 ##########################################################################################
 
@@ -759,7 +762,6 @@ for ((f=1; f<=`awk '{print NF}' ${workingdirectory}/${outdirectory}/sample_metad
       elif [[ "$header" = "sites" ]]; then
       sites="TRUE"
       elif [[ "$header" = "controls" ]]; then
-      controlspresent="TRUE"
       positiveCount=`cat ${workingdirectory}/${outdirectory}/temp | grep -c "positive"`
       negativeCount=`cat ${workingdirectory}/${outdirectory}/temp | grep -c "negative"`
       if [[ $positiveCount -ge 1 ]]; then
@@ -767,6 +769,9 @@ for ((f=1; f<=`awk '{print NF}' ${workingdirectory}/${outdirectory}/sample_metad
       fi
       if [[ $negativeCount -ge 1 ]]; then
         controlNeg="TRUE"
+      fi
+      if [[ $positiveCount -ge 1 || $negativeCount -ge 1 ]]; then
+        controlspresent="TRUE"
       fi
       elif [[ "$header" =~ "group" ]]; then
       groupsDefinedFlag="TRUE"
@@ -803,28 +808,7 @@ rm -f ${workingdirectory}/${outdirectory}/Figures/01_Maps/Rplot*
 #Tables
 perl ${metapipedir}/assets/barchart_filterLowAbund.pl -i ${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR.txt -f $filterPercent > ${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR_filtLowAbund_zzOther.txt
 
-asv_to_use="ASV_1"
-if [[ "$removeASVsFILE" != "NULL" ]]; then
-  tempcount=1
-  temphitindicator="YES"
-  while [ "$temphitindicator" = "YES" ]; do
-    temphit="NO"
-    while IFS= read -r line; do
-      if [[ "$line" = "ASV_${tempcount}" ]]; then
-        temphit="YES"
-        tempcount=$(expr $tempcount + 1)
-      fi
-    done < $removeASVsFILE
-    if [[ "$temphit" = "YES" ]]; then
-      temphitindicator="YES"
-    else
-      temphitindicator="NO"
-    fi
-  done
-  asv_to_use="ASV_${tempcount}"
-fi
-
-Rscript --vanilla ${metapipedir}/assets/process_tables.R ${workingdirectory}/${outdirectory} ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $filterPercent $controlspresent $filterLowQualSamples $filterPercentLowQualSamples ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv $sites $replicates ${workingdirectory}/${outdirectory}/dada2/ASVs_counts.tsv $asv_to_use \
+Rscript --vanilla ${metapipedir}/assets/process_tables.R ${workingdirectory}/${outdirectory} ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $filterPercent $controlspresent $filterLowQualSamples $filterPercentLowQualSamples ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv $sites $replicates ${workingdirectory}/${outdirectory}/dada2/ASVs_counts.tsv \
   1>> ${workingdirectory}/${outdirectory}/processed_tables/table_rscript_out.log 2>&1
 perl ${metapipedir}/assets/filter_lowabundance_taxa.pl -a ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt -p $filterPercent > ${outdirectory}/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2zzOther.txt
 

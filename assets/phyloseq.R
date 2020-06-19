@@ -4,11 +4,11 @@ args <- commandArgs(trailingOnly = TRUE)
 ########################################
 #TEMP WHILE WORKING ON SCRIPT
 # args[1]<-"/Users/mcallister/Desktop/test_figs" #FIGURE OUT directory
-# args[2]<-"/Users/mcallister/Desktop/chris_test" #Working directory
-# args[3]<-"CP_all_out" #outdirectory name
-# args[4]<-TRUE #control flag
+# args[2]<-"/Users/mcallister/Desktop/small_dataset" #Working directory
+# args[3]<-"small_dataset_out" #outdirectory name
+# args[4]<-FALSE #control flag
 # args[5]<-FALSE #filter low quality samples flag
-# args[6]<-TRUE #replicateFlag
+# args[6]<-FALSE #replicateFlag
 # args[7]<-TRUE #sitelabelFlag
 # args[8]<-5 #percent filter for taxa
 # args[9]<-FALSE #FILTER NAs where appropriate
@@ -16,9 +16,9 @@ args <- commandArgs(trailingOnly = TRUE)
 # args[11]<-TRUE #groups defined in sample metadata file
 # args[12]<-2 #number of groups defined in sample metadata file
 # args[13]<-"Order" #category to filter on for taxa of interest
-# args[14]<-"/Users/mcallister/Desktop/chris_test/choice_taxa.txt" #location of taxa of interest one per line
+# args[14]<-"/Users/mcallister/Desktop/chris_test/18S/choice_taxa.txt" #location of taxa of interest one per line
 # args[15]<-TRUE #whether chem data has been provided
-# args[16]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/chem_headers.txt" #location of chem header file (one per line)
+# args[16]<-"/Users/mcallister/Desktop/small_dataset/small_dataset_out/chem_headers.txt" #location of chem header file (one per line)
 ########################################
 library("ggplot2")
 library("dplyr")
@@ -746,8 +746,10 @@ heatmap <- plot_heatmap(phylo3, method = "NMDS", distance = "jaccard",
              high = "red", 
              na.value = "white") +
   theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+tryCatch({
 heatmap$scales$scales[[1]]$name <- "ASV"
 heatmap$scales$scales[[2]]$name <- "Relative Abundance (%)"
+}, error=function(e){heatmap$scales$scales[[1]]$name <- "Relative Abundance (%)" })
 pdf(file='heatmap_ASVs_relabund_filtsamples_alltaxa_clustSamples.pdf', width = 11, height = 8.5)
 print(heatmap)
 dev.off()
@@ -757,13 +759,16 @@ print(heatmap)
 dev.off()
 
 if (replicateFlag == TRUE) {
+  tryCatch({
   heatmap <- plot_heatmap(phylo7a, method = "NMDS", distance = "jaccard", 
                           low = "ghostwhite", 
                           high = "red", 
                           na.value = "white") +
     theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+  tryCatch({
   heatmap$scales$scales[[1]]$name <- "ASV"
   heatmap$scales$scales[[2]]$name <- "Relative Abundance (%)"
+  }, error=function(e){heatmap$scales$scales[[1]]$name <- "Relative Abundance (%)" })
   pdf(file='heatmap_ASVs_relabund_replicateGroupedSamples_alltaxa_clustReplicates.pdf', width = 11, height = 8.5)
   print(heatmap)
   dev.off()
@@ -771,17 +776,21 @@ if (replicateFlag == TRUE) {
   pdf(file='heatmap_ASVs_relabund_replicateGroupedSamples_alltaxa_orderedReplicates.pdf', width = 11, height = 8.5)
   print(heatmap)
   dev.off()
+  }, error=function(e){})
 }
 
 
 if (sitelabelFlag == TRUE) {
+  tryCatch({
   heatmap <- plot_heatmap(phylo7b, method = "NMDS", distance = "jaccard", 
                           low = "ghostwhite", 
                           high = "red", 
                           na.value = "white") +
     theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+  tryCatch({
   heatmap$scales$scales[[1]]$name <- "ASV"
   heatmap$scales$scales[[2]]$name <- "Relative Abundance (%)"
+  }, error=function(e){heatmap$scales$scales[[1]]$name <- "Relative Abundance (%)" })
   pdf(file='heatmap_ASVs_relabund_siteGroupedSamples_alltaxa_clustSites.pdf', width = 11, height = 8.5)
   print(heatmap)
   dev.off()
@@ -789,6 +798,7 @@ if (sitelabelFlag == TRUE) {
   pdf(file='heatmap_ASVs_relabund_siteGroupedSamples_alltaxa_orderedSites.pdf', width = 11, height = 8.5)
   print(heatmap)
   dev.off()
+  }, error=function(e){})
 }
 
 setwd(paste0(as.character(args[1]), "/03_Heatmaps/Taxonomy_merge_based", sep = ""))
@@ -798,8 +808,10 @@ heatmap <- plot_heatmap(phylo11, method = "NMDS", distance = "jaccard",
                         high = "red", 
                         na.value = "white") +
   theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+tryCatch({
 heatmap$scales$scales[[1]]$name <- "ASV"
 heatmap$scales$scales[[2]]$name <- "Relative Abundance (%)"
+}, error=function(e){heatmap$scales$scales[[1]]$name <- "Relative Abundance (%)" })
 pdf(file='heatmap_Taxa_relabund_filtsamples_alltaxa_clustSamples.pdf', width = 11, height = 8.5)
 print(heatmap)
 dev.off()
@@ -809,13 +821,16 @@ print(heatmap)
 dev.off()
 
 if (replicateFlag == TRUE) {
+  tryCatch({
   heatmap <- plot_heatmap(phylo15a, method = "NMDS", distance = "jaccard", 
                           low = "ghostwhite", 
                           high = "red", 
                           na.value = "white") +
     theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+  tryCatch({
   heatmap$scales$scales[[1]]$name <- "ASV"
   heatmap$scales$scales[[2]]$name <- "Relative Abundance (%)"
+  }, error=function(e){heatmap$scales$scales[[1]]$name <- "Relative Abundance (%)" })
   pdf(file='heatmap_Taxa_relabund_replicateGroupedSamples_alltaxa_clustReplicates.pdf', width = 11, height = 8.5)
   print(heatmap)
   dev.off()
@@ -823,17 +838,21 @@ if (replicateFlag == TRUE) {
   pdf(file='heatmap_Taxa_relabund_replicateGroupedSamples_alltaxa_orderedReplicates.pdf', width = 11, height = 8.5)
   print(heatmap)
   dev.off()
+  }, error=function(e){})
 }
 
 
 if (sitelabelFlag == TRUE) {
+  tryCatch({
   heatmap <- plot_heatmap(phylo15b, method = "NMDS", distance = "jaccard", 
                           low = "ghostwhite", 
                           high = "red", 
                           na.value = "white") +
     theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+  tryCatch({
   heatmap$scales$scales[[1]]$name <- "ASV"
   heatmap$scales$scales[[2]]$name <- "Relative Abundance (%)"
+  }, error=function(e){heatmap$scales$scales[[1]]$name <- "Relative Abundance (%)" })
   pdf(file='heatmap_Taxa_relabund_siteGroupedSamples_alltaxa_clustSites.pdf', width = 11, height = 8.5)
   print(heatmap)
   dev.off()
@@ -841,6 +860,7 @@ if (sitelabelFlag == TRUE) {
   pdf(file='heatmap_Taxa_relabund_siteGroupedSamples_alltaxa_orderedSites.pdf', width = 11, height = 8.5)
   print(heatmap)
   dev.off()
+  }, error=function(e){})
 }
 
 ########################
@@ -1900,6 +1920,25 @@ if (chemDataFlag == TRUE) {
 # ORDINATION  
 #
 ########################
+original_replicateFlag <- FALSE
+original_sitelabelFlag <- FALSE
+if (replicateFlag == TRUE) {
+  test_replicate_column <- sample_metadata$replicates
+  test_replicate_column <- unique(test_replicate_column)
+  if (length(test_replicate_column) == 1) {
+    original_replicateFlag <- replicateFlag
+    replicateFlag <- FALSE
+  }
+}
+if (sitelabelFlag == TRUE) {
+  test_site_column <- sample_metadata$sites
+  test_site_column <- unique(test_site_column)
+  if (length(test_site_column) == 1) {
+    original_sitelabelFlag <- sitelabelFlag
+    sitelabelFlag <- FALSE
+  }
+}
+
 setwd(paste0(as.character(args[1]), "/05_Ordination/ASV_based/read_count", sep = ""))
 options(max.print=1000000)
 
@@ -6452,6 +6491,14 @@ if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
 # NETWORK ANALYSIS
 #
 ########################
+if (original_replicateFlag == TRUE) {
+  replicateFlag <- TRUE
+}
+if (original_sitelabelFlag == TRUE) {
+  sitelabelFlag <- TRUE
+}
+
+
 setwd(paste0(as.character(args[1]), "/06_Network/ASV_based/read_count", sep = ""))
 
 for (i in 1:9) {
@@ -6705,7 +6752,12 @@ dev.off()
 
 
 
-
+if (original_replicateFlag == TRUE) {
+  replicateFlag <- FALSE
+}
+if (original_sitelabelFlag == TRUE) {
+  sitelabelFlag <- FALSE
+}
 
 
 ########################  
@@ -8991,7 +9043,12 @@ if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
 
 
 
-
+if (original_replicateFlag == TRUE) {
+  replicateFlag <- TRUE
+}
+if (original_sitelabelFlag == TRUE) {
+  sitelabelFlag <- TRUE
+}
 
 ########################
 #
@@ -9097,29 +9154,49 @@ if (taxaofinterestFlag == TRUE) {
   taxa_of_interest <- as.vector(taxa_of_interest)
   hierarchy_level <- as.character(args[13])
   
+  testing_filter <- as.data.frame(tax_table(phylo4))
+  testing_filter <- testing_filter %>% select(as.character(hierarchy_level)) %>% filter(eval(parse(text = hierarchy_level)) %in% taxa_of_interest)
+  if (nrow(testing_filter) == 0) {
+    skip_filtered <- TRUE
+  } else {
+    skip_filtered <- FALSE
+  }
+  
   phylo1 <- subset_taxa(phylo1, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
   phylo2 <- subset_taxa(phylo2, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
   phylo3 <- subset_taxa(phylo3, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+  if (skip_filtered == FALSE) {
   phylo4 <- subset_taxa(phylo4, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
   phylo5 <- subset_taxa(phylo5, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+  }
   
   phylo10 <- subset_taxa(phylo10, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
   phylo11 <- subset_taxa(phylo11, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+  if (skip_filtered == FALSE) {
   phylo12 <- subset_taxa(phylo12, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
   phylo13 <- subset_taxa(phylo13, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+  }
   
   if (replicateFlag == TRUE) {
     phylo7a <- subset_taxa(phylo7a, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    if (skip_filtered == FALSE) {
     phylo9a <- subset_taxa(phylo9a, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    }
     phylo15a <- subset_taxa(phylo15a, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    if (skip_filtered == FALSE) {
     phylo17a <- subset_taxa(phylo17a, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    }
   }
   
   if (sitelabelFlag == TRUE) {
     phylo7b <- subset_taxa(phylo7b, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    if (skip_filtered == FALSE) {
     phylo9b <- subset_taxa(phylo9b, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    }
     phylo15b <- subset_taxa(phylo15b, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    if (skip_filtered == FALSE) {
     phylo17b <- subset_taxa(phylo17b, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    }
   }
   
   ########################
@@ -9230,6 +9307,7 @@ if (taxaofinterestFlag == TRUE) {
     hcl(h = hues, l = 65, c = 100)[1:n]
   }
   
+  if (skip_filtered == FALSE) {
   for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
     count_call <- eval(parse(text = paste0(i,"_count")))
     NA_call <- eval(parse(text = paste0(i,"_NA")))
@@ -9256,6 +9334,7 @@ if (taxaofinterestFlag == TRUE) {
     pdf(file=paste0('barplot_readcount_filtsamples_filtLT',filter_percent,'PERCtaxa_',i,'.pdf', sep = ""), width = 11, height = 8.5)
     print(bar_plot)
     dev.off()
+  }
   }
   
   ###Relative abundance
@@ -9304,6 +9383,7 @@ if (taxaofinterestFlag == TRUE) {
     dev.off()
   }
   
+  if (skip_filtered == FALSE) {
   for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
     count_call <- eval(parse(text = paste0(i,"_count")))
     NA_call <- eval(parse(text = paste0(i,"_NA")))
@@ -9330,6 +9410,7 @@ if (taxaofinterestFlag == TRUE) {
     pdf(file=paste0('barplot_relabund_filtsamples_filtLT',filter_percent,'PERCtaxa_',i,'.pdf', sep = ""), width = 11, height = 8.5)
     print(bar_plot)
     dev.off()
+  }
   }
   
   #GROUPED
@@ -9384,6 +9465,7 @@ if (taxaofinterestFlag == TRUE) {
   }
   
   if (replicateFlag == TRUE) {
+    if (skip_filtered == FALSE) {
     for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
       count_call <- eval(parse(text = paste0(i,"_count")))
       NA_call <- eval(parse(text = paste0(i,"_NA")))
@@ -9411,9 +9493,11 @@ if (taxaofinterestFlag == TRUE) {
       print(bar_plot)
       dev.off()
     }
+    }
   }
   
   if (sitelabelFlag == TRUE) {
+    if (skip_filtered == FALSE) {
     for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
       count_call <- eval(parse(text = paste0(i,"_count")))
       NA_call <- eval(parse(text = paste0(i,"_NA")))
@@ -9441,6 +9525,7 @@ if (taxaofinterestFlag == TRUE) {
       print(bar_plot)
       dev.off()
     }
+    }
   }
   
   ########################
@@ -9451,6 +9536,7 @@ if (taxaofinterestFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/Taxa_of_interest/03_Heatmaps/ASV_based", sep = ""))
   standf = function(x) 100*(x / sum(x))
   
+  tryCatch({
   heatmap <- plot_heatmap(phylo3, method = "NMDS", distance = "jaccard", 
                           low = "ghostwhite", 
                           high = "red", 
@@ -9462,7 +9548,9 @@ if (taxaofinterestFlag == TRUE) {
   pdf(file='heatmap_ASVs_relabund_filtsamples_alltaxa_orderedSamples.pdf', width = 11, height = 8.5)
   print(heatmap)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   if (replicateFlag == TRUE) {
     heatmap <- plot_heatmap(phylo7a, method = "NMDS", distance = "jaccard", 
                             low = "ghostwhite", 
@@ -9476,8 +9564,9 @@ if (taxaofinterestFlag == TRUE) {
     print(heatmap)
     dev.off()
   }
+  }, error=function(e){})
   
-  
+  tryCatch({
   if (sitelabelFlag == TRUE) {
     heatmap <- plot_heatmap(phylo7b, method = "NMDS", distance = "jaccard", 
                             low = "ghostwhite", 
@@ -9491,10 +9580,12 @@ if (taxaofinterestFlag == TRUE) {
     print(heatmap)
     dev.off()
   }
+  }, error=function(e){})
   
   
   setwd(paste0(as.character(args[1]), "/Taxa_of_interest/03_Heatmaps/Taxonomy_merge_based", sep = ""))
   
+  tryCatch({
   heatmap <- plot_heatmap(phylo11, method = "NMDS", distance = "jaccard", 
                           low = "ghostwhite", 
                           high = "red", 
@@ -9506,7 +9597,9 @@ if (taxaofinterestFlag == TRUE) {
   pdf(file='heatmap_Taxa_relabund_filtsamples_alltaxa_orderedSamples.pdf', width = 11, height = 8.5)
   print(heatmap)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   if (replicateFlag == TRUE) {
     heatmap <- plot_heatmap(phylo15a, method = "NMDS", distance = "jaccard", 
                             low = "ghostwhite", 
@@ -9520,8 +9613,9 @@ if (taxaofinterestFlag == TRUE) {
     print(heatmap)
     dev.off()
   }
+  }, error=function(e){})
   
-  
+  tryCatch({
   if (sitelabelFlag == TRUE) {
     heatmap <- plot_heatmap(phylo15b, method = "NMDS", distance = "jaccard", 
                             low = "ghostwhite", 
@@ -9535,6 +9629,7 @@ if (taxaofinterestFlag == TRUE) {
     print(heatmap)
     dev.off()
   }
+  }, error=function(e){})
   
   ########################
   #

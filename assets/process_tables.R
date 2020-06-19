@@ -4,18 +4,17 @@ args <- commandArgs(trailingOnly = TRUE)
 ########################################
 # # TEMP WHILE WORKING ON SCRIPT
 # args[1]<-"/Users/mcallister/Desktop/test_figs" #FIGURE OUT directory
-# args[2]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv" #ASV count table
-# args[3]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/ASV2Taxonomy/CP_all_out_asvTaxonomyTable_NOUNKNOWNS.txt" #ASV taxonomy table
-# args[4]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/sample_metadata_forR.txt" #sample metadata file
+# args[2]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv" #ASV count table
+# args[3]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/ASV2Taxonomy/CP_all_out_asvTaxonomyTable_NOUNKNOWNS.txt" #ASV taxonomy table
+# args[4]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/sample_metadata_forR.txt" #sample metadata file
 # args[5]<-5 #percent filter (ASVs)
 # args[6]<-TRUE #controllabelFlag
 # args[7]<-TRUE #low quality sample filter
 # args[8]<-30 #percent filter (Samples), based on median (excluding controls)
-# args[9]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv" #ASV counts merged on taxonomy
+# args[9]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv" #ASV counts merged on taxonomy
 # args[10]<- FALSE #Sites metadata category
 # args[11]<- TRUE #Replicates metadata category
-# args[12]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/dada2/ASVs_counts.tsv"
-# args[13]<-"ASV_2" #Use for filtering NA
+# args[12]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/dada2/ASVs_counts.tsv"
 ########################################
 library("dplyr")
 
@@ -114,13 +113,13 @@ write.table(asv_countrel, "ASVs_counts_NOUNKNOWNS_percentabund.tsv", sep="\t", q
 #Grouped counts by mean (not sum) of rel. abund
 replicateFlag <- as.logical(args[11])
 sitelabelFlag <- as.logical(args[10])
-ASV_filt <- as.character(args[13])
 
 if (sitelabelFlag == TRUE) { #Will expect "sites" column
   asv_countrel_rotated <- asv_countrel_rotated1
   asv_countrel_rotated <- asv_countrel_rotated %>% rename(Sample = x)
   asv_countrel_join <- left_join(select(sample_metadata, Sample, sites), asv_countrel_rotated, by = "Sample")
-  asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = ASV_filt))))
+  temp_colnames <- colnames(asv_countrel_join)
+  asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = temp_colnames[3]))))
   asv_countrel_join <- asv_countrel_join %>% select(-Sample)
   rep_group <- asv_countrel_join %>% group_by(sites) %>% 
     summarise_all(funs(mean))
@@ -142,7 +141,8 @@ if (replicateFlag == TRUE) { #Will expect "replicates" column
   asv_countrel_rotated <- asv_countrel_rotated2
   asv_countrel_rotated <- asv_countrel_rotated %>% rename(Sample = x)
   asv_countrel_join <- left_join(select(sample_metadata, Sample, replicates), asv_countrel_rotated, by = "Sample")
-  asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = ASV_filt))))
+  temp_colnames <- colnames(asv_countrel_join)
+  asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = temp_colnames[3]))))
   asv_countrel_join <- asv_countrel_join %>% select(-Sample)
   rep_group <- asv_countrel_join %>% group_by(replicates) %>% 
     summarise_all(funs(mean))
@@ -240,7 +240,8 @@ if (sitelabelFlag == TRUE) { #Will expect "sites" column
   asv_countrel_rotated <- asv_countrel_rotated1
   asv_countrel_rotated <- asv_countrel_rotated %>% rename(Sample = x)
   asv_countrel_join <- left_join(select(sample_metadata, Sample, sites), asv_countrel_rotated, by = "Sample")
-  asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = ASV_filt))))
+  temp_colnames <- colnames(asv_countrel_join)
+  asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = temp_colnames[3]))))
   asv_countrel_join <- asv_countrel_join %>% select(-Sample)
   rep_group <- asv_countrel_join %>% group_by(sites) %>% 
     summarise_all(funs(mean))
@@ -256,7 +257,8 @@ if (replicateFlag == TRUE) { #Will expect "replicates" column
   asv_countrel_rotated <- asv_countrel_rotated2
   asv_countrel_rotated <- asv_countrel_rotated %>% rename(Sample = x)
   asv_countrel_join <- left_join(select(sample_metadata, Sample, replicates), asv_countrel_rotated, by = "Sample")
-  asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = ASV_filt))))
+  temp_colnames <- colnames(asv_countrel_join)
+  asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = temp_colnames[3]))))
   asv_countrel_join <- asv_countrel_join %>% select(-Sample)
   rep_group <- asv_countrel_join %>% group_by(replicates) %>% 
     summarise_all(funs(mean))
