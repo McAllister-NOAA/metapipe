@@ -2,6 +2,7 @@
 ###Figure options:
 filterPercent=5
 filterPercentLowQualSamples=10
+pieScale=5.7
 
 ###
 filterLowQualSamples=TRUE
