@@ -4,9 +4,9 @@ args <- commandArgs(trailingOnly = TRUE)
 ########################################
 # # TEMP WHILE WORKING ON SCRIPT
 # args[1]<-"/Users/mcallister/Desktop/test_figs" #FIGURE OUT directory
-# args[2]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/processed_tables/presence_absence/presenceabsence_compRelAbund_ASVbased_withUnknowns_filtsamples.txt" #presenceabsence_compRelAbund_x file
-# args[3]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/processed_tables/presence_absence/presenceabsence_compRelAbund_ASVbased_NoUnknowns_filtsamples.txt" #presenceabsence_compRelAbund_x file
-# args[4]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/processed_tables/presence_absence/presenceabsence_compRelAbund_TAXAbased_NoUnknowns_filtsamples.txt" #presenceabsence_compRelAbund_x file
+# args[2]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_filtsamples.txt" #presenceabsence_compRelAbund_x file
+# args[3]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_filtsamples.txt" #presenceabsence_compRelAbund_x file
+# args[4]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_filtsamples.txt" #presenceabsence_compRelAbund_x file
 
 ########################################
 library("dplyr")
@@ -137,16 +137,3 @@ PA_plot <- ggplot(PA_table, aes(num_present, avg_counts_allrep)) +
 pdf(file='ViolinBoxPlot_ReadsVSReplicateDetection_TAXAbased_withoutUnknowns_avgReadsAllReplicates.pdf', width = 11, height = 8.5)
 print(PA_plot)
 dev.off()
-
-
-
-
-
-
-
-
-
-
-
-
-

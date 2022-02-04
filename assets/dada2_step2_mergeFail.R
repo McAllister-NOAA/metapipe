@@ -45,7 +45,7 @@ if (as.character(args[3]) == "forward") {
                             dada_f=sapply(dada_forward, getN), 
                             nonchim=rowSums(seqtab.nochim), 
                             final_perc_reads_retained=round(rowSums(seqtab.nochim)/filtered_out[,1]*100, 1))
-  write.table(summary_tab, file='ReadTrimSummary_mergeFailed_ForwardReadOnly.txt', sep= '\t', quote=FALSE)
+  write.table(summary_tab, file='ReadTrimSummary.txt', sep= '\t', quote=FALSE)
   
   message("DADA2 - Creating ASV outs")
   asv_seqs <- colnames(seqtab.nochim)
@@ -89,7 +89,7 @@ if (as.character(args[3]) == "reverse") {
                             dada_r=sapply(dada_reverse, getN), 
                             nonchim=rowSums(seqtab.nochim), 
                             final_perc_reads_retained=round(rowSums(seqtab.nochim)/filtered_out[,1]*100, 1))
-  write.table(summary_tab, file='ReadTrimSummary_mergeFailed_ReverseReadOnly.txt', sep= '\t', quote=FALSE)
+  write.table(summary_tab, file='ReadTrimSummary.txt', sep= '\t', quote=FALSE)
   
   message("DADA2 - Creating ASV outs")
   asv_seqs <- colnames(seqtab.nochim)

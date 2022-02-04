@@ -21,15 +21,15 @@ if ($options{h})
     {   print "\n\nHelp called:\nOptions:\n";
         print "-a = ASV counts table (make sure there is text in the upperleft)\n";
         print "-s = DADA2 taxonomy output (w/ headers ASV Perc Len TaxID correction)\n";
-	print "-t = reformatted taxonkit output (TaxID\tsimplified taxonomy)\n";
-	print "-f = filtering options Species,Genus (e.g. 97,95)\n";
-	print "-n = Allin Output basename\n";
-	print '-c = Location of common names file (grep "genbank common name" from names.dmp NCBI taxonomy file)'; print "\n";
-	print "-d = List of ASVs to ignore (one per line) for outputs ignoring contaminants and/or unknowns\n";
-	print "-o = List of samples (one per line) in the order you want them exported. Must be exact matches to ASV counts table.\n";
-	print "       Does not have to include all samples.\n";
-	print "-h = This help message\n\n";
-	die;
+        print "-t = reformatted taxonkit output (TaxID\tsimplified taxonomy)\n";
+        print "-f = filtering options Species,Genus,Order (e.g. 97,95,90)\n";
+        print "-n = Allin Output basename\n";
+        print '-c = Location of common names file (grep "genbank common name" from names.dmp NCBI taxonomy file)'; print "\n";
+        print "-d = List of ASVs to ignore (one per line) for outputs ignoring contaminants and/or unknowns\n";
+        print "-o = List of samples (one per line) in the order you want them exported. Must be exact matches to ASV counts table.\n";
+        print "       Does not have to include all samples.\n";
+        print "-h = This help message\n\n";
+        die;
     }
 
 # - - - - - G L O B A L  V A R I A B L E S  - - - - - -
@@ -108,10 +108,10 @@ foreach my $line (@dada_dat)
 		if ($data[1] < $splitfilter[0] && $data[1] >= $splitfilter[1])
 			{	$ASV{$blah}{'confidence'} = "GENUS";
 			}
-		if ($data[1] < $splitfilter[1] && $data[1] >= 90)
+		if ($data[1] < $splitfilter[1] && $data[1] >= $splitfilter[2])
 			{	$ASV{$blah}{'confidence'} = "ORDER";
 			}
-		if ($data[1] < 90)
+		if ($data[1] < $splitfilter[2])
 			{	$ASV{$blah}{'confidence'} = "NOCONFIDENCE";
 			}
 	}
@@ -205,7 +205,8 @@ foreach my $i (sort keys %TAXON)
 
 #CHOOSE TAXONOMY for output
 foreach my $i (sort keys %ASV)
-	{	if (exists $ASV{$i}{'taxid'})	#CREATE list of taxids to consider
+	{   my $passTaxTest = "FALSE";
+        if (exists $ASV{$i}{'taxid'})	#TEST exists taxonomic assignment for taxid
 		{	my $asv_taxid = $ASV{$i}{'taxid'};
 			my @tax_list;
 			if ($asv_taxid =~ m/\;/ || $asv_taxid =~ m/\,/)
@@ -222,12 +223,47 @@ foreach my $i (sort keys %ASV)
 						}
 				}
 			else {push(@tax_list, $asv_taxid);}
+            my @new_tax_list;
+            foreach my $keepTaxHits (@tax_list)
+                {   if (exists $TAXON{$keepTaxHits})
+                        {   push(@new_tax_list, $keepTaxHits);
+                        }
+                }
+            @tax_list = @new_tax_list;
+            if (scalar @tax_list > 0)
+                {   $passTaxTest = "TRUE";
+                }
+        }
+        if (exists $ASV{$i}{'taxid'} && $passTaxTest eq "TRUE")	#CREATE list of taxids to consider
+		{	my $asv_taxid = $ASV{$i}{'taxid'};
+			my @tax_list;
+			if ($asv_taxid =~ m/\;/ || $asv_taxid =~ m/\,/)
+				{	my @multi = split(',', $asv_taxid);
+					foreach my $j (@multi)
+						{	$j =~ s/\ //;
+							if ($j =~ m/\;/)
+								{	my @multipli = split(';', $j);
+									foreach my $k (@multipli)
+										{	push(@tax_list, $k);	
+										}
+								}
+							else {push(@tax_list, $j);}
+						}
+				}
+			else {push(@tax_list, $asv_taxid);}
+            my @new_tax_list;
+            foreach my $keepTaxHits (@tax_list)
+                {   if (exists $TAXON{$keepTaxHits})
+                        {   push(@new_tax_list, $keepTaxHits);
+                        }
+                }
+            @tax_list = @new_tax_list;
 			my $choiceindicator = 0;
 			my $commonnameYES = 0;
 			my $desiredcommonname;
 			my $choice; # SET the first taxid in the list as the first choice
 			if ($ASV{$i}{'confidence'} eq "SPECIES") # SET depth of first choice based on confidence (%)
-				{	my $tap = $TAXON{$tax_list[0]}{'taxastring'};
+				{   my $tap = $TAXON{$tax_list[0]}{'taxastring'};
 					if ($tap !~ m/@@/)
 						{	$choice = $TAXON{$tax_list[0]}{'taxastring'};
 							$choiceindicator = 1;
@@ -1070,12 +1106,20 @@ foreach my $i (sort keys %ASV)
 										else {push(@unknown_tax_list, $j);}
 									}
 								foreach my $entry (@unknown_tax_list)
-									{	print UNKNOWNS "$TAXON{$entry}{'taxastring'}\t";
+									{   if (exists $TAXON{$entry}{'taxastring'})
+                                        {print UNKNOWNS "$TAXON{$entry}{'taxastring'}\t";}
+                                        else
+                                            {print UNKNOWNS "TaxaStringDeleted_or_DoesNotExist\t";}
 									}
 								print UNKNOWNS "\n";
 							}
 						else
-						{	print UNKNOWNS "$TAXON{$string}{'taxastring'}\n";
+						{   if (exists $TAXON{$string}{'taxastring'})
+                                {   print UNKNOWNS "$TAXON{$string}{'taxastring'}\n";
+                                }
+                            else
+                                {   print UNKNOWNS "TaxaStringDeleted_or_DoesNotExist\n";
+                                }
 						}
 					}
 				else

@@ -40,7 +40,8 @@ foreach my $line (@data)
         my $species = "";
         my @split_line = split('\t', $line);
         my $taxonID = $split_line[0];
-        my $taxonomyString = $split_line[1];
+        my $originaltaxonkitlineage = $split_line[1];
+        my $taxonomyString = $split_line[2];
         my @splittaxonomy = split(';', $taxonomyString);
         if (exists $splittaxonomy[0]) {$kingdom = $splittaxonomy[0];}
         if (exists $splittaxonomy[1]) {$phylum = $splittaxonomy[1];}
@@ -49,12 +50,6 @@ foreach my $line (@data)
         if (exists $splittaxonomy[4]) {$family = $splittaxonomy[4];}
         if (exists $splittaxonomy[5]) {$genus = $splittaxonomy[5];}
         if (exists $splittaxonomy[6]) {$species = $splittaxonomy[6];}
-        #if ($genus eq "" && $species eq "")
-        #    {   $species = "unknown__s"
-        #    }
-        #if ($genus ne "" && $species eq "")
-        #    {   $species = "$genus unknown__s";
-        #    }
         if ($#splittaxonomy > 6)
             {   die "\n\nTaxonkit format is not correct\n\n";}
         if ($kingdom eq "")
@@ -91,7 +86,7 @@ foreach my $line (@data)
                             }
                     }
                 my $mergetaxastring = $kingdom.";".$phylum.";".$class.";".$order.";".$family.";".$genus.";".$species;
-                print "$taxonID\t$mergetaxastring\n";
+                print "$taxonID\t$originaltaxonkitlineage\t$mergetaxastring\n";
             }
     }
     

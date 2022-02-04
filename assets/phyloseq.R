@@ -3,22 +3,22 @@ args <- commandArgs(trailingOnly = TRUE)
 
 ########################################
 #TEMP WHILE WORKING ON SCRIPT
-# args[1]<-"/Users/mcallister/Desktop/test_figs" #FIGURE OUT directory
-# args[2]<-"/Users/mcallister/Desktop/small_dataset" #Working directory
-# args[3]<-"small_dataset_out" #outdirectory name
-# args[4]<-FALSE #control flag
-# args[5]<-FALSE #filter low quality samples flag
-# args[6]<-FALSE #replicateFlag
-# args[7]<-TRUE #sitelabelFlag
-# args[8]<-5 #percent filter for taxa
-# args[9]<-FALSE #FILTER NAs where appropriate
-# args[10]<-TRUE #whether taxa of interest file is given
-# args[11]<-TRUE #groups defined in sample metadata file
-# args[12]<-2 #number of groups defined in sample metadata file
+# args[1]<-"/Users/mcallister/Desktop/Angie/COI_27Aug21/MTeDNA/MTeDNA_out/Figures" #FIGURE OUT directory
+# args[2]<-"/Users/mcallister/Desktop/Angie/COI_27Aug21/MTeDNA" #Working directory
+# args[3]<-"MTeDNA_out" #outdirectory name
+# args[4]<-"TRUE" #control flag
+# args[5]<-"FALSE" #filter low quality samples flag
+# args[6]<-"FALSE" #replicateFlag
+# args[7]<-"TRUE" #sitelabelFlag
+# args[8]<-"5" #percent filter for taxa
+# args[9]<-"FALSE" #FILTER NAs where appropriate
+# args[10]<-"FALSE" #whether taxa of interest file is given
+# args[11]<-"TRUE" #groups defined in sample metadata file
+# args[12]<-"3" #number of groups defined in sample metadata file
 # args[13]<-"Order" #category to filter on for taxa of interest
 # args[14]<-"/Users/mcallister/Desktop/chris_test/18S/choice_taxa.txt" #location of taxa of interest one per line
-# args[15]<-TRUE #whether chem data has been provided
-# args[16]<-"/Users/mcallister/Desktop/small_dataset/small_dataset_out/chem_headers.txt" #location of chem header file (one per line)
+# args[15]<-"FALSE" #whether chem data has been provided
+# args[16]<-"NULL" #location of chem header file (one per line)
 ########################################
 library("ggplot2")
 library("dplyr")
@@ -175,6 +175,7 @@ phylo11 <- phyloseq(ASV, TAX, samples)
 #ADD GROUPED SAMPLE METADATA
 if (replicateFlag == TRUE) {
   grouped_sample_metadata <- read.delim(paste0(as.character(args[2]),"/",as.character(args[3]),"/processed_tables/sample_metadata_NOUNKNOWNS_percentabund_groupedByReplicates.tsv", sep = ""), header=TRUE, stringsAsFactors=TRUE)
+  grouped_sample_metadata <- grouped_sample_metadata %>% filter(!is.na(Sample))
   row.names(grouped_sample_metadata) <- grouped_sample_metadata$Sample
   grouped_sample_metadata <- grouped_sample_metadata %>% select(-Sample)
   grouped_samplesA = sample_data(grouped_sample_metadata)
@@ -188,6 +189,7 @@ if (replicateFlag == TRUE) {
 }
 if (sitelabelFlag == TRUE) {
   grouped_sample_metadata <- read.delim(paste0(as.character(args[2]),"/",as.character(args[3]),"/processed_tables/sample_metadata_NOUNKNOWNS_percentabund_groupedBySites.tsv", sep = ""), header=TRUE, stringsAsFactors=TRUE)
+  grouped_sample_metadata <- grouped_sample_metadata %>% filter(!is.na(Sample))
   row.names(grouped_sample_metadata) <- grouped_sample_metadata$Sample
   grouped_sample_metadata <- grouped_sample_metadata %>% select(-Sample)
   grouped_samplesB = sample_data(grouped_sample_metadata)
@@ -412,8 +414,10 @@ if (sitelabelFlag == TRUE) {
 # BARCHARTS
 #
 ########################
+tryCatch({
 setwd(paste0(as.character(args[1]), "/02_Barcharts/read_count", sep = ""))
 
+tryCatch({
 for (i in c("Phylum")) {
   if (NAremoveFlag == TRUE) {
     bar_plot <- plot_bar(subset_taxa(phylo1, eval(parse(text = paste0("!is.na(",i,")")))), fill = i) +
@@ -436,7 +440,9 @@ for (i in c("Phylum")) {
   print(bar_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (controlFlag == TRUE || filteredLowQualSamples == TRUE) {
   for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
     if (NAremoveFlag == TRUE) {
@@ -484,8 +490,10 @@ if (controlFlag == TRUE || filteredLowQualSamples == TRUE) {
     dev.off()
   }
 }
+}, error=function(e){})
 
 #Filtered taxa barcharts
+tryCatch({
 Phylum_count <- as.numeric(system(paste0("cat ",as.character(args[2]),"/",as.character(args[3]),"/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2zzOther.txt | cut -f3 | grep -v ","\"","Phylum","\""," | sort | uniq | wc -l", sep = ""),
                                   intern = TRUE))
 Phylum_NA <- as.numeric(system(paste0("cat ",as.character(args[2]),"/",as.character(args[3]),"/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2zzOther.txt | cut -f3 | grep ","\"","^NA$","\""," | sort | uniq | wc -l", sep = ""),
@@ -542,10 +550,12 @@ for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
   print(bar_plot)
   dev.off()
 }
+}, error=function(e){})
 
 ###Relative abundance
 setwd(paste0(as.character(args[1]), "/02_Barcharts/relative_abundance", sep = ""))
 
+tryCatch({
 for (i in c("Phylum")) {
   if (NAremoveFlag == TRUE) {
     standf = function(x) 100*(x / sum(x))
@@ -565,7 +575,9 @@ for (i in c("Phylum")) {
   print(bar_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
   if (NAremoveFlag == TRUE) {
     standf = function(x) 100*(x / sum(x))
@@ -589,7 +601,9 @@ for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
   print(bar_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
   count_call <- eval(parse(text = paste0(i,"_count")))
   NA_call <- eval(parse(text = paste0(i,"_NA")))
@@ -618,8 +632,10 @@ for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
   print(bar_plot)
   dev.off()
 }
+}, error=function(e){})
 
 #GROUPED
+tryCatch({
 if (replicateFlag == TRUE) {
   for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
     if (NAremoveFlag == TRUE) {
@@ -645,7 +661,9 @@ if (replicateFlag == TRUE) {
     dev.off()
   }
 }
+}, error=function(e){})
 
+tryCatch({
 if (sitelabelFlag == TRUE) {
   for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
     if (NAremoveFlag == TRUE) {
@@ -671,7 +689,9 @@ if (sitelabelFlag == TRUE) {
     dev.off()
   }
 }
+}, error=function(e){})
 
+tryCatch({
 if (replicateFlag == TRUE) {
   for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
     count_call <- eval(parse(text = paste0(i,"_count")))
@@ -702,7 +722,9 @@ if (replicateFlag == TRUE) {
     dev.off()
   }
 }
+}, error=function(e){})
 
+tryCatch({
 if (sitelabelFlag == TRUE) {
   for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
     count_call <- eval(parse(text = paste0(i,"_count")))
@@ -733,7 +755,8 @@ if (sitelabelFlag == TRUE) {
     dev.off()
   }
 }
-
+}, error=function(e){})
+}, error=function(e){})
 ########################
 #
 # HEATMAPS
@@ -741,6 +764,7 @@ if (sitelabelFlag == TRUE) {
 ########################
 setwd(paste0(as.character(args[1]), "/03_Heatmaps/ASV_based", sep = ""))
 
+tryCatch({
 heatmap <- plot_heatmap(phylo3, method = "NMDS", distance = "jaccard", 
              low = "ghostwhite", 
              high = "red", 
@@ -757,6 +781,7 @@ heatmap$data$Sample <- factor(heatmap$data$Sample, levels = sample_order$V1)
 pdf(file='heatmap_ASVs_relabund_filtsamples_alltaxa_orderedSamples.pdf', width = 11, height = 8.5)
 print(heatmap)
 dev.off()
+}, error=function(e){})
 
 if (replicateFlag == TRUE) {
   tryCatch({
@@ -803,6 +828,7 @@ if (sitelabelFlag == TRUE) {
 
 setwd(paste0(as.character(args[1]), "/03_Heatmaps/Taxonomy_merge_based", sep = ""))
 
+tryCatch({
 heatmap <- plot_heatmap(phylo11, method = "NMDS", distance = "jaccard", 
                         low = "ghostwhite", 
                         high = "red", 
@@ -819,6 +845,7 @@ heatmap$data$Sample <- factor(heatmap$data$Sample, levels = sample_order$V1)
 pdf(file='heatmap_Taxa_relabund_filtsamples_alltaxa_orderedSamples.pdf', width = 11, height = 8.5)
 print(heatmap)
 dev.off()
+}, error=function(e){})
 
 if (replicateFlag == TRUE) {
   tryCatch({
@@ -871,13 +898,17 @@ if (sitelabelFlag == TRUE) {
 ########################
 setwd(paste0(as.character(args[1]), "/04_Alpha_Diversity/ASV_based", sep = ""))
 
+tryCatch({
 total = median(sample_sums(phylo2))
 standf = function(x, t=total) round(t * (x / sum(x)))
 
+tryCatch({
 alpha <- plot_richness(transform_sample_counts(phylo2, standf))
 out_alpha <- as.data.frame(alpha$data)
 write.table(out_alpha, "alpha_diversity_ASVbased_R.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 alpha_human <- estimate_richness(transform_sample_counts(phylo2, standf))
 for (i in c("Chao1", "Shannon")) {
   if (replicateFlag == TRUE) {
@@ -897,7 +928,9 @@ for (i in c("Chao1", "Shannon")) {
 }
 alpha_human <- tibble::rownames_to_column(alpha_human, "Sample")
 write.table(alpha_human, "alpha_diversity_ASVbased_human.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 if (replicateFlag == TRUE) {
   total = median(sample_sums(phylo2))
   alpha <- plot_richness(transform_sample_counts(phylo2, standf), nrow = NULL, x = "replicates") +
@@ -928,8 +961,10 @@ if (replicateFlag == TRUE) {
   pdf(file='alphaDiversity_ASVs_normalized_replicateGroupedSamples_alltaxa_Chao1Shannon.pdf', width = 15, height = 8.5)
   print(alpha)
   dev.off()
-  
 }
+}, error=function(e){})
+
+tryCatch({
 if (sitelabelFlag == TRUE) {
   total = median(sample_sums(phylo2))
   alpha <- plot_richness(transform_sample_counts(phylo2, standf), nrow = NULL, x = "sites") +
@@ -961,7 +996,9 @@ if (sitelabelFlag == TRUE) {
   print(alpha)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 total = median(sample_sums(phylo2))
 alpha <- plot_richness(transform_sample_counts(phylo2, standf), nrow = NULL) +
   xlab("Samples")
@@ -976,10 +1013,12 @@ alpha$data$samples <- factor(alpha$data$samples, levels = sample_order$V1)
 pdf(file='alphaDiversity_ASVs_normalized_filtsamples_alltaxa_Chao1Shannon.pdf', width = 15, height = 8.5)
 print(alpha)
 dev.off()
+}, error=function(e){})
 
 
 if (groupingFlag == TRUE) {
   for (i in 1:numberofGroups) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       total = median(sample_sums(phylo2))
       alpha <- plot_richness(transform_sample_counts(phylo2, standf), nrow = NULL, x = "replicates", color = paste0("group",i)) +
@@ -1011,6 +1050,9 @@ if (groupingFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       total = median(sample_sums(phylo2))
       alpha <- plot_richness(transform_sample_counts(phylo2, standf), nrow = NULL, x = "sites", color = paste0("group",i)) +
@@ -1042,7 +1084,9 @@ if (groupingFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
     
+    tryCatch({
     total = median(sample_sums(phylo2))
     alpha <- plot_richness(transform_sample_counts(phylo2, standf), nrow = NULL, color = paste0("group",i), sortby = "Chao1") +
       xlab("Samples")
@@ -1073,12 +1117,13 @@ if (groupingFlag == TRUE) {
     pdf(file=paste0('alphaDiversity_ASVs_normalized_filtsamples_alltaxa_Chao1Shannon_group',i,'Colored.pdf'), width = 15, height = 8.5)
     print(alpha)
     dev.off()
-    
+    }, error=function(e){})
   }
 }
 
 if (chemDataFlag == TRUE) {
   for (i in chem_headers$V1) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       classgroup <- class(sample_data(phylo2)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -1124,6 +1169,9 @@ if (chemDataFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       classgroup <- class(sample_data(phylo2)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -1169,7 +1217,9 @@ if (chemDataFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
     
+    tryCatch({
     classgroup <- class(sample_data(phylo2)[[i]])
     if (classgroup != "integer" && classgroup != "numeric") {
       viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -1207,7 +1257,7 @@ if (chemDataFlag == TRUE) {
     pdf(file=paste0('alphaDiversity_ASVs_normalized_filtsamples_alltaxa_Chao1Shannon_chem_',i,'_Colored.pdf'), width = 15, height = 8.5)
     print(alpha)
     dev.off()
-    
+    }, error=function(e){})
   }
 }
 
@@ -1220,10 +1270,13 @@ setwd(paste0(as.character(args[1]), "/04_Alpha_Diversity/Taxonomy_merge_based", 
 total = median(sample_sums(phylo10))
 standf = function(x, t=total) round(t * (x / sum(x)))
 
+tryCatch({
 alpha <- plot_richness(transform_sample_counts(phylo10, standf))
 out_alpha <- as.data.frame(alpha$data)
 write.table(out_alpha, "alpha_diversity_TAXAbased_R.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 alpha_human <- estimate_richness(transform_sample_counts(phylo10, standf))
 for (i in c("Chao1", "Shannon")) {
   if (replicateFlag == TRUE) {
@@ -1243,49 +1296,63 @@ for (i in c("Chao1", "Shannon")) {
 }
 alpha_human <- tibble::rownames_to_column(alpha_human, "Sample")
 write.table(alpha_human, "alpha_diversity_TAXAbased_human.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Species)), standf))
 out_alpha <- as.data.frame(alpha$data)
 write.table(out_alpha, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Species_R.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 alpha_human <- estimate_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Species)), standf))
 alpha_human <- tibble::rownames_to_column(alpha_human, "Sample")
 write.table(alpha_human, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Species_human.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Genus)), standf))
 out_alpha <- as.data.frame(alpha$data)
 write.table(out_alpha, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Genus_R.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 alpha_human <- estimate_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Genus)), standf))
 alpha_human <- tibble::rownames_to_column(alpha_human, "Sample")
 write.table(alpha_human, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Genus_human.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Family)), standf))
 out_alpha <- as.data.frame(alpha$data)
 write.table(out_alpha, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Family_R.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 alpha_human <- estimate_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Family)), standf))
 alpha_human <- tibble::rownames_to_column(alpha_human, "Sample")
 write.table(alpha_human, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Family_human.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Order)), standf))
 out_alpha <- as.data.frame(alpha$data)
 write.table(out_alpha, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Order_R.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 alpha_human <- estimate_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Order)), standf))
 alpha_human <- tibble::rownames_to_column(alpha_human, "Sample")
 write.table(alpha_human, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Order_human.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Class)), standf))
 out_alpha <- as.data.frame(alpha$data)
 write.table(out_alpha, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Class_R.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 alpha_human <- estimate_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Class)), standf))
 alpha_human <- tibble::rownames_to_column(alpha_human, "Sample")
 write.table(alpha_human, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Class_human.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Phylum)), standf))
 out_alpha <- as.data.frame(alpha$data)
 write.table(out_alpha, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Phylum_R.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 alpha_human <- estimate_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Phylum)), standf))
 alpha_human <- tibble::rownames_to_column(alpha_human, "Sample")
 write.table(alpha_human, "alpha_diversity_TAXAbased_ONLYINCLUDINGTAXACOMPLETETO_Phylum_human.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 if (replicateFlag == TRUE) {
   total = median(sample_sums(phylo10))
   alpha <- plot_richness(transform_sample_counts(phylo10, standf), nrow = NULL, x = "replicates") +
@@ -1316,8 +1383,10 @@ if (replicateFlag == TRUE) {
   pdf(file='alphaDiversity_Taxa_normalized_replicateGroupedSamples_alltaxa_Chao1Shannon.pdf', width = 15, height = 8.5)
   print(alpha)
   dev.off()
-  
 }
+}, error=function(e){})
+
+tryCatch({
 if (sitelabelFlag == TRUE) {
   total = median(sample_sums(phylo10))
   alpha <- plot_richness(transform_sample_counts(phylo10, standf), nrow = NULL, x = "sites") +
@@ -1349,7 +1418,9 @@ if (sitelabelFlag == TRUE) {
   print(alpha)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 total = median(sample_sums(phylo10))
 alpha <- plot_richness(transform_sample_counts(phylo10, standf), nrow = NULL) +
   xlab("Samples")
@@ -1364,10 +1435,12 @@ alpha$data$samples <- factor(alpha$data$samples, levels = sample_order$V1)
 pdf(file='alphaDiversity_Taxa_normalized_filtsamples_alltaxa_Chao1Shannon.pdf', width = 15, height = 8.5)
 print(alpha)
 dev.off()
+}, error=function(e){})
 
 
 if (groupingFlag == TRUE) {
   for (i in 1:numberofGroups) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       total = median(sample_sums(phylo10))
       alpha <- plot_richness(transform_sample_counts(phylo10, standf), nrow = NULL, x = "replicates", color = paste0("group",i)) +
@@ -1399,6 +1472,9 @@ if (groupingFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       total = median(sample_sums(phylo10))
       alpha <- plot_richness(transform_sample_counts(phylo10, standf), nrow = NULL, x = "sites", color = paste0("group",i)) +
@@ -1430,7 +1506,9 @@ if (groupingFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
     
+    tryCatch({
     total = median(sample_sums(phylo10))
     alpha <- plot_richness(transform_sample_counts(phylo10, standf), nrow = NULL, color = paste0("group",i), sortby = "Chao1") +
       xlab("Samples")
@@ -1461,12 +1539,13 @@ if (groupingFlag == TRUE) {
     pdf(file=paste0('alphaDiversity_Taxa_normalized_filtsamples_alltaxa_Chao1Shannon_group',i,'Colored.pdf'), width = 15, height = 8.5)
     print(alpha)
     dev.off()
-    
+    }, error=function(e){})
   }
 }
 
 if (chemDataFlag == TRUE) {
   for (i in chem_headers$V1) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       classgroup <- class(sample_data(phylo10)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -1512,6 +1591,9 @@ if (chemDataFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       classgroup <- class(sample_data(phylo10)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -1557,7 +1639,9 @@ if (chemDataFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
     
+    tryCatch({
     classgroup <- class(sample_data(phylo10)[[i]])
     if (classgroup != "integer" && classgroup != "numeric") {
       viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -1595,13 +1679,14 @@ if (chemDataFlag == TRUE) {
     pdf(file=paste0('alphaDiversity_Taxa_normalized_filtsamples_alltaxa_Chao1Shannon_chem_',i,'_Colored.pdf'), width = 15, height = 8.5)
     print(alpha)
     dev.off()
-    
+    }, error=function(e){})
   }
 }
 
 ###############
 # Taxa-based, filter to include only taxa with species level identifiers
 ###############
+tryCatch({
 if (replicateFlag == TRUE) {
   total = median(sample_sums(phylo10))
   alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Species)), standf), nrow = NULL, x = "replicates") +
@@ -1632,8 +1717,10 @@ if (replicateFlag == TRUE) {
   pdf(file='alphaDiversity_Taxa_normalized_TOSPECIES_replicateGroupedSamples_alltaxa_Chao1Shannon.pdf', width = 15, height = 8.5)
   print(alpha)
   dev.off()
-  
 }
+}, error=function(e){})
+
+tryCatch({
 if (sitelabelFlag == TRUE) {
   total = median(sample_sums(phylo10))
   alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Species)), standf), nrow = NULL, x = "sites") +
@@ -1665,7 +1752,9 @@ if (sitelabelFlag == TRUE) {
   print(alpha)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 total = median(sample_sums(phylo10))
 alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Species)), standf), nrow = NULL) +
   xlab("Samples")
@@ -1680,10 +1769,12 @@ alpha$data$samples <- factor(alpha$data$samples, levels = sample_order$V1)
 pdf(file='alphaDiversity_Taxa_normalized_TOSPECIES_filtsamples_alltaxa_Chao1Shannon.pdf', width = 15, height = 8.5)
 print(alpha)
 dev.off()
+}, error=function(e){})
 
 
 if (groupingFlag == TRUE) {
   for (i in 1:numberofGroups) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       total = median(sample_sums(phylo10))
       alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Species)), standf), nrow = NULL, x = "replicates", color = paste0("group",i)) +
@@ -1715,6 +1806,9 @@ if (groupingFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       total = median(sample_sums(phylo10))
       alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Species)), standf), nrow = NULL, x = "sites", color = paste0("group",i)) +
@@ -1746,7 +1840,9 @@ if (groupingFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
     
+    tryCatch({
     total = median(sample_sums(phylo10))
     alpha <- plot_richness(transform_sample_counts(subset_taxa(phylo10, !is.na(Species)), standf), nrow = NULL, color = paste0("group",i), sortby = "Chao1") +
       xlab("Samples")
@@ -1777,12 +1873,13 @@ if (groupingFlag == TRUE) {
     pdf(file=paste0('alphaDiversity_Taxa_normalized_TOSPECIES_filtsamples_alltaxa_Chao1Shannon_group',i,'Colored.pdf'), width = 15, height = 8.5)
     print(alpha)
     dev.off()
-    
+    }, error=function(e){})
   }
 }
 
 if (chemDataFlag == TRUE) {
   for (i in chem_headers$V1) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       classgroup <- class(sample_data(phylo10)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -1828,6 +1925,9 @@ if (chemDataFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       classgroup <- class(sample_data(phylo10)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -1873,7 +1973,9 @@ if (chemDataFlag == TRUE) {
       print(alpha)
       dev.off()
     }
+    }, error=function(e){})
     
+    tryCatch({
     classgroup <- class(sample_data(phylo10)[[i]])
     if (classgroup != "integer" && classgroup != "numeric") {
       viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -1911,10 +2013,10 @@ if (chemDataFlag == TRUE) {
     pdf(file=paste0('alphaDiversity_Taxa_normalized_TOSPECIES_filtsamples_alltaxa_Chao1Shannon_chem_',i,'_Colored.pdf'), width = 15, height = 8.5)
     print(alpha)
     dev.off()
-    
+    }, error=function(e){})
   }
 }
-
+}, error=function(e){})
 ########################
 #
 # ORDINATION  
@@ -1943,6 +2045,7 @@ setwd(paste0(as.character(args[1]), "/05_Ordination/ASV_based/read_count", sep =
 options(max.print=1000000)
 
 #Create ordinations for almost all phyloseq objects (NMDS & PCoA)
+tryCatch({
 message("phylo2 NMDS")
 phylo2_NMDS.ord <- ordinate(phylo2, "NMDS")
 phylo2_NMDS.ord
@@ -1968,8 +2071,9 @@ ord_tab <- ord_plot$data
 ord_tab <- tibble::rownames_to_column(ord_tab, "Samples")
 ord_tab <- ord_tab %>% select(Samples, Axis.1, Axis.2)
 write.table(ord_tab, "PCoA_ASVbased_samples_readcount_filtsamples_alltaxa.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
-
+tryCatch({
 message("phylo3 NMDS")
 setwd(paste0(as.character(args[1]), "/05_Ordination/ASV_based/relative_abundance", sep = ""))
 phylo3_NMDS.ord <- ordinate(phylo3, "NMDS")
@@ -1996,9 +2100,12 @@ ord_tab <- ord_plot$data
 ord_tab <- tibble::rownames_to_column(ord_tab, "Samples")
 ord_tab <- ord_tab %>% select(Samples, Axis.1, Axis.2)
 write.table(ord_tab, "PCoA_ASVbased_samples_relabund_filtsamples_alltaxa.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
 if (replicateFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/05_Ordination/ASV_based/relative_abundance", sep = ""))
+  
+  tryCatch({
   message("phylo7a NMDS")
   phylo7a_NMDS.ord <- ordinate(phylo7a, "NMDS")
   phylo7a_NMDS.ord
@@ -2024,8 +2131,9 @@ if (replicateFlag == TRUE) {
   ord_tab <- tibble::rownames_to_column(ord_tab, "Replicates")
   ord_tab <- ord_tab %>% select(Replicates, Axis.1, Axis.2)
   write.table(ord_tab, "PCoA_ASVbased_samples_relabund_replicateGroupedSamples_alltaxa.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+  }, error=function(e){})
   
-  
+  tryCatch({
   message("phylo15a NMDS")
   setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/relative_abundance", sep = ""))
   phylo15a_NMDS.ord <- ordinate(phylo15a, "NMDS")
@@ -2052,10 +2160,13 @@ if (replicateFlag == TRUE) {
   ord_tab <- tibble::rownames_to_column(ord_tab, "Replicates")
   ord_tab <- ord_tab %>% select(Replicates, Axis.1, Axis.2)
   write.table(ord_tab, "PCoA_TAXAbased_samples_relabund_replicateGroupedSamples_alltaxa.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+  }, error=function(e){})
 }
 
 if (sitelabelFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/05_Ordination/ASV_based/relative_abundance", sep = ""))
+  
+  tryCatch({
   message("phylo7b NMDS")
   phylo7b_NMDS.ord <- ordinate(phylo7b, "NMDS")
   phylo7b_NMDS.ord
@@ -2081,8 +2192,9 @@ if (sitelabelFlag == TRUE) {
   ord_tab <- tibble::rownames_to_column(ord_tab, "Sites")
   ord_tab <- ord_tab %>% select(Sites, Axis.1, Axis.2)
   write.table(ord_tab, "PCoA_ASVbased_samples_relabund_siteGroupedSamples_alltaxa.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+  }, error=function(e){})
   
-  
+  tryCatch({
   message("phylo15b NMDS")
   setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/relative_abundance", sep = ""))
   phylo15b_NMDS.ord <- ordinate(phylo15b, "NMDS")
@@ -2109,9 +2221,10 @@ if (sitelabelFlag == TRUE) {
   ord_tab <- tibble::rownames_to_column(ord_tab, "Sites")
   ord_tab <- ord_tab %>% select(Sites, Axis.1, Axis.2)
   write.table(ord_tab, "PCoA_TAXAbased_samples_relabund_siteGroupedSamples_alltaxa.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
-  
+  }, error=function(e){})
 }
 
+tryCatch({
 message("phylo10 NMDS")
 setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/read_count", sep = ""))
 phylo10_NMDS.ord <- ordinate(phylo10, "NMDS")
@@ -2138,7 +2251,9 @@ ord_tab <- ord_plot$data
 ord_tab <- tibble::rownames_to_column(ord_tab, "Samples")
 ord_tab <- ord_tab %>% select(Samples, Axis.1, Axis.2)
 write.table(ord_tab, "PCoA_TAXAbased_samples_readcount_filtsamples_alltaxa.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 message("phylo11 NMDS")
 setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/relative_abundance", sep = ""))
 phylo11_NMDS.ord <- ordinate(phylo11, "NMDS")
@@ -2165,6 +2280,7 @@ ord_tab <- ord_plot$data
 ord_tab <- tibble::rownames_to_column(ord_tab, "Samples")
 ord_tab <- ord_tab %>% select(Samples, Axis.1, Axis.2)
 write.table(ord_tab, "PCoA_TAXAbased_samples_relabund_filtsamples_alltaxa.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
 ########################
 #
@@ -4585,6 +4701,8 @@ if (sitelabelFlag == TRUE) {
 
 #ASV-based, read counts (phylo2)
 setwd(paste0(as.character(args[1]), "/05_Ordination/ASV_based/read_count", sep = ""))
+
+tryCatch({
 ord_plot <- plot_ordination(phylo2, phylo2_NMDS.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -4597,7 +4715,9 @@ dev.off()
 pdf(file='NMDS_ASVbased_taxa_readcount_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo2, phylo2_NMDS.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -4611,7 +4731,9 @@ dev.off()
 pdf(file='NMDS_ASVbased_taxa_readcount_filtsamples_alltaxa_facetPhylum_colorGenus.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo2, phylo2_PCoA.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -4624,7 +4746,9 @@ dev.off()
 pdf(file='PCoA_ASVbased_taxa_readcount_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo2, phylo2_PCoA.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -4638,7 +4762,9 @@ dev.off()
 pdf(file='PCoA_ASVbased_taxa_readcount_filtsamples_alltaxa_facetPhylum_colorGenus.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo2, phylo2_NMDS.ord, 
                             type="samples", 
                             title=paste0("NMDS - stress ",round(phylo2_stress, 3))) +
@@ -4647,7 +4773,9 @@ ord_plot <- plot_ordination(phylo2, phylo2_NMDS.ord,
 pdf(file='NMDS_ASVbased_samples_readcount_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo2, phylo2_PCoA.ord, 
                             type="samples", 
                             title="PCoA") +
@@ -4656,7 +4784,9 @@ ord_plot <- plot_ordination(phylo2, phylo2_PCoA.ord,
 pdf(file='PCoA_ASVbased_samples_readcount_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo2, phylo2_NMDS.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -4669,7 +4799,9 @@ dev.off()
 pdf(file='NMDS_ASVbased_taxa_readcount_filtsamples_alltaxa_biplot.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo2, phylo2_PCoA.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -4682,9 +4814,11 @@ dev.off()
 pdf(file='PCoA_ASVbased_taxa_readcount_filtsamples_alltaxa_biplot.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
 if (groupingFlag == TRUE) {
   for (i in 1:numberofGroups) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       ord_plot <- plot_ordination(phylo2, phylo2_NMDS.ord, 
                                   type="samples",
@@ -4706,6 +4840,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       ord_plot <- plot_ordination(phylo2, phylo2_NMDS.ord, 
                                   type="samples",
@@ -4727,6 +4864,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     groupnum <- paste0("group",i)
     classgroup <- class(sample_data(phylo2)[[groupnum]])
     if (classgroup == "integer" || classgroup == "numeric") {
@@ -4770,11 +4910,13 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
 if (chemDataFlag == TRUE) {
   for (i in chem_headers$V1) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       classgroup <- class(sample_data(phylo2)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -4805,6 +4947,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       classgroup <- class(sample_data(phylo2)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -4835,6 +4980,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     classgroup <- class(sample_data(phylo2)[[i]])
     if (classgroup != "integer" && classgroup != "numeric") {
       viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -4861,9 +5009,11 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
+tryCatch({
 if (replicateFlag == TRUE) {
   ord_plot <- plot_ordination(phylo2, phylo2_NMDS.ord, 
                               type="samples",
@@ -4885,7 +5035,9 @@ if (replicateFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo2, phylo2_NMDS.ord, 
                               type="samples",
@@ -4907,7 +5059,9 @@ if (sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo2, phylo2_NMDS.ord, 
                               type="samples",
@@ -4931,9 +5085,13 @@ if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (replicateFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/05_Ordination/ASV_based/relative_abundance", sep = ""))
+  
+  tryCatch({
   ord_plot <- plot_ordination(phylo7a, phylo7a_NMDS.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -4946,7 +5104,9 @@ if (replicateFlag == TRUE) {
   pdf(file='NMDS_ASVbased_taxa_relabund_replicateGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo7a, phylo7a_PCoA.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -4959,7 +5119,9 @@ if (replicateFlag == TRUE) {
   pdf(file='PCoA_ASVbased_taxa_relabund_replicateGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo7a, phylo7a_NMDS.ord, 
                               type="samples", 
                               title=paste0("NMDS - stress ",round(phylo7a_stress, 3))) +
@@ -4968,7 +5130,9 @@ if (replicateFlag == TRUE) {
   pdf(file='NMDS_ASVbased_samples_relabund_replicateGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo7a, phylo7a_PCoA.ord, 
                               type="samples", 
                               title="PCoA") +
@@ -4977,9 +5141,11 @@ if (replicateFlag == TRUE) {
   pdf(file='PCoA_ASVbased_samples_relabund_replicateGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
   if (groupingFlag == TRUE) {
     for (i in 1:numberofGroups) {
+      tryCatch({
       groupnum <- paste0("group",i)
       classgroup <- class(sample_data(phylo7a)[[groupnum]])
       if (classgroup == "integer" || classgroup == "numeric") {
@@ -5023,11 +5189,13 @@ if (replicateFlag == TRUE) {
         print(ord_plot)
         dev.off()
       }
+      }, error=function(e){})
     }
   }
   
   if (chemDataFlag == TRUE) {
     for (i in chem_headers$V1) {
+      tryCatch({
       classgroup <- class(sample_data(phylo7a)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
         viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -5052,13 +5220,18 @@ if (replicateFlag == TRUE) {
         pdf(file=paste0('PCoA_ASVbased_samples_relabund_replicateGroupedSamples_alltaxa_chem_',i,'_Colored.pdf'), width = 8, height = 8)
         print(ord_plot)
         dev.off()
-      } 
+      }
+      }, error=function(e){})
     }
   }
 }
+}, error=function(e){})
 
+tryCatch({
 if (sitelabelFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/05_Ordination/ASV_based/relative_abundance", sep = ""))
+  
+  tryCatch({
   ord_plot <- plot_ordination(phylo7b, phylo7b_NMDS.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -5071,7 +5244,9 @@ if (sitelabelFlag == TRUE) {
   pdf(file='NMDS_ASVbased_taxa_relabund_siteGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo7b, phylo7b_PCoA.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -5084,7 +5259,9 @@ if (sitelabelFlag == TRUE) {
   pdf(file='PCoA_ASVbased_taxa_relabund_siteGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo7b, phylo7b_NMDS.ord, 
                               type="samples", 
                               title=paste0("NMDS - stress ",round(phylo7b_stress, 3))) +
@@ -5093,7 +5270,9 @@ if (sitelabelFlag == TRUE) {
   pdf(file='NMDS_ASVbased_samples_relabund_siteGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo7b, phylo7b_PCoA.ord, 
                               type="samples", 
                               title="PCoA") +
@@ -5102,9 +5281,11 @@ if (sitelabelFlag == TRUE) {
   pdf(file='PCoA_ASVbased_samples_relabund_siteGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
   if (groupingFlag == TRUE) {
     for (i in 1:numberofGroups) {
+      tryCatch({
       groupnum <- paste0("group",i)
       classgroup <- class(sample_data(phylo7b)[[groupnum]])
       if (classgroup == "integer" || classgroup == "numeric") {
@@ -5148,11 +5329,13 @@ if (sitelabelFlag == TRUE) {
         print(ord_plot)
         dev.off()
       }
+      }, error=function(e){})
     }
   }
   
   if (chemDataFlag == TRUE) {
     for (i in chem_headers$V1) {
+      tryCatch({
       classgroup <- class(sample_data(phylo7b)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
         viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -5179,12 +5362,16 @@ if (sitelabelFlag == TRUE) {
         print(ord_plot)
         dev.off()
       }
+      }, error=function(e){})
     }
   }
 }
+}, error=function(e){})
 
 #ASV-based relative abundance (phylo3)
 setwd(paste0(as.character(args[1]), "/05_Ordination/ASV_based/relative_abundance", sep = ""))
+
+tryCatch({
 ord_plot <- plot_ordination(phylo3, phylo3_NMDS.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -5197,7 +5384,9 @@ dev.off()
 pdf(file='NMDS_ASVbased_taxa_relabund_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo3, phylo3_NMDS.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -5211,7 +5400,9 @@ dev.off()
 pdf(file='NMDS_ASVbased_taxa_relabund_filtsamples_alltaxa_facetPhylum_colorGenus.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo3, phylo3_PCoA.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -5224,7 +5415,9 @@ dev.off()
 pdf(file='PCoA_ASVbased_taxa_relabund_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo3, phylo3_PCoA.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -5238,7 +5431,9 @@ dev.off()
 pdf(file='PCoA_ASVbased_taxa_relabund_filtsamples_alltaxa_facetPhylum_colorGenus.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo3, phylo3_NMDS.ord, 
                             type="samples", 
                             title=paste0("NMDS - stress ",round(phylo3_stress, 3))) +
@@ -5247,7 +5442,9 @@ ord_plot <- plot_ordination(phylo3, phylo3_NMDS.ord,
 pdf(file='NMDS_ASVbased_samples_relabund_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo3, phylo3_PCoA.ord, 
                             type="samples", 
                             title="PCoA") +
@@ -5256,7 +5453,9 @@ ord_plot <- plot_ordination(phylo3, phylo3_PCoA.ord,
 pdf(file='PCoA_ASVbased_samples_relabund_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo3, phylo3_NMDS.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -5269,7 +5468,9 @@ dev.off()
 pdf(file='NMDS_ASVbased_taxa_relabund_filtsamples_alltaxa_biplot.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo3, phylo3_PCoA.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -5282,9 +5483,11 @@ dev.off()
 pdf(file='PCoA_ASVbased_taxa_relabund_filtsamples_alltaxa_biplot.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
 if (groupingFlag == TRUE) {
   for (i in 1:numberofGroups) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       ord_plot <- plot_ordination(phylo3, phylo3_NMDS.ord, 
                                   type="samples",
@@ -5306,6 +5509,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       ord_plot <- plot_ordination(phylo3, phylo3_NMDS.ord, 
                                   type="samples",
@@ -5327,6 +5533,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     groupnum <- paste0("group",i)
     classgroup <- class(sample_data(phylo3)[[groupnum]])
     if (classgroup == "integer" || classgroup == "numeric") {
@@ -5370,11 +5579,13 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
 if (chemDataFlag == TRUE) {
   for (i in chem_headers$V1) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       classgroup <- class(sample_data(phylo3)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -5405,6 +5616,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       classgroup <- class(sample_data(phylo3)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -5435,6 +5649,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     classgroup <- class(sample_data(phylo3)[[i]])
     if (classgroup != "integer" && classgroup != "numeric") {
       viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -5460,10 +5677,12 @@ if (chemDataFlag == TRUE) {
       pdf(file=paste0('PCoA_ASVbased_samples_relabund_filtsamples_alltaxa_chem_',i,'_Colored.pdf'), width = 8, height = 8)
       print(ord_plot)
       dev.off()
-    } 
+    }
+    }, error=function(e){})
   }
 }
 
+tryCatch({
 if (replicateFlag == TRUE) {
   ord_plot <- plot_ordination(phylo3, phylo3_NMDS.ord, 
                               type="samples",
@@ -5485,7 +5704,9 @@ if (replicateFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo3, phylo3_NMDS.ord, 
                               type="samples",
@@ -5507,7 +5728,9 @@ if (sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo3, phylo3_NMDS.ord, 
                               type="samples",
@@ -5531,6 +5754,7 @@ if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
 ########################
 #
@@ -5539,6 +5763,8 @@ if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
 ########################
 #TAXA-based, read counts (phylo10)
 setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/read_count", sep = ""))
+
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -5551,7 +5777,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_readcount_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -5565,7 +5793,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_readcount_filtsamples_alltaxa_facetPhylum_colorGenus.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_PCoA.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -5578,7 +5808,9 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_readcount_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_PCoA.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -5592,7 +5824,9 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_readcount_filtsamples_alltaxa_facetPhylum_colorGenus.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                             type="samples", 
                             title=paste0("NMDS - stress ",round(phylo10_stress, 3))) +
@@ -5601,7 +5835,9 @@ ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord,
 pdf(file='NMDS_TAXAbased_samples_readcount_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_PCoA.ord, 
                             type="samples", 
                             title="PCoA") +
@@ -5610,7 +5846,9 @@ ord_plot <- plot_ordination(phylo10, phylo10_PCoA.ord,
 pdf(file='PCoA_TAXAbased_samples_readcount_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -5623,7 +5861,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_readcount_filtsamples_alltaxa_biplot.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_PCoA.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -5636,9 +5876,11 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_readcount_filtsamples_alltaxa_biplot.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
 if (groupingFlag == TRUE) {
   for (i in 1:numberofGroups) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                                   type="samples",
@@ -5660,6 +5902,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                                   type="samples",
@@ -5681,6 +5926,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     groupnum <- paste0("group",i)
     classgroup <- class(sample_data(phylo10)[[groupnum]])
     if (classgroup == "integer" || classgroup == "numeric") {
@@ -5724,11 +5972,13 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
 if (chemDataFlag == TRUE) {
   for (i in chem_headers$V1) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       classgroup <- class(sample_data(phylo10)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -5759,6 +6009,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       classgroup <- class(sample_data(phylo10)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -5789,6 +6042,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     classgroup <- class(sample_data(phylo10)[[i]])
     if (classgroup != "integer" && classgroup != "numeric") {
       viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -5815,9 +6071,11 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
+tryCatch({
 if (replicateFlag == TRUE) {
   ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                               type="samples",
@@ -5839,7 +6097,9 @@ if (replicateFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                               type="samples",
@@ -5861,7 +6121,9 @@ if (sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                               type="samples",
@@ -5885,9 +6147,12 @@ if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
 if (replicateFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/relative_abundance", sep = ""))
+  
+  tryCatch({
   ord_plot <- plot_ordination(phylo15a, phylo15a_NMDS.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -5900,7 +6165,9 @@ if (replicateFlag == TRUE) {
   pdf(file='NMDS_TAXAbased_taxa_relabund_replicateGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15a, phylo15a_PCoA.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -5913,7 +6180,9 @@ if (replicateFlag == TRUE) {
   pdf(file='PCoA_TAXAbased_taxa_relabund_replicateGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15a, phylo15a_NMDS.ord, 
                               type="samples", 
                               title=paste0("NMDS - stress ",round(phylo15a_stress, 3))) +
@@ -5922,7 +6191,9 @@ if (replicateFlag == TRUE) {
   pdf(file='NMDS_TAXAbased_samples_relabund_replicateGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15a, phylo15a_PCoA.ord, 
                               type="samples", 
                               title="PCoA") +
@@ -5931,9 +6202,11 @@ if (replicateFlag == TRUE) {
   pdf(file='PCoA_TAXAbased_samples_relabund_replicateGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
   if (groupingFlag == TRUE) {
     for (i in 1:numberofGroups) {
+      tryCatch({
       groupnum <- paste0("group",i)
       classgroup <- class(sample_data(phylo15a)[[groupnum]])
       if (classgroup == "integer" || classgroup == "numeric") {
@@ -5977,11 +6250,13 @@ if (replicateFlag == TRUE) {
         print(ord_plot)
         dev.off()
       }
+      }, error=function(e){})
     }
   }
   
   if (chemDataFlag == TRUE) {
     for (i in chem_headers$V1) {
+      tryCatch({
       classgroup <- class(sample_data(phylo15a)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
         viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -6008,12 +6283,15 @@ if (replicateFlag == TRUE) {
         print(ord_plot)
         dev.off()
       }
+      }, error=function(e){})
     }
   }
 }
 
 if (sitelabelFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/relative_abundance", sep = ""))
+  
+  tryCatch({
   ord_plot <- plot_ordination(phylo15b, phylo15b_NMDS.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -6026,7 +6304,9 @@ if (sitelabelFlag == TRUE) {
   pdf(file='NMDS_TAXAbased_taxa_relabund_siteGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15b, phylo15b_PCoA.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -6039,7 +6319,9 @@ if (sitelabelFlag == TRUE) {
   pdf(file='PCoA_TAXAbased_taxa_relabund_siteGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15b, phylo15b_NMDS.ord, 
                               type="samples", 
                               title=paste0("NMDS - stress ",round(phylo15b_stress, 3))) +
@@ -6048,7 +6330,9 @@ if (sitelabelFlag == TRUE) {
   pdf(file='NMDS_TAXAbased_samples_relabund_siteGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15b, phylo15b_PCoA.ord, 
                               type="samples", 
                               title="PCoA") +
@@ -6057,9 +6341,11 @@ if (sitelabelFlag == TRUE) {
   pdf(file='PCoA_TAXAbased_samples_relabund_siteGroupedSamples_alltaxa.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
   if (groupingFlag == TRUE) {
     for (i in 1:numberofGroups) {
+      tryCatch({
       groupnum <- paste0("group",i)
       classgroup <- class(sample_data(phylo15b)[[groupnum]])
       if (classgroup == "integer" || classgroup == "numeric") {
@@ -6103,11 +6389,13 @@ if (sitelabelFlag == TRUE) {
         print(ord_plot)
         dev.off()
       }
+      }, error=function(e){})
     }
   }
   
   if (chemDataFlag == TRUE) {
     for (i in chem_headers$V1) {
+      tryCatch({
       classgroup <- class(sample_data(phylo15b)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
         viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -6132,13 +6420,16 @@ if (sitelabelFlag == TRUE) {
         pdf(file=paste0('PCoA_TAXAbased_samples_relabund_siteGroupedSamples_alltaxa_chem_',i,'_Colored.pdf'), width = 8, height = 8)
         print(ord_plot)
         dev.off()
-      } 
+      }
+      }, error=function(e){})
     }
   }
 }
 
 #Taxa-based relative abundance (phylo11)
 setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/relative_abundance", sep = ""))
+
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -6151,7 +6442,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_relabund_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -6165,7 +6458,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_relabund_filtsamples_alltaxa_facetPhylum_colorGenus.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_PCoA.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -6178,7 +6473,9 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_relabund_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_PCoA.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -6192,7 +6489,9 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_relabund_filtsamples_alltaxa_facetPhylum_colorGenus.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                             type="samples", 
                             title=paste0("NMDS - stress ",round(phylo11_stress, 3))) +
@@ -6201,7 +6500,9 @@ ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord,
 pdf(file='NMDS_TAXAbased_samples_relabund_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_PCoA.ord, 
                             type="samples", 
                             title="PCoA") +
@@ -6210,7 +6511,9 @@ ord_plot <- plot_ordination(phylo11, phylo11_PCoA.ord,
 pdf(file='PCoA_TAXAbased_samples_relabund_filtsamples_alltaxa.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -6223,7 +6526,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_relabund_filtsamples_alltaxa_biplot.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_PCoA.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -6236,9 +6541,11 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_relabund_filtsamples_alltaxa_biplot.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
 if (groupingFlag == TRUE) {
   for (i in 1:numberofGroups) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                                   type="samples",
@@ -6260,6 +6567,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                                   type="samples",
@@ -6281,6 +6591,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     groupnum <- paste0("group",i)
     classgroup <- class(sample_data(phylo11)[[groupnum]])
     if (classgroup == "integer" || classgroup == "numeric") {
@@ -6324,11 +6637,13 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
 if (chemDataFlag == TRUE) {
   for (i in chem_headers$V1) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       classgroup <- class(sample_data(phylo11)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -6359,6 +6674,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       classgroup <- class(sample_data(phylo11)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -6389,6 +6707,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     classgroup <- class(sample_data(phylo11)[[i]])
     if (classgroup != "integer" && classgroup != "numeric") {
       viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -6414,9 +6735,11 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
+tryCatch({
 if (replicateFlag == TRUE) {
   ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                               type="samples",
@@ -6438,7 +6761,9 @@ if (replicateFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                               type="samples",
@@ -6460,7 +6785,9 @@ if (sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                               type="samples",
@@ -6484,6 +6811,7 @@ if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
 
 ########################
@@ -6716,17 +7044,23 @@ if (sitelabelFlag == TRUE) {
 ########################
 setwd(paste0(as.character(args[1]), "/07_Rarefaction_Curves", sep = ""))
 
+tryCatch({
 pdf(file='RarefactionCurve_ASVbased_readcount_allsamples_alltaxa.pdf', width = 11, height = 8.5)
 rarecurve(t(otu_table(phylo1)), step = 50, cex = 0.5)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 pdf(file='RarefactionCurve_ASVbased_readcount_filtsamples_alltaxa.pdf', width = 11, height = 8.5)
 rarecurve(t(otu_table(phylo2)), step = 50, cex = 0.5)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 pdf(file='RarefactionCurve_TAXAbased_readcount_filtsamples_alltaxa.pdf', width = 11, height = 8.5)
 rarecurve(t(otu_table(phylo10)), step = 50, cex = 0.5)
 dev.off()
+}, error=function(e){})
 
 
 
@@ -6767,6 +7101,7 @@ if (original_sitelabelFlag == TRUE) {
 ########################
 #Create ordinations for new filtered phyloseq objects (NMDS & PCoA)
 
+tryCatch({
 if (replicateFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/filterInclude_TOSPECIES_only/relative_abundance", sep = ""))
   
@@ -6797,7 +7132,9 @@ if (replicateFlag == TRUE) {
   ord_tab <- ord_tab %>% select(Replicates, Axis.1, Axis.2)
   write.table(ord_tab, "PCoA_TAXAbased_samples_relabund_replicateGroupedSamples_alltaxa_filterTOSPECIES.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 }
+}, error=function(e){})
 
+tryCatch({
 if (sitelabelFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/filterInclude_TOSPECIES_only/relative_abundance", sep = ""))
   
@@ -6827,9 +7164,10 @@ if (sitelabelFlag == TRUE) {
   ord_tab <- tibble::rownames_to_column(ord_tab, "Sites")
   ord_tab <- ord_tab %>% select(Sites, Axis.1, Axis.2)
   write.table(ord_tab, "PCoA_TAXAbased_samples_relabund_siteGroupedSamples_alltaxa_filterTOSPECIES.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
-  
 }
+}, error=function(e){})
 
+tryCatch({
 message("phylo10 NMDS -- SPECIES filtered")
 setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/filterInclude_TOSPECIES_only/read_count", sep = ""))
 phylo10 <- subset_taxa(phylo10, !is.na(Species))
@@ -6857,7 +7195,9 @@ ord_tab <- ord_plot$data
 ord_tab <- tibble::rownames_to_column(ord_tab, "Samples")
 ord_tab <- ord_tab %>% select(Samples, Axis.1, Axis.2)
 write.table(ord_tab, "PCoA_TAXAbased_samples_readcount_filtsamples_alltaxa_filterTOSPECIES.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 message("phylo11 NMDS -- SPECIES filtered")
 setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/filterInclude_TOSPECIES_only/relative_abundance", sep = ""))
 phylo11 <- subset_taxa(phylo11, !is.na(Species))
@@ -6885,6 +7225,7 @@ ord_tab <- ord_plot$data
 ord_tab <- tibble::rownames_to_column(ord_tab, "Samples")
 ord_tab <- ord_tab %>% select(Samples, Axis.1, Axis.2)
 write.table(ord_tab, "PCoA_TAXAbased_samples_relabund_filtsamples_alltaxa_filterTOSPECIES.txt", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
 ########################
 #
@@ -8098,6 +8439,8 @@ if (sitelabelFlag == TRUE) {
 
 #TAXA-based, read counts (phylo10)
 setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/filterInclude_TOSPECIES_only/read_count", sep = ""))
+
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -8110,7 +8453,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_readcount_filtsamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -8124,7 +8469,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_readcount_filtsamples_alltaxa_facetPhylum_colorGenus_filterTOSPECIES.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_PCoA.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -8137,7 +8484,9 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_readcount_filtsamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_PCoA.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -8151,7 +8500,9 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_readcount_filtsamples_alltaxa_facetPhylum_colorGenus_filterTOSPECIES.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                             type="samples", 
                             title=paste0("NMDS - stress ",round(phylo10_stress, 3))) +
@@ -8160,7 +8511,9 @@ ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord,
 pdf(file='NMDS_TAXAbased_samples_readcount_filtsamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_PCoA.ord, 
                             type="samples", 
                             title="PCoA") +
@@ -8169,7 +8522,9 @@ ord_plot <- plot_ordination(phylo10, phylo10_PCoA.ord,
 pdf(file='PCoA_TAXAbased_samples_readcount_filtsamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -8182,7 +8537,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_readcount_filtsamples_alltaxa_biplot_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo10, phylo10_PCoA.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -8195,9 +8552,11 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_readcount_filtsamples_alltaxa_biplot_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
 if (groupingFlag == TRUE) {
   for (i in 1:numberofGroups) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                                   type="samples",
@@ -8219,6 +8578,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                                   type="samples",
@@ -8240,6 +8602,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     groupnum <- paste0("group",i)
     classgroup <- class(sample_data(phylo10)[[groupnum]])
     if (classgroup == "integer" || classgroup == "numeric") {
@@ -8283,11 +8648,13 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
 if (chemDataFlag == TRUE) {
   for (i in chem_headers$V1) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       classgroup <- class(sample_data(phylo10)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -8318,6 +8685,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       classgroup <- class(sample_data(phylo10)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -8348,6 +8718,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     classgroup <- class(sample_data(phylo10)[[i]])
     if (classgroup != "integer" && classgroup != "numeric") {
       viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -8373,9 +8746,11 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
+tryCatch({
 if (replicateFlag == TRUE) {
   ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                               type="samples",
@@ -8397,7 +8772,9 @@ if (replicateFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                               type="samples",
@@ -8419,7 +8796,9 @@ if (sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo10, phylo10_NMDS.ord, 
                               type="samples",
@@ -8443,9 +8822,13 @@ if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
+
 
 if (replicateFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/filterInclude_TOSPECIES_only/relative_abundance", sep = ""))
+  
+  tryCatch({
   ord_plot <- plot_ordination(phylo15a, phylo15a_NMDS.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -8458,7 +8841,9 @@ if (replicateFlag == TRUE) {
   pdf(file='NMDS_TAXAbased_taxa_relabund_replicateGroupedSamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15a, phylo15a_PCoA.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -8471,7 +8856,9 @@ if (replicateFlag == TRUE) {
   pdf(file='PCoA_TAXAbased_taxa_relabund_replicateGroupedSamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15a, phylo15a_NMDS.ord, 
                               type="samples", 
                               title=paste0("NMDS - stress ",round(phylo15a_stress, 3))) +
@@ -8480,7 +8867,9 @@ if (replicateFlag == TRUE) {
   pdf(file='NMDS_TAXAbased_samples_relabund_replicateGroupedSamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15a, phylo15a_PCoA.ord, 
                               type="samples", 
                               title="PCoA") +
@@ -8489,9 +8878,11 @@ if (replicateFlag == TRUE) {
   pdf(file='PCoA_TAXAbased_samples_relabund_replicateGroupedSamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
   if (groupingFlag == TRUE) {
     for (i in 1:numberofGroups) {
+      tryCatch({
       groupnum <- paste0("group",i)
       classgroup <- class(sample_data(phylo15a)[[groupnum]])
       if (classgroup == "integer" || classgroup == "numeric") {
@@ -8535,11 +8926,13 @@ if (replicateFlag == TRUE) {
         print(ord_plot)
         dev.off()
       }
+      }, error=function(e){})
     }
   }
   
   if (chemDataFlag == TRUE) {
     for (i in chem_headers$V1) {
+      tryCatch({
       classgroup <- class(sample_data(phylo15a)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
         viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -8565,12 +8958,15 @@ if (replicateFlag == TRUE) {
         print(ord_plot)
         dev.off()
       }
+      }, error=function(e){})
     }
   }
 }
 
 if (sitelabelFlag == TRUE) {
   setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/filterInclude_TOSPECIES_only/relative_abundance", sep = ""))
+  
+  tryCatch({
   ord_plot <- plot_ordination(phylo15b, phylo15b_NMDS.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -8583,7 +8979,9 @@ if (sitelabelFlag == TRUE) {
   pdf(file='NMDS_TAXAbased_taxa_relabund_siteGroupedSamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15b, phylo15b_PCoA.ord, 
                               type="taxa", 
                               color = "Phylum",
@@ -8596,7 +8994,9 @@ if (sitelabelFlag == TRUE) {
   pdf(file='PCoA_TAXAbased_taxa_relabund_siteGroupedSamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15b, phylo15b_NMDS.ord, 
                               type="samples", 
                               title=paste0("NMDS - stress ",round(phylo15b_stress, 3))) +
@@ -8605,7 +9005,9 @@ if (sitelabelFlag == TRUE) {
   pdf(file='NMDS_TAXAbased_samples_relabund_siteGroupedSamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
+  tryCatch({
   ord_plot <- plot_ordination(phylo15b, phylo15b_PCoA.ord, 
                               type="samples", 
                               title="PCoA") +
@@ -8614,9 +9016,11 @@ if (sitelabelFlag == TRUE) {
   pdf(file='PCoA_TAXAbased_samples_relabund_siteGroupedSamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
   if (groupingFlag == TRUE) {
     for (i in 1:numberofGroups) {
+      tryCatch({
       groupnum <- paste0("group",i)
       classgroup <- class(sample_data(phylo15b)[[groupnum]])
       if (classgroup == "integer" || classgroup == "numeric") {
@@ -8660,11 +9064,13 @@ if (sitelabelFlag == TRUE) {
         print(ord_plot)
         dev.off()
       }
+      }, error=function(e){})
     }
   }
   
   if (chemDataFlag == TRUE) {
     for (i in chem_headers$V1) {
+      tryCatch({
       classgroup <- class(sample_data(phylo15b)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
         viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -8690,12 +9096,15 @@ if (sitelabelFlag == TRUE) {
         print(ord_plot)
         dev.off()
       }
+      }, error=function(e){})
     }
   }
 }
 
 #Taxa-based relative abundance (phylo11)
 setwd(paste0(as.character(args[1]), "/05_Ordination/Taxonomy_merge_based/filterInclude_TOSPECIES_only/relative_abundance", sep = ""))
+
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -8708,7 +9117,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_relabund_filtsamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -8722,7 +9133,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_relabund_filtsamples_alltaxa_facetPhylum_colorGenus_filterTOSPECIES.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_PCoA.ord, 
                             type="taxa", 
                             color = "Phylum",
@@ -8735,7 +9148,9 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_relabund_filtsamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_PCoA.ord, 
                             type="taxa", 
                             color = "Genus",
@@ -8749,7 +9164,9 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_relabund_filtsamples_alltaxa_facetPhylum_colorGenus_filterTOSPECIES.pdf', width = 15, height = 15)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                             type="samples", 
                             title=paste0("NMDS - stress ",round(phylo11_stress, 3))) +
@@ -8758,7 +9175,9 @@ ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord,
 pdf(file='NMDS_TAXAbased_samples_relabund_filtsamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_PCoA.ord, 
                             type="samples", 
                             title="PCoA") +
@@ -8767,7 +9186,9 @@ ord_plot <- plot_ordination(phylo11, phylo11_PCoA.ord,
 pdf(file='PCoA_TAXAbased_samples_relabund_filtsamples_alltaxa_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -8780,7 +9201,9 @@ dev.off()
 pdf(file='NMDS_TAXAbased_taxa_relabund_filtsamples_alltaxa_biplot_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- plot_ordination(phylo11, phylo11_PCoA.ord, 
                             type="biplot", 
                             color = "Phylum",
@@ -8793,9 +9216,11 @@ dev.off()
 pdf(file='PCoA_TAXAbased_taxa_relabund_filtsamples_alltaxa_biplot_filterTOSPECIES.pdf', width = 8, height = 8)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
 if (groupingFlag == TRUE) {
   for (i in 1:numberofGroups) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                                   type="samples",
@@ -8817,6 +9242,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                                   type="samples",
@@ -8838,6 +9266,9 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     groupnum <- paste0("group",i)
     classgroup <- class(sample_data(phylo11)[[groupnum]])
     if (classgroup == "integer" || classgroup == "numeric") {
@@ -8881,11 +9312,13 @@ if (groupingFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
 if (chemDataFlag == TRUE) {
   for (i in chem_headers$V1) {
+    tryCatch({
     if (replicateFlag == TRUE) {
       classgroup <- class(sample_data(phylo11)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -8915,6 +9348,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     if (sitelabelFlag == TRUE) {
       classgroup <- class(sample_data(phylo11)[[i]])
       if (classgroup != "integer" && classgroup != "numeric") {
@@ -8944,6 +9380,9 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
+    
+    tryCatch({
     classgroup <- class(sample_data(phylo11)[[i]])
     if (classgroup != "integer" && classgroup != "numeric") {
       viridis_scale <- 'scale_color_viridis_d(option="C")'
@@ -8969,9 +9408,11 @@ if (chemDataFlag == TRUE) {
       print(ord_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
 }
 
+tryCatch({
 if (replicateFlag == TRUE) {
   ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                               type="samples",
@@ -8993,7 +9434,9 @@ if (replicateFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
+tryCatch({
 if (sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                               type="samples",
@@ -9015,7 +9458,9 @@ if (sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
-
+}, error=function(e){})
+  
+tryCatch({
 if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   ord_plot <- plot_ordination(phylo11, phylo11_NMDS.ord, 
                               type="samples",
@@ -9039,6 +9484,7 @@ if (replicateFlag == TRUE && sitelabelFlag == TRUE) {
   print(ord_plot)
   dev.off()
 }
+}, error=function(e){})
 
 
 
@@ -9154,49 +9600,84 @@ if (taxaofinterestFlag == TRUE) {
   taxa_of_interest <- as.vector(taxa_of_interest)
   hierarchy_level <- as.character(args[13])
   
-  testing_filter <- as.data.frame(tax_table(phylo4))
-  testing_filter <- testing_filter %>% select(as.character(hierarchy_level)) %>% filter(eval(parse(text = hierarchy_level)) %in% taxa_of_interest)
-  if (nrow(testing_filter) == 0) {
-    skip_filtered <- TRUE
-  } else {
-    skip_filtered <- FALSE
-  }
+  skip_filtered<-TRUE
   
+  tryCatch({
+    phylo4 <- subset_taxa(phylo4, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    phylo5 <- subset_taxa(phylo5, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    skip_filtered<-FALSE
+  }, error=function(e){})
+  
+  tryCatch({
   phylo1 <- subset_taxa(phylo1, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
-  phylo2 <- subset_taxa(phylo2, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
-  phylo3 <- subset_taxa(phylo3, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
-  if (skip_filtered == FALSE) {
-  phylo4 <- subset_taxa(phylo4, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
-  phylo5 <- subset_taxa(phylo5, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
-  }
+  }, error=function(e){})
   
+  tryCatch({
+  phylo2 <- subset_taxa(phylo2, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+  }, error=function(e){})
+  
+  tryCatch({
+  phylo3 <- subset_taxa(phylo3, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+  }, error=function(e){})
+  
+  tryCatch({
   phylo10 <- subset_taxa(phylo10, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+  }, error=function(e){})
+  
+  tryCatch({
   phylo11 <- subset_taxa(phylo11, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+  }, error=function(e){})
+  
+  tryCatch({
   if (skip_filtered == FALSE) {
   phylo12 <- subset_taxa(phylo12, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
   phylo13 <- subset_taxa(phylo13, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
   }
+  }, error=function(e){})
+  
   
   if (replicateFlag == TRUE) {
+    tryCatch({
     phylo7a <- subset_taxa(phylo7a, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    }, error=function(e){})
+    
+    tryCatch({
     if (skip_filtered == FALSE) {
     phylo9a <- subset_taxa(phylo9a, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
     }
+    }, error=function(e){})
+    
+    tryCatch({
     phylo15a <- subset_taxa(phylo15a, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    }, error=function(e){})
+    
+    tryCatch({
     if (skip_filtered == FALSE) {
     phylo17a <- subset_taxa(phylo17a, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
     }
+    }, error=function(e){})
   }
   
   if (sitelabelFlag == TRUE) {
+    tryCatch({
     phylo7b <- subset_taxa(phylo7b, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    }, error=function(e){})
+    
+    tryCatch({
     if (skip_filtered == FALSE) {
     phylo9b <- subset_taxa(phylo9b, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
     }
+    }, error=function(e){})
+    
+    tryCatch({
     phylo15b <- subset_taxa(phylo15b, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
+    }, error=function(e){})
+    
+    tryCatch({
     if (skip_filtered == FALSE) {
     phylo17b <- subset_taxa(phylo17b, eval(parse(text = hierarchy_level)) %in% taxa_of_interest$V1)
     }
+    }, error=function(e){})
   }
   
   ########################
@@ -9206,6 +9687,7 @@ if (taxaofinterestFlag == TRUE) {
   ########################
   setwd(paste0(as.character(args[1]), "/Taxa_of_interest/02_Barcharts/read_count", sep = ""))
   
+  tryCatch({
   for (i in c("Phylum")) {
     if (NAremoveFlag == TRUE) {
       bar_plot <- plot_bar(subset_taxa(phylo1, eval(parse(text = paste0("!is.na(",i,")")))), fill = i) +
@@ -9228,8 +9710,11 @@ if (taxaofinterestFlag == TRUE) {
     print(bar_plot)
     dev.off()
   }
+  }, error=function(e){})
+  
   
   if (controlFlag == TRUE || filteredLowQualSamples == TRUE) {
+    tryCatch({
     for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
       if (NAremoveFlag == TRUE) {
         bar_plot <- plot_bar(subset_taxa(phylo2, eval(parse(text = paste0("!is.na(",i,")")))), fill = i) +
@@ -9252,7 +9737,9 @@ if (taxaofinterestFlag == TRUE) {
       print(bar_plot)
       dev.off()
     }
+    }, error=function(e){})
   } else {
+    tryCatch({
     for (i in c("Class", "Order", "Family", "Genus", "Species")) {
       if (NAremoveFlag == TRUE) {
         bar_plot <- plot_bar(subset_taxa(phylo1, eval(parse(text = paste0("!is.na(",i,")")))), fill = i) +
@@ -9275,9 +9762,11 @@ if (taxaofinterestFlag == TRUE) {
       print(bar_plot)
       dev.off()
     }
+    }, error=function(e){})
   }
   
   #Filtered taxa barcharts
+  tryCatch({
   Phylum_count <- as.numeric(system(paste0("cat ",as.character(args[2]),"/",as.character(args[3]),"/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2zzOther.txt | cut -f3 | grep -v ","\"","Phylum","\""," | sort | uniq | wc -l", sep = ""),
                                     intern = TRUE))
   Phylum_NA <- as.numeric(system(paste0("cat ",as.character(args[2]),"/",as.character(args[3]),"/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2zzOther.txt | cut -f3 | grep ","\"","^NA$","\""," | sort | uniq | wc -l", sep = ""),
@@ -9308,6 +9797,7 @@ if (taxaofinterestFlag == TRUE) {
   }
   
   if (skip_filtered == FALSE) {
+    tryCatch({
   for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
     count_call <- eval(parse(text = paste0(i,"_count")))
     NA_call <- eval(parse(text = paste0(i,"_NA")))
@@ -9335,12 +9825,16 @@ if (taxaofinterestFlag == TRUE) {
     print(bar_plot)
     dev.off()
   }
+    }, error=function(e){})
   }
+  }, error=function(e){})
+  
   
   ###Relative abundance
   setwd(paste0(as.character(args[1]), "/Taxa_of_interest/02_Barcharts/relative_abundance", sep = ""))
   standf = function(x) 100*(x / sum(x))
   
+  tryCatch({
   for (i in c("Phylum")) {
     if (NAremoveFlag == TRUE) {
       bar_plot <- plot_bar(transform_sample_counts(subset_taxa(phylo3, eval(parse(text = paste0("!is.na(",i,")")))), standf), fill = i) +
@@ -9359,7 +9853,9 @@ if (taxaofinterestFlag == TRUE) {
     print(bar_plot)
     dev.off()
   }
+  }, error=function(e){})
   
+  tryCatch({
   for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
     if (NAremoveFlag == TRUE) {
       bar_plot <- plot_bar(transform_sample_counts(subset_taxa(phylo3, eval(parse(text = paste0("!is.na(",i,")")))), standf), fill = i) +
@@ -9382,8 +9878,10 @@ if (taxaofinterestFlag == TRUE) {
     print(bar_plot)
     dev.off()
   }
+  }, error=function(e){})
   
   if (skip_filtered == FALSE) {
+    tryCatch({
   for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
     count_call <- eval(parse(text = paste0(i,"_count")))
     NA_call <- eval(parse(text = paste0(i,"_NA")))
@@ -9411,9 +9909,11 @@ if (taxaofinterestFlag == TRUE) {
     print(bar_plot)
     dev.off()
   }
+    }, error=function(e){})
   }
   
   #GROUPED
+  tryCatch({
   if (replicateFlag == TRUE) {
     for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
       if (NAremoveFlag == TRUE) {
@@ -9438,7 +9938,9 @@ if (taxaofinterestFlag == TRUE) {
       dev.off()
     }
   }
+  }, error=function(e){})
   
+  tryCatch({
   if (sitelabelFlag == TRUE) {
     for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
       if (NAremoveFlag == TRUE) {
@@ -9463,7 +9965,9 @@ if (taxaofinterestFlag == TRUE) {
       dev.off()
     }
   }
+  }, error=function(e){})
   
+  tryCatch({
   if (replicateFlag == TRUE) {
     if (skip_filtered == FALSE) {
     for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
@@ -9495,7 +9999,9 @@ if (taxaofinterestFlag == TRUE) {
     }
     }
   }
+  }, error=function(e){})
   
+  tryCatch({
   if (sitelabelFlag == TRUE) {
     if (skip_filtered == FALSE) {
     for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
@@ -9527,6 +10033,7 @@ if (taxaofinterestFlag == TRUE) {
     }
     }
   }
+  }, error=function(e){})
   
   ########################
   #

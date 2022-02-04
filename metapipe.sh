@@ -129,7 +129,7 @@ unset primerR
 unset ampliconSize
 unset systemmemoryMB
 unset locationNTdatabase
-unset speciesGenusCutoffs
+unset speciesGenusCutoffs  #TODO rename to speciesGenusOrderCutoffs
 unset dada_minlength
 unset dada_phix
 unset dada_trunQ
@@ -138,12 +138,17 @@ unset dada_maxEE2
 unset dada_trimRight
 unset dada_trimLeft
 unset blastMode
+failedMerge_useDirection=NA
 removeASVsFILE=NULL
 
 source $parameterfilepath
 
 temp_holder=$speciesGenusCutoffs
-speciesGenusCutoffs=`echo $temp_holder | sed -E 's/^\"//' | sed -E 's/\"$//'`
+speciesGenusCutoffs=`echo $temp_holder | sed -E 's/[^0-9]/,/g'`
+
+#TEMP Holding:
+#echo "<<<$speciesGenusCutoffs>>>"
+#sed -E 's/^\D//' | sed -E 's/\D$//' 
 
 ##########################################################################################
 ##########################################################################################
@@ -213,7 +218,7 @@ cd ${workingdirectory}
 cat ${samplemetafilepath} | cut -f1 | grep -v "Sample" | sed -E 's/[^A-Za-z0-9_]/_/g' | sed -E 's/^/MP_/' > ${outdirectory}/sample_order.txt
 
 #Create sample metadata file with identical manipulation of sample names for downstream R work
-cat ${samplemetafilepath} | awk 'FNR==NR {gsub("[^a-zA-Z0-9]", "_", $1)} 1' OFS="\t" | sed -e '2,$ s/^/MP_/' | grep -v "^MP_$" > ${outdirectory}/sample_metadata_forR.txt
+cat ${samplemetafilepath} | awk 'FNR==NR {gsub("[^a-zA-Z0-9]", "_", $1)} 1' OFS="\t" | sed -e '2,$ s/^/MP_/' | grep -v "^MP_$" | sed "s/$(printf '\r')\$//" > ${outdirectory}/sample_metadata_forR.txt
 
 ##########################################################################################
 ##########################################################################################
@@ -233,7 +238,7 @@ else
   else
     mkdir ${outdirectory}/cutadapt
   fi
-  
+    
   #Reverse complement primers (I is converted to N; T/U ok)
   revcomp_primerF=`echo $primerF | tr ACGTUWSMKRYBDHVNIacgtuwsmkrybdhvni TGCAAWSKMYRVHDBNNtgcaawskmyrvhdbnn | rev`
   revcomp_primerR=`echo $primerR | tr ACGTUWSMKRYBDHVNIacgtuwsmkrybdhvni TGCAAWSKMYRVHDBNNtgcaawskmyrvhdbnn | rev`
@@ -244,25 +249,70 @@ else
   primerR=$temp_primerR  
   
   #Run cutadapt
-  for sample in $(cat ${outdirectory}/sample_order.txt)
-  do
-      echo "======================================" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
-      echo "On sample: $sample" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
-      echo "======================================" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
-      echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
-      cutadapt -a "${primerF};required...${revcomp_primerR};optional" \
-      -A "${primerR};required...${revcomp_primerF};optional" \
-      --discard-untrimmed \
-      -j 0 \
-      -m 1 \
-      -o ${outdirectory}/cutadapt/${sample}_R1_trimmed.fq.gz -p ${outdirectory}/cutadapt/${sample}_R2_trimmed.fq.gz \
-      ${readfolderpath}/${sample}_R1.fastq.gz ${readfolderpath}/${sample}_R2.fastq.gz \
-      >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt 2>&1
-      echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
-      echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
-  done
+  if [[ "${failedMerge_useDirection}" = "NA" ]]; then
+    for sample in $(cat ${outdirectory}/sample_order.txt)
+    do
+        echo "======================================" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo "On sample: $sample" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo "======================================" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        cutadapt -a "${primerF};required...${revcomp_primerR};optional" \
+        -A "${primerR};required...${revcomp_primerF};optional" \
+        --discard-untrimmed \
+        -j 0 \
+        -m 1 \
+        -o ${outdirectory}/cutadapt/${sample}_R1_trimmed.fq.gz -p ${outdirectory}/cutadapt/${sample}_R2_trimmed.fq.gz \
+        ${readfolderpath}/${sample}_R1.fastq.gz ${readfolderpath}/${sample}_R2.fastq.gz \
+        >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt 2>&1
+        echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+    done
+    
+    echo "Finished Cutadapt: `date`"
+  fi
   
-  echo "Finished Cutadapt: `date`"
+  if [[ "${failedMerge_useDirection}" = "FORWARD" ]]; then
+    for sample in $(cat ${outdirectory}/sample_order.txt)
+    do
+        echo "======================================" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo "On sample: $sample" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo "======================================" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        cutadapt -a "${primerF};required...${revcomp_primerR};optional" \
+        --discard-untrimmed \
+        -j 0 \
+        -m 1 \
+        -o ${outdirectory}/cutadapt/${sample}_R1_trimmed.fq.gz \
+        ${readfolderpath}/${sample}_R1.fastq.gz \
+        >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt 2>&1
+        echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+    done
+    
+    echo "Finished Cutadapt: `date`"
+  fi
+  
+  if [[ "${failedMerge_useDirection}" = "REVERSE" ]]; then
+    for sample in $(cat ${outdirectory}/sample_order.txt)
+    do
+        echo "======================================" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo "On sample: $sample" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo "======================================" >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        cutadapt -a "${primerR};required...${revcomp_primerF};optional" \
+        --discard-untrimmed \
+        -j 0 \
+        -m 1 \
+        -o ${outdirectory}/cutadapt/${sample}_R2_trimmed.fq.gz \
+        ${readfolderpath}/${sample}_R2.fastq.gz \
+        >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt 2>&1
+        echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+        echo >> ${outdirectory}/cutadapt/cutadapt_primer_trimming_stats.txt
+    done
+    
+    echo "Finished Cutadapt: `date`"
+  fi
+  
   
   #print cutadapt stats
   echo "Sample	Passing Reads	Passing bp"
@@ -308,154 +358,253 @@ else
   
   echo "Trim and filter in DADA2..."
   
-  dada2continue=FALSE
-  while [ $dada2continue = FALSE ]
-    do
-    Rscript --vanilla ${metapipedir}/assets/dada2_step1.R ${workingdirectory}/${outdirectory}/dada2 $dada_minlength $dada_phix $dada_trunQ $dada_maxEE1 $dada_maxEE2 $dada_trimRight $dada_trimLeft \
-      1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+  if [[ "${failedMerge_useDirection}" = "NA" ]]; then
+    dada2continue=FALSE
+    while [ $dada2continue = FALSE ]
+      do
+      Rscript --vanilla ${metapipedir}/assets/dada2_step1.R ${workingdirectory}/${outdirectory}/dada2 $dada_minlength $dada_phix $dada_trunQ $dada_maxEE1 $dada_maxEE2 $dada_trimRight $dada_trimLeft \
+        1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+      echo
+      echo "DADA2 Filtering results:"
+      echo "Sample	% Reads Passing"
+      awk 'NR>1 { print $1, 100 * ( $3 / $2 ) }' ${workingdirectory}/${outdirectory}/dada2/filtered_out_stats.txt
+      echo
+      echo "Parameters to modify:"
+      echo "minLen,rm.phix,truncQ,maxEE-primer1,maxEE-primer2,trimRight,trimLeft"
+      echo "Current settings:"
+      echo "${dada_minlength},${dada_phix},${dada_trunQ},${dada_maxEE1},${dada_maxEE2},${dada_trimRight},${dada_trimLeft}"
+      if [[ "$bypassflag" = "FALSE" ]]; then
+        echo "Please check DADA2 filtering success. Proceed? [y/n/m]"
+        read mainmenuinput
+        if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
+          echo "Continuing!"
+          dada2continue=TRUE
+        elif [[ "$mainmenuinput" = "m" || "$mainmenuinput" = "M" ]]; then
+          echo "You have chosen to redo DADA2 filtering with modified settings."
+          echo "Input new settings separated by commas in the same order as above."
+          read secondmainmenuinput
+          IFS=','
+          read -ra ADDR <<< "$secondmainmenuinput"
+          dada_minlength=${ADDR[0]}
+          dada_phix=${ADDR[1]}
+          dada_trunQ=${ADDR[2]}
+          dada_maxEE1=${ADDR[3]}
+          dada_maxEE2=${ADDR[4]}
+          dada_trimRight=${ADDR[5]}
+          dada_trimLeft=${ADDR[6]}
+          echo "New settings:"
+          echo "${dada_minlength},${dada_phix},${dada_trunQ},${dada_maxEE1},${dada_maxEE2},${dada_trimRight},${dada_trimLeft}"
+          echo "Rerunning DADA2 filtering"
+        elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
+          echo "You have chosen to exit"
+          exit
+        else
+          echo "Invalid selection, try again"
+        fi
+      else
+        dada2continue=TRUE
+      fi
+    done
+  
+  
     echo
-    echo "DADA2 Filtering results:"
-    echo "Sample	% Reads Passing"
-    awk 'NR>1 { print $1, 100 * ( $3 / $2 ) }' ${workingdirectory}/${outdirectory}/dada2/filtered_out_stats.txt
+    echo "Learning error, Dereplication, Merge, and ASVs in DADA2..."
+    echo "Please be patient, may take a while. Messages printed to Rscript log."
     echo
-    echo "Parameters to modify:"
-    echo "minLen,rm.phix,truncQ,maxEE-primer1,maxEE-primer2,trimRight,trimLeft"
-    echo "Current settings:"
-    echo "${dada_minlength},${dada_phix},${dada_trunQ},${dada_maxEE1},${dada_maxEE2},${dada_trimRight},${dada_trimLeft}"
+    Rscript --vanilla ${metapipedir}/assets/dada2_step2.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB \
+        1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+    
+    cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
+    mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
+    
+    #TODO: minOverlap currently set to 20bp, which seems reasonable. Option for change?
+  
+    echo
+    echo "FINAL DADA2 STATS"
+    echo "Note: Please check for a failed merge of forward/reverse sequences"
+    echo "Sample	%Reads Retained"
+    awk 'NR>1 { print $1, $8 }' ${workingdirectory}/${outdirectory}/dada2/ReadTrimSummary.txt
     if [[ "$bypassflag" = "FALSE" ]]; then
-      echo "Please check DADA2 filtering success. Proceed? [y/n/m]"
+      echo
+      echo "Do you wish to Proceed? [y/n]"
       read mainmenuinput
       if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
         echo "Continuing!"
-        dada2continue=TRUE
-      elif [[ "$mainmenuinput" = "m" || "$mainmenuinput" = "M" ]]; then
-        echo "You have chosen to redo DADA2 filtering with modified settings."
-        echo "Input new settings separated by commas in the same order as above."
-        read secondmainmenuinput
-        IFS=','
-        read -ra ADDR <<< "$secondmainmenuinput"
-        dada_minlength=${ADDR[0]}
-        dada_phix=${ADDR[1]}
-        dada_trunQ=${ADDR[2]}
-        dada_maxEE1=${ADDR[3]}
-        dada_maxEE2=${ADDR[4]}
-        dada_trimRight=${ADDR[5]}
-        dada_trimLeft=${ADDR[6]}
-        echo "New settings:"
-        echo "${dada_minlength},${dada_phix},${dada_trunQ},${dada_maxEE1},${dada_maxEE2},${dada_trimRight},${dada_trimLeft}"
-        echo "Rerunning DADA2 filtering"
       elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
         echo "You have chosen to exit"
         exit
       else
-        echo "Invalid selection, try again"
+        echo "Invalid selection, exiting"
+        exit
       fi
-    else
-      dada2continue=TRUE
     fi
-  done
+    
+  fi
   
-  echo
-  echo "Learning error, Dereplication, Merge, and ASVs in DADA2..."
-  echo "Please be patient, may take a while. Messages printed to Rscript log."
-  echo
-  Rscript --vanilla ${metapipedir}/assets/dada2_step2.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB \
-      1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+  if [[ "${failedMerge_useDirection}" = "FORWARD" ]]; then
+    dada2continue=FALSE
+    while [ $dada2continue = FALSE ]
+      do
+      Rscript --vanilla ${metapipedir}/assets/dada2_step1_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $dada_minlength $dada_phix $dada_trunQ $dada_maxEE1 $dada_maxEE2 $dada_trimRight $dada_trimLeft forward \
+        1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+      echo
+      echo "DADA2 Filtering results:"
+      echo "Sample	% Reads Passing"
+      awk 'NR>1 { print $1, 100 * ( $3 / $2 ) }' ${workingdirectory}/${outdirectory}/dada2/filtered_out_stats.txt
+      echo
+      echo "Parameters to modify:"
+      echo "minLen,rm.phix,truncQ,maxEE-primer1,maxEE-primer2,trimRight,trimLeft"
+      echo "Current settings:"
+      echo "${dada_minlength},${dada_phix},${dada_trunQ},${dada_maxEE1},${dada_maxEE2},${dada_trimRight},${dada_trimLeft}"
+      if [[ "$bypassflag" = "FALSE" ]]; then
+        echo "Please check DADA2 filtering success. Proceed? [y/n/m]"
+        read mainmenuinput
+        if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
+          echo "Continuing!"
+          dada2continue=TRUE
+        elif [[ "$mainmenuinput" = "m" || "$mainmenuinput" = "M" ]]; then
+          echo "You have chosen to redo DADA2 filtering with modified settings."
+          echo "Input new settings separated by commas in the same order as above."
+          read secondmainmenuinput
+          IFS=','
+          read -ra ADDR <<< "$secondmainmenuinput"
+          dada_minlength=${ADDR[0]}
+          dada_phix=${ADDR[1]}
+          dada_trunQ=${ADDR[2]}
+          dada_maxEE1=${ADDR[3]}
+          dada_maxEE2=${ADDR[4]}
+          dada_trimRight=${ADDR[5]}
+          dada_trimLeft=${ADDR[6]}
+          echo "New settings:"
+          echo "${dada_minlength},${dada_phix},${dada_trunQ},${dada_maxEE1},${dada_maxEE2},${dada_trimRight},${dada_trimLeft}"
+          echo "Rerunning DADA2 filtering"
+        elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
+          echo "You have chosen to exit"
+          exit
+        else
+          echo "Invalid selection, try again"
+        fi
+      else
+        dada2continue=TRUE
+      fi
+    done
   
-  cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
-  mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
   
-  #TODO: minOverlap currently set to 20bp, which seems reasonable. Option for change?
-  
-  echo
-  echo "FINAL DADA2 STATS"
-  echo "Note: Please check for a failed merge of forward/reverse sequences"
-  echo "Sample	%Reads Retained"
-  awk 'NR>1 { print $1, $8 }' ${workingdirectory}/${outdirectory}/dada2/ReadTrimSummary.txt
-  if [[ "$bypassflag" = "FALSE" ]]; then
     echo
-    echo "Do you wish to Proceed? [y/n/m]"
-    echo "Use [m] for continuing after a failed merge"
-    read mainmenuinput
-    if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
-      echo "Continuing!"
-    elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
-      echo "You have chosen to exit"
-      exit
-    elif [[ "$mainmenuinput" = "m" || "$mainmenuinput" = "M" ]]; then
-      echo "You have chosen to bypass a failed merge"
-      echo "Please select either [F/for/forward] or [R/rev/reverse] reads:"
+    echo "Learning error, Dereplication, Merge, and ASVs in DADA2..."
+    echo "Please be patient, may take a while. Messages printed to Rscript log."
+    echo
+    Rscript --vanilla ${metapipedir}/assets/dada2_step2_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB forward \
+        1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+    
+    cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
+    mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
+    
+    touch ${outdirectory}/dada2/00_MERGEFAILED_ForwardReadsOnly_usedFor_ASVs_EOM
+    
+    echo
+    echo "FINAL DADA2 STATS"
+    echo "Note: Please check for a failed merge of forward/reverse sequences"
+    echo "Sample	%Reads Retained"
+    awk 'NR>1 { print $1, $6 }' ${workingdirectory}/${outdirectory}/dada2/ReadTrimSummary.txt
+    if [[ "$bypassflag" = "FALSE" ]]; then
+      echo
+      echo "Do you wish to Proceed? [y/n]"
       read mainmenuinput
-      if [[ "$mainmenuinput" = "forward" || "$mainmenuinput" = "F" || "$mainmenuinput" = "f" || "$mainmenuinput" = "for" ]]; then
-        echo
-        echo "Learning error, Dereplication, Merge, and ASVs in DADA2 for FORWARD reads..."
-        echo "Please be patient, may take a while. Messages printed to Rscript log."
-        echo
-        Rscript --vanilla ${metapipedir}/assets/dada2_step2_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB forward \
-            1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
-  
-        cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
-        mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
-        
-        touch ${outdirectory}/dada2/00_MERGEFAILED_ForwardReadsOnly_usedFor_ASVs_EOM
-        
-        echo
-        echo "FORWARD DADA2 STATS"
-        echo "Sample	%Reads Retained"
-        awk 'NR>1 { print $1, $6 }' ${workingdirectory}/${outdirectory}/dada2/ReadTrimSummary_mergeFailed_ForwardReadOnly.txt
-        
-        echo
-        echo "Do you wish to Proceed? [y/n]"
-        read mainmenuinput
-        if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
-          echo "Continuing!"
-        elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
-          echo "You have chosen to exit"
-          exit
-        else
-          echo "Invalid selection, exiting"
-          exit
-        fi
-        
-      elif [[ "$mainmenuinput" = "reverse" || "$mainmenuinput" = "rev" || "$mainmenuinput" = "r" || "$mainmenuinput" = "R" ]]; then
-        echo
-        echo "Learning error, Dereplication, Merge, and ASVs in DADA2 for REVERSE reads..."
-        echo "Please be patient, may take a while. Messages printed to Rscript log."
-        echo
-        Rscript --vanilla ${metapipedir}/assets/dada2_step2_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB reverse \
-            1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
-  
-        cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
-        mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
-        
-        touch ${outdirectory}/dada2/00_MERGEFAILED_ReverseReadsOnly_usedFor_ASVs_EOM
-        
-        echo
-        echo "REVERSE DADA2 STATS"
-        echo "Sample	%Reads Retained"
-        awk 'NR>1 { print $1, $6 }' ${workingdirectory}/${outdirectory}/dada2/ReadTrimSummary_mergeFailed_ReverseReadOnly.txt
-        
-        echo
-        echo "Do you wish to Proceed? [y/n]"
-        read mainmenuinput
-        if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
-          echo "Continuing!"
-        elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
-          echo "You have chosen to exit"
-          exit
-        else
-          echo "Invalid selection, exiting"
-          exit
-        fi
-        
+      if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
+        echo "Continuing!"
+      elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
+        echo "You have chosen to exit"
+        exit
       else
         echo "Invalid selection, exiting"
         exit
       fi
-    else
-      echo "Invalid selection, exiting"
-      exit
     fi
+    
+  fi
+  
+  if [[ "${failedMerge_useDirection}" = "REVERSE" ]]; then
+    dada2continue=FALSE
+    while [ $dada2continue = FALSE ]
+      do
+      Rscript --vanilla ${metapipedir}/assets/dada2_step1_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $dada_minlength $dada_phix $dada_trunQ $dada_maxEE1 $dada_maxEE2 $dada_trimRight $dada_trimLeft reverse \
+        1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+      echo
+      echo "DADA2 Filtering results:"
+      echo "Sample	% Reads Passing"
+      awk 'NR>1 { print $1, 100 * ( $3 / $2 ) }' ${workingdirectory}/${outdirectory}/dada2/filtered_out_stats.txt
+      echo
+      echo "Parameters to modify:"
+      echo "minLen,rm.phix,truncQ,maxEE-primer1,maxEE-primer2,trimRight,trimLeft"
+      echo "Current settings:"
+      echo "${dada_minlength},${dada_phix},${dada_trunQ},${dada_maxEE1},${dada_maxEE2},${dada_trimRight},${dada_trimLeft}"
+      if [[ "$bypassflag" = "FALSE" ]]; then
+        echo "Please check DADA2 filtering success. Proceed? [y/n/m]"
+        read mainmenuinput
+        if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
+          echo "Continuing!"
+          dada2continue=TRUE
+        elif [[ "$mainmenuinput" = "m" || "$mainmenuinput" = "M" ]]; then
+          echo "You have chosen to redo DADA2 filtering with modified settings."
+          echo "Input new settings separated by commas in the same order as above."
+          read secondmainmenuinput
+          IFS=','
+          read -ra ADDR <<< "$secondmainmenuinput"
+          dada_minlength=${ADDR[0]}
+          dada_phix=${ADDR[1]}
+          dada_trunQ=${ADDR[2]}
+          dada_maxEE1=${ADDR[3]}
+          dada_maxEE2=${ADDR[4]}
+          dada_trimRight=${ADDR[5]}
+          dada_trimLeft=${ADDR[6]}
+          echo "New settings:"
+          echo "${dada_minlength},${dada_phix},${dada_trunQ},${dada_maxEE1},${dada_maxEE2},${dada_trimRight},${dada_trimLeft}"
+          echo "Rerunning DADA2 filtering"
+        elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
+          echo "You have chosen to exit"
+          exit
+        else
+          echo "Invalid selection, try again"
+        fi
+      else
+        dada2continue=TRUE
+      fi
+    done
+  
+  
+    echo
+    echo "Learning error, Dereplication, Merge, and ASVs in DADA2..."
+    echo "Please be patient, may take a while. Messages printed to Rscript log."
+    echo
+    Rscript --vanilla ${metapipedir}/assets/dada2_step2_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB reverse \
+        1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+    
+    cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
+    mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
+    
+    touch ${outdirectory}/dada2/00_MERGEFAILED_ReverseReadsOnly_usedFor_ASVs_EOM
+    
+    echo
+    echo "FINAL DADA2 STATS"
+    echo "Note: Please check for a failed merge of forward/reverse sequences"
+    echo "Sample	%Reads Retained"
+    awk 'NR>1 { print $1, $6 }' ${workingdirectory}/${outdirectory}/dada2/ReadTrimSummary.txt
+    if [[ "$bypassflag" = "FALSE" ]]; then
+      echo
+      echo "Do you wish to Proceed? [y/n]"
+      read mainmenuinput
+      if [[ "$mainmenuinput" = "y" || "$mainmenuinput" = "Y" ]]; then
+        echo "Continuing!"
+      elif [[ "$mainmenuinput" = "n" || "$mainmenuinput" = "N" ]]; then
+        echo "You have chosen to exit"
+        exit
+      else
+        echo "Invalid selection, exiting"
+        exit
+      fi
+    fi
+    
   fi
 
   echo "dada2_Finished=TRUE" >> ${outdirectory}/progress.txt
@@ -482,8 +631,8 @@ else
   echo "Running BLASTn: `date`"
   
   passblastscrutiny=FALSE
-  maxtargetseqs=400
-  runthroughcount=0
+  maxtargetseqs=4000
+  runthroughcount=3 #temp TODO
   
   while [ $passblastscrutiny = FALSE ]
     do
@@ -577,17 +726,22 @@ else
     echo "Automatically fill gaps in reformatted taxonkit hierarchy [a]"
     read mainmenuinput
     if [[ "$mainmenuinput" = "c" || "$mainmenuinput" = "C" ]]; then
+      cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
+      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
       echo "Continuing!"
     elif [[ "$mainmenuinput" = "m" || "$mainmenuinput" = "M" ]]; then
       echo "Continuing!"
       cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt | tr '\r' '\n' | tr -s '\n' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
-      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+      cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+      rm ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
     elif [[ "$mainmenuinput" = "a" || "$mainmenuinput" = "A" ]]; then
       echo "Reformatting..."
       echo "Original reformatted taxonkit out stored at ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt"
       perl ${metapipedir}/assets/fillIn_taxonkit.pl -i ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
       mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
-      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+      cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+      rm ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
       echo "Continuing!"
     else
       echo "Invalid selection, exiting"
@@ -598,7 +752,8 @@ else
     echo "Original reformatted taxonkit out stored at ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt"
     perl ${metapipedir}/assets/fillIn_taxonkit.pl -i ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
     mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
-    mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+    cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+    rm ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
     echo "Continuing!"
   fi
     
@@ -631,7 +786,7 @@ else
     perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt -d $removeASVsFILE \
         -t reformatted_taxonkit_out.txt -f $speciesGenusCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
     
-    #Move non-filtered files to folder, replace with files from "IGNORING_ASVs" director
+    #Move non-filtered files to folder, replace with files from "IGNORING_ASVs" directory
     mkdir unfiltered_files
     mkdir -p KRONA_plots/KRONA_inputs
     mv MP* KRONA_plots/KRONA_inputs/
@@ -709,6 +864,7 @@ gzip -q -9 ${outdirectory}/blast_results/ASV_blastn_nt.btab
 filterPercent=5
 filterLowQualSamples="FALSE"
 filterPercentLowQualSamples=30
+pieScale=5 #TODO assign appropriate default
 removeNA="FALSE"
 providedTaxaOfInterest="FALSE"
 taxaOfInterestFile="NULL"
@@ -752,8 +908,8 @@ rm -r ${outdirectory}/Figures/00_KRONA_plots/KRONA_inputs
 highestgroupnum=0
 rm -f ${workingdirectory}/${outdirectory}/chem_headers.txt
 
-for ((f=1; f<=`awk '{print NF}' ${workingdirectory}/${outdirectory}/sample_metadata.txt | sort -nu | tail -n 1`; f++))
-  do cat ${workingdirectory}/${outdirectory}/sample_metadata.txt | cut -f${f} > ${workingdirectory}/${outdirectory}/temp
+for ((f=1; f<=`awk '{print NF}' ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt | sort -nu | tail -n 1`; f++))
+  do cat ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt | cut -f${f} > ${workingdirectory}/${outdirectory}/temp
     header=`head -n 1 ${workingdirectory}/${outdirectory}/temp`
     if [[ "$header" = "Sample" || "$header" = "lat" || "$header" = "long" ]]; then
       continue
@@ -800,7 +956,7 @@ for ((f=1; f<=`awk '{print NF}' ${workingdirectory}/${outdirectory}/sample_metad
 
 #Maps
 mkdir ${outdirectory}/Figures/01_Maps
-Rscript --vanilla ${metapipedir}/assets/maps.R ${workingdirectory}/${outdirectory}/Figures/01_Maps ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_NO_UNKNOWNS_barchart.txt $filterPercent \
+Rscript --vanilla ${metapipedir}/assets/maps.R ${workingdirectory}/${outdirectory}/Figures/01_Maps ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_NO_UNKNOWNS_barchart.txt $filterPercent $pieScale \
     1>> ${workingdirectory}/${outdirectory}/Figures/01_Maps/maps_rscript_out.log 2>&1
 
 rm -f ${workingdirectory}/${outdirectory}/Figures/01_Maps/Rplot*
@@ -888,6 +1044,7 @@ mkdir -p ${outdirectory}/Figures/Taxa_of_interest/06_Network/Taxonomy_merge_base
 mkdir -p ${outdirectory}/Figures/Taxa_of_interest/06_Network/Taxonomy_merge_based/relative_abundance
 fi
 
+#echo ${workingdirectory}/${outdirectory}/Figures ${workingdirectory} ${outdirectory} $controlspresent $filterLowQualSamples $replicates $sites $filterPercent $removeNA $providedTaxaOfInterest $groupsDefinedFlag $numberGroupsDefined $taxaOfInterestLevel $taxaOfInterestFile $chemData $locationChemHeaders
 Rscript --vanilla ${metapipedir}/assets/phyloseq.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory} ${outdirectory} $controlspresent $filterLowQualSamples $replicates $sites $filterPercent $removeNA $providedTaxaOfInterest $groupsDefinedFlag $numberGroupsDefined $taxaOfInterestLevel $taxaOfInterestFile $chemData $locationChemHeaders \
   1>> ${workingdirectory}/${outdirectory}/Figures/phyloseq_rscript_out.log 2>&1
 

@@ -6,6 +6,8 @@ use List::MoreUtils qw(uniq);
 # - - - - - H E A D E R - - - - - - - - - - - - - - - - -
 #Goals of script:
 #Calculate some basic taxonomy/ASV stats per sample
+#The calculated numbers per taxa represent the number of unique taxa at that level.
+#   NOT the number of the taxa only resolved to that level.
 
 # - - - - - C O M M A N D    L I N E    O P T I O N S - - - - - - - -
 my %options=();

@@ -3,12 +3,13 @@ args <- commandArgs(trailingOnly = TRUE)
 
 ########################################
 #TEMP WHILE WORKING ON SCRIPT
-# args[1]<-"/Users/mcallister/Desktop/test_out/test_figs" #FIGURE OUT directory
-# args[2]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/sample_metadata_forR.txt" #sample metadata (only pass if lat and long column headers exist)
-# args[3]<-TRUE #whether or not there are replicates (and thus identical coordinates)
-# args[4]<-FALSE #whether or not there are site labels in sample metadata
-# args[5]<-"/Users/mcallister/Desktop/chris_test/CP_all_out/ASV2Taxonomy/CP_all_out_NO_UNKNOWNS_barchart.txt"
+# args[1]<-"/Users/mcallister/Desktop/Angie/COI_27Aug21/MTeDNA/MTeDNA_out/Figures/01_Maps" #FIGURE OUT directory
+# args[2]<-"/Users/mcallister/Desktop/Angie/COI_27Aug21/MTeDNA/MTeDNA_out/sample_metadata_forR.txt" #sample metadata (only pass if lat and long column headers exist)
+# args[3]<-FALSE #whether or not there are replicates (and thus identical coordinates)
+# args[4]<-TRUE #whether or not there are site labels in sample metadata
+# args[5]<-"/Users/mcallister/Desktop/Angie/COI_27Aug21/MTeDNA/MTeDNA_out/ASV2Taxonomy/MTeDNA_out_NO_UNKNOWNS_barchart.txt"
 # args[6]<-5 #Percent filter setting for pies and barcharts
+# args[7]<-5 #Pie chart scalling factor (also affects amount of scattering)
 ########################################
 library("ggplot2")
 library("mapdata")
@@ -68,7 +69,7 @@ maxlimlat <- max_lat+4
 world_filt <- world %>% filter(long>=minlimlong & long<=maxlimlong)
 world_filt <- world_filt  %>% filter(lat>=minlimlat & lat<=maxlimlat)
 regions_of_interest <- select(world_filt, region)
-collapse <- regions_of_interest %>% group_by(region) %>% summarise_all(funs(toString(unique(.))))
+collapse <- regions_of_interest %>% group_by(region) %>% summarise_all(list(~toString(unique(.))))
 region_string <- sapply(collapse, as.character)
 world_of_interest <- map_data("world2Hires", region = c("USA", region_string))
 
@@ -91,7 +92,6 @@ m
 dev.off()
 
 ### Bathymetric map with data points
-tryCatch({
 if (min_long-0.5 < 0 & max_long+0.5 > 0) {
   antimeridian <- TRUE
 } else if (min_long-0.5 > 0 & max_long+0.5 < 0) {
@@ -133,7 +133,7 @@ m_bath_sanslegend <- autoplot.bathy(bathymap, geom = c("c", "r"), colour = "whit
 pdf(file='mapBathy_sanslegend_datapoints.pdf')
 print(m_bath_sanslegend)
 dev.off()
-}, error=function(e){message(e)})
+
 #############Simple map with data points and pie charts
 
 #####Find repel coordinates
@@ -188,35 +188,37 @@ filter_percent <- as.numeric(args[6])
 abundance_dat <- read.delim(as.character(args[5]), header=TRUE, stringsAsFactors=FALSE, check.names = FALSE)
 abundance_dat <- abundance_dat %>% remove_empty("cols")
 abundance_dat$readSum <- rowSums(abundance_dat[, -1])
-abundance_dat <- abundance_dat %>% mutate_at(vars(-Sample, -readSum), funs(100*./readSum))
+abundance_dat <- abundance_dat %>% mutate_at(vars(-Sample, -readSum), list(~100*./readSum))
 abundance_dat <- abundance_dat %>% select(-readSum)
 
 if (sitelabelFlag == TRUE) {
   abundance_meta_join <- left_join(select(sample_metadata, Sample, sites), abundance_dat, by = "Sample")
   abundance_meta_join <- abundance_meta_join %>% select(-Sample)
+  abundance_meta_join <- abundance_meta_join %>% filter(!is.na(sites))
   rep_group <- abundance_meta_join %>% group_by(sites) %>% 
-    summarise_all(funs(mean)) %>% 
+    summarise_all(mean) %>% 
     mutate(zzOther = rowSums(select_if(., ~is.numeric(.) & max(.) < filter_percent))) %>%
     select_if(~is.numeric(.) & max(.) >= filter_percent | is.character(.))
   rep_group <- left_join(select(sample_metadata, sites, lat, long), rep_group, by = "sites")
   rep_group <- rep_group %>% filter(!is.na(long))
   rep_group <- rep_group %>% filter(!is.na(lat))
   rep_group <- rep_group %>% group_by(sites) %>%
-    summarise_all(funs(as.numeric(unique(.))))
+    summarise_all(list(~as.numeric(unique(.))))
   number_observations <- ncol(rep_group)
   number_observations <- number_observations - 3
 } else if (replicateFlag == TRUE) {
   abundance_meta_join <- left_join(select(sample_metadata, Sample, replicates), abundance_dat, by = "Sample")
   abundance_meta_join <- abundance_meta_join %>% select(-Sample)
+  abundance_meta_join <- abundance_meta_join %>% filter(!is.na(replicates))
   rep_group <- abundance_meta_join %>% group_by(replicates) %>% 
-    summarise_all(funs(mean)) %>% 
+    summarise_all(mean) %>% 
     mutate(zzOther = rowSums(select_if(., ~is.numeric(.) & max(.) < filter_percent))) %>%
     select_if(~is.numeric(.) & max(.) >= filter_percent | is.character(.))
   rep_group <- left_join(select(sample_metadata, replicates, lat, long), rep_group, by = "replicates")
   rep_group <- rep_group %>% filter(!is.na(long))
   rep_group <- rep_group %>% filter(!is.na(lat))
   rep_group <- rep_group %>% group_by(replicates) %>%
-    summarise_all(funs(as.numeric(unique(.))))
+    summarise_all(list(~as.numeric(unique(.))))
   number_observations <- ncol(rep_group)
   number_observations <- number_observations - 3
 } else {
@@ -241,7 +243,8 @@ max_dim <- max(dims)
 long_mid <- max_long - (min_long_dim/2)
 lat_mid <- max_lat - (min_lat_dim/2)
 
-pie_scale <- (min_dim + 0.5) * 5 
+pie_scale <- as.numeric(args[7])
+#pie_scale <- (min_dim + 0.5) * 5 
 
 plasma_pal <- c(viridis::plasma(n = number_observations - 1), "lightgrey")
 
@@ -284,7 +287,8 @@ m_pies <- m_pies + theme(legend.position='none')
 pdf(file='mapPies.pdf')
 m_pies
 dev.off()
-  
+
+
 sites_mod <- sites
 sites_mod[,2] <- test_rep_group[,3]
 sites_mod[,3] <- test_rep_group[,2]

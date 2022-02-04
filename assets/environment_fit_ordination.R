@@ -4,13 +4,13 @@ args <- commandArgs(trailingOnly = TRUE)
 ########################################
 #TEMP WHILE WORKING ON SCRIPT
 # args[1]<-"/Users/mcallister/Desktop/test_figs" #FIGURE OUT directory
-# args[2]<-"/Users/mcallister/Desktop/small_dataset/small_dataset_out/processed_tables/ASVs_counts_NOUNKNOWNS_percentabund.tsv" #ASV rel abund
-# args[3]<-"/Users/mcallister/Desktop/small_dataset/small_dataset_out/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv" #Taxonomy rel abund
-# args[4]<-"/Users/mcallister/Desktop/small_dataset/small_dataset_out/sample_metadata_forR.txt" #sample metadata
+# args[2]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/processed_tables/ASVs_counts_NOUNKNOWNS_percentabund.tsv" #ASV rel abund
+# args[3]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv" #Taxonomy rel abund
+# args[4]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/sample_metadata_forR.txt" #sample metadata
 # args[5]<-"FALSE" #replicates flag
 # args[6]<-"TRUE" #sites flag
 # args[7]<-"TRUE" #chem data
-# args[8]<-"/Users/mcallister/Desktop/small_dataset/small_dataset_out/chem_headers.txt" #location chem headers
+# args[8]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/chem_headers.txt" #location chem headers
 ########################################
 library("ggplot2")
 library("dplyr")
@@ -26,7 +26,9 @@ replicateFlag <- as.logical(args[5])
 sitelabelFlag <- as.logical(args[6])
 chemDataFlag <- as.logical(args[7])
 
+
 if (chemDataFlag == TRUE) {
+  tryCatch({
   chem_headers <- read.delim(as.character(args[8]), header=FALSE, stringsAsFactors=FALSE)
   chem_headers <- as.vector(chem_headers)
   sample_metadata <- read.delim(as.character(args[4]), header=TRUE, stringsAsFactors=FALSE)
@@ -78,8 +80,9 @@ if (chemDataFlag == TRUE) {
   # row.names(CHEMONLY_sample_meta) <- CHEMONLY_sample_meta$Sample
   # CHEMONLY_sample_meta <- CHEMONLY_sample_meta %>% select(-Sample)
   
-  
+  }, error=function(e){})
 } else {
+  tryCatch({
   ASV_percabund <- read.delim(as.character(args[2]), header=TRUE, stringsAsFactors=FALSE)
   row.names(ASV_percabund) <- ASV_percabund$x 
   ASV_percabund <- ASV_percabund %>% select(-x)
@@ -113,10 +116,12 @@ if (chemDataFlag == TRUE) {
   sample_metadata <- read.delim(as.character(args[4]), header=TRUE, stringsAsFactors=FALSE)
   reference_sample_metadata <- sample_metadata
   reference_sample_metadata2 <- sample_metadata
+  }, error=function(e){})
 }
 
 #ASV-based ordination
 setwd(paste0(as.character(args[1]),"/08_EnvironmentFit_Ordination/ASV_based"))
+tryCatch({
 NMDS_ASV <- metaMDS(ASV_percabund, k=2, trymax = 100, trace = F, autotransform = FALSE, distance = "bray")
 NMDS_tab <- as.data.frame(NMDS_ASV$species)
 NMDS_tab <- tibble::rownames_to_column(NMDS_tab, "ASV")
@@ -126,11 +131,15 @@ NMDS_tab <- tibble::rownames_to_column(NMDS_tab, "Sample")
 write.table(NMDS_tab, "NMDS_vegan_ASVbased_sample_coordinates.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 reference_sample_metadata <- left_join(reference_sample_metadata, NMDS_tab, by = "Sample")
 reference_sample_metadata <- reference_sample_metadata %>% filter(!is.na(MDS1))
+}, error=function(e){})
 
+tryCatch({
 pdf(file='NMDS_vegan_ASVbased_relabund_stressplot.pdf', width = 11, height = 8.5)
 stressplot(NMDS_ASV)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 fitenv_ASV <- envfit(NMDS_ASV, ASV_sample_meta, permutations = 999)
 arrows <- as.data.frame(fitenv_ASV$vectors$arrows*sqrt(fitenv_ASV$vectors$r))
 arrows <- tibble::rownames_to_column(arrows, "Variable")
@@ -143,16 +152,19 @@ pvals <- tibble::rownames_to_column(pvals, "Variable")
 filtenv_tab <- left_join(arrows, r2, by = "Variable")
 filtenv_tab <- left_join(filtenv_tab, pvals, by = "Variable")
 write.table(filtenv_tab, "NMDS_vegan_ASVbased_environmentFitVectors_coordinates_r2_pvalues.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- ggplot(NMDS_tab) + geom_point(aes(x = MDS1, y = MDS2), color="red") +
   geom_text_repel(aes(label = Sample, x = MDS1, y = MDS2), box.padding = 0.4, min.segment.length = 0.2) +
   xlab("NMDS1") + ylab("NMDS2") + theme(panel.grid = element_blank())
 pdf(file='NMDS_vegan_ASVbased_samples_relabund_filtsamples_alltaxa.pdf', width = 11, height = 8.5)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
-filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
 tryCatch({
+filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
 ord_plot <- ggplot(NMDS_tab) + geom_point(aes(x = MDS1, y = MDS2), color="red") +
   geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
                arrow = arrow(length=unit(0.2, "cm")), 
@@ -165,8 +177,8 @@ print(ord_plot)
 dev.off()
 }, error=function(e){})
 
-filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
 tryCatch({
+filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
 ord_plot <- ggplot(NMDS_tab) + geom_point(aes(x = MDS1, y = MDS2), color="red") +
   geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
                arrow = arrow(length=unit(0.2, "cm")), 
@@ -180,8 +192,8 @@ dev.off()
 }, error=function(e){})
 
 if (chemDataFlag == TRUE) {
+  tryCatch({
 filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
-tryCatch({
 ord_plot <- ggplot(NMDS_tab) + geom_point(aes(x = MDS1, y = MDS2), color="red") +
   geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
                arrow = arrow(length=unit(0.2, "cm")), 
@@ -196,15 +208,17 @@ dev.off()
 }
 
 if (replicateFlag == TRUE) {
+  tryCatch({
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = replicates)) +
     xlab("NMDS1") + ylab("NMDS2") + theme(panel.grid = element_blank()) + 
     geom_encircle(aes(x = MDS1, y = MDS2, fill = replicates, group = replicates), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001)
   pdf(file='NMDS_vegan_ASVbased_samples_relabund_filtsamples_alltaxa_encircleReplicates.pdf', width = 11, height = 8.5)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
-  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
   tryCatch({
+  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = replicates)) +
     geom_encircle(aes(x = MDS1, y = MDS2, fill = replicates, group = replicates), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
     geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -218,8 +232,8 @@ if (replicateFlag == TRUE) {
   dev.off()
   }, error=function(e){})
   
-  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
   tryCatch({
+  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = replicates)) +
     geom_encircle(aes(x = MDS1, y = MDS2, fill = replicates, group = replicates), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
     geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -234,8 +248,8 @@ if (replicateFlag == TRUE) {
   }, error=function(e){})
   
   if (chemDataFlag == TRUE) {
-    filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
     tryCatch({
+    filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
     ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = replicates)) +
       geom_encircle(aes(x = MDS1, y = MDS2, fill = replicates, group = replicates), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
       geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -252,15 +266,17 @@ if (replicateFlag == TRUE) {
 }
 
 if (sitelabelFlag == TRUE) {
+  tryCatch({
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = sites)) +
     xlab("NMDS1") + ylab("NMDS2") + theme(panel.grid = element_blank()) + 
     geom_encircle(aes(x = MDS1, y = MDS2, fill = sites, group = sites), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001)
   pdf(file='NMDS_vegan_ASVbased_samples_relabund_filtsamples_alltaxa_encircleSites.pdf', width = 11, height = 8.5)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
-  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
   tryCatch({
+  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = sites)) +
     geom_encircle(aes(x = MDS1, y = MDS2, fill = sites, group = sites), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
     geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -274,8 +290,8 @@ if (sitelabelFlag == TRUE) {
   dev.off()
   }, error=function(e){})
   
-  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
   tryCatch({
+  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = sites)) +
     geom_encircle(aes(x = MDS1, y = MDS2, fill = sites, group = sites), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
     geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -290,8 +306,8 @@ if (sitelabelFlag == TRUE) {
   }, error=function(e){})
   
   if (chemDataFlag == TRUE) {
-    filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
     tryCatch({
+    filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
     ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = sites)) +
       geom_encircle(aes(x = MDS1, y = MDS2, fill = sites, group = sites), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
       geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -310,6 +326,7 @@ if (sitelabelFlag == TRUE) {
 #Taxonomy-based ordination
 setwd(paste0(as.character(args[1]),"/08_EnvironmentFit_Ordination/Taxonomy_merge_based"))
 
+tryCatch({
 NMDS_TAXA <- metaMDS(TAXA_percabund, k=2, trymax = 100, trace = F, autotransform = FALSE, distance = "bray")
 NMDS_tab <- as.data.frame(NMDS_TAXA$species)
 NMDS_tab <- tibble::rownames_to_column(NMDS_tab, "ASV")
@@ -317,15 +334,21 @@ write.table(NMDS_tab, "NMDS_vegan_TAXAbased_ASV_coordinates.tsv", sep="\t", quot
 NMDS_tab <- as.data.frame(NMDS_TAXA$points)
 NMDS_tab <- tibble::rownames_to_column(NMDS_tab, "Sample")
 write.table(NMDS_tab, "NMDS_vegan_TAXAbased_sample_coordinates.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 reference_sample_metadata <- reference_sample_metadata2
 reference_sample_metadata <- left_join(reference_sample_metadata, NMDS_tab, by = "Sample")
 reference_sample_metadata <- reference_sample_metadata %>% filter(!is.na(MDS1))
+}, error=function(e){})
 
+tryCatch({
 pdf(file='NMDS_vegan_TAXAbased_relabund_stressplot.pdf', width = 11, height = 8.5)
 stressplot(NMDS_TAXA)
 dev.off()
+}, error=function(e){})
 
+tryCatch({
 fitenv_TAXA <- envfit(NMDS_TAXA, TAXA_sample_meta, permutations = 999)
 arrows <- as.data.frame(fitenv_TAXA$vectors$arrows*sqrt(fitenv_TAXA$vectors$r))
 arrows <- tibble::rownames_to_column(arrows, "Variable")
@@ -338,16 +361,19 @@ pvals <- tibble::rownames_to_column(pvals, "Variable")
 filtenv_tab <- left_join(arrows, r2, by = "Variable")
 filtenv_tab <- left_join(filtenv_tab, pvals, by = "Variable")
 write.table(filtenv_tab, "NMDS_vegan_TAXAbased_environmentFitVectors_coordinates_r2_pvalues.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
+}, error=function(e){})
 
+tryCatch({
 ord_plot <- ggplot(NMDS_tab) + geom_point(aes(x = MDS1, y = MDS2), color="red") +
   geom_text_repel(aes(label = Sample, x = MDS1, y = MDS2), box.padding = 0.4, min.segment.length = 0.2) +
   xlab("NMDS1") + ylab("NMDS2") + theme(panel.grid = element_blank())
 pdf(file='NMDS_vegan_TAXAbased_samples_relabund_filtsamples_alltaxa.pdf', width = 11, height = 8.5)
 print(ord_plot)
 dev.off()
+}, error=function(e){})
 
-filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
 tryCatch({
+filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
 ord_plot <- ggplot(NMDS_tab) + geom_point(aes(x = MDS1, y = MDS2), color="red") +
   geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
                arrow = arrow(length=unit(0.2, "cm")), 
@@ -360,8 +386,8 @@ print(ord_plot)
 dev.off()
 }, error=function(e){})
 
-filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
 tryCatch({
+filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
 ord_plot <- ggplot(NMDS_tab) + geom_point(aes(x = MDS1, y = MDS2), color="red") +
   geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
                arrow = arrow(length=unit(0.2, "cm")), 
@@ -375,8 +401,8 @@ dev.off()
 }, error=function(e){})
 
 if (chemDataFlag == TRUE) {
-  filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
   tryCatch({
+  filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
   ord_plot <- ggplot(NMDS_tab) + geom_point(aes(x = MDS1, y = MDS2), color="red") +
     geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
                  arrow = arrow(length=unit(0.2, "cm")), 
@@ -392,15 +418,17 @@ if (chemDataFlag == TRUE) {
 
 
 if (replicateFlag == TRUE) {
+  tryCatch({
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = replicates)) +
     xlab("NMDS1") + ylab("NMDS2") + theme(panel.grid = element_blank()) + 
     geom_encircle(aes(x = MDS1, y = MDS2, fill = replicates, group = replicates), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001)
   pdf(file='NMDS_vegan_TAXAbased_samples_relabund_filtsamples_alltaxa_encircleReplicates.pdf', width = 11, height = 8.5)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
-  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
   tryCatch({
+  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = replicates)) +
     geom_encircle(aes(x = MDS1, y = MDS2, fill = replicates, group = replicates), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
     geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -414,8 +442,8 @@ if (replicateFlag == TRUE) {
   dev.off()
   }, error=function(e){})
   
-  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
   tryCatch({
+  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = replicates)) +
     geom_encircle(aes(x = MDS1, y = MDS2, fill = replicates, group = replicates), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
     geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -430,8 +458,8 @@ if (replicateFlag == TRUE) {
   }, error=function(e){})
   
   if (chemDataFlag == TRUE) {
-    filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
     tryCatch({
+    filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
     ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = replicates)) +
       geom_encircle(aes(x = MDS1, y = MDS2, fill = replicates, group = replicates), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
       geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -448,15 +476,17 @@ if (replicateFlag == TRUE) {
 }
 
 if (sitelabelFlag == TRUE) {
+  tryCatch({
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = sites)) +
     xlab("NMDS1") + ylab("NMDS2") + theme(panel.grid = element_blank()) + 
     geom_encircle(aes(x = MDS1, y = MDS2, fill = sites, group = sites), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001)
   pdf(file='NMDS_vegan_TAXAbased_samples_relabund_filtsamples_alltaxa_encircleSites.pdf', width = 11, height = 8.5)
   print(ord_plot)
   dev.off()
+  }, error=function(e){})
   
-  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
   tryCatch({
+  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.05)
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = sites)) +
     geom_encircle(aes(x = MDS1, y = MDS2, fill = sites, group = sites), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
     geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -470,8 +500,8 @@ if (sitelabelFlag == TRUE) {
   dev.off()
   }, error=function(e){})
   
-  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
   tryCatch({
+  filtenv_plot <- filtenv_tab %>% filter(pval <= 0.001)
   ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = sites)) +
     geom_encircle(aes(x = MDS1, y = MDS2, fill = sites, group = sites), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
     geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 
@@ -486,8 +516,8 @@ if (sitelabelFlag == TRUE) {
   }, error=function(e){})
   
   if (chemDataFlag == TRUE) {
-    filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
     tryCatch({
+    filtenv_plot <- filtenv_tab %>% filter(Variable %in% chem_headers$V1)
     ord_plot <- ggplot(reference_sample_metadata) + geom_point(aes(x = MDS1, y = MDS2, color = sites)) +
       geom_encircle(aes(x = MDS1, y = MDS2, fill = sites, group = sites), inherit.aes = TRUE, alpha = 0.3, expand = 0, s_shape = 1, spread = 0.001) +
       geom_segment(data = filtenv_plot, aes(x=0,xend= NMDS1, y=0, yend = NMDS2), 

@@ -2,7 +2,7 @@
 args <- commandArgs(trailingOnly = TRUE)
 
 ########################################
-# # TEMP WHILE WORKING ON SCRIPT
+# TEMP WHILE WORKING ON SCRIPT
 # args[1]<-"/Users/mcallister/Desktop/test_figs" #FIGURE OUT directory
 # args[2]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv" #ASV count table
 # args[3]<-"/Users/mcallister/Desktop/chris_test/18S/CP_all_out/ASV2Taxonomy/CP_all_out_asvTaxonomyTable_NOUNKNOWNS.txt" #ASV taxonomy table
@@ -98,7 +98,7 @@ asv_countrel <- asv_countrel %>% select(-x)
 asv_countrel <- as.data.frame(t(asv_countrel))
 asv_countrel <- tibble::rownames_to_column(asv_countrel, "x")
 asv_countrel$readSum <- rowSums(asv_countrel[,-1])
-asv_countrel <- asv_countrel %>% mutate_at(vars(-x, -readSum), funs(100*./readSum))
+asv_countrel <- asv_countrel %>% mutate_at(vars(-x, -readSum), list(~(100*./readSum)))
 asv_countrel <- asv_countrel %>% select(-readSum)
 asv_countrel_rotated1 <- asv_countrel
 asv_countrel_rotated2 <- asv_countrel
@@ -122,8 +122,9 @@ if (sitelabelFlag == TRUE) { #Will expect "sites" column
   asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = temp_colnames[3]))))
   asv_countrel_join <- asv_countrel_join %>% select(-Sample)
   rep_group <- asv_countrel_join %>% group_by(sites) %>% 
-    summarise_all(funs(mean))
+    summarise_all(mean)
   rep_group <- rep_group %>% rename(x = sites)
+  rep_group <- as.data.frame(rep_group)
   row.names(rep_group) <- rep_group$x
   rep_group <- rep_group %>% select(-x)
   rep_group <- as.data.frame(t(rep_group))
@@ -132,8 +133,9 @@ if (sitelabelFlag == TRUE) { #Will expect "sites" column
   
   sample_repgroup <- sample_metadata
   sample_repgroup <- sample_repgroup %>% select(-Sample)
+  sample_repgroup <- sample_repgroup %>% filter(!is.na(sites))
   sample_repgroup <- sample_repgroup %>% group_by(sites) %>%
-    summarise_all(funs(toString(unique(.)))) %>% rename(Sample = sites)
+    summarise_all(list(~toString(unique(.)))) %>% rename(Sample = sites)
   write.table(sample_repgroup, "sample_metadata_NOUNKNOWNS_percentabund_groupedBySites.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 }
 
@@ -145,8 +147,9 @@ if (replicateFlag == TRUE) { #Will expect "replicates" column
   asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = temp_colnames[3]))))
   asv_countrel_join <- asv_countrel_join %>% select(-Sample)
   rep_group <- asv_countrel_join %>% group_by(replicates) %>% 
-    summarise_all(funs(mean))
+    summarise_all(mean)
   rep_group <- rep_group %>% rename(x = replicates)
+  rep_group <- as.data.frame(rep_group)
   row.names(rep_group) <- rep_group$x
   rep_group <- rep_group %>% select(-x)
   rep_group <- as.data.frame(t(rep_group))
@@ -155,8 +158,9 @@ if (replicateFlag == TRUE) { #Will expect "replicates" column
   
   sample_repgroup <- sample_metadata
   sample_repgroup <- sample_repgroup %>% select(-Sample)
+  sample_repgroup <- sample_repgroup %>% filter(!is.na(replicates))
   sample_repgroup <- sample_repgroup %>% group_by(replicates) %>%
-    summarise_all(funs(toString(unique(.)))) %>% rename(Sample = replicates)
+    summarise_all(list(~toString(unique(.)))) %>% rename(Sample = replicates)
   write.table(sample_repgroup, "sample_metadata_NOUNKNOWNS_percentabund_groupedByReplicates.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 }
 
@@ -219,7 +223,7 @@ asv_countrel <- asv_countrel %>% select(-x)
 asv_countrel <- as.data.frame(t(asv_countrel))
 asv_countrel <- tibble::rownames_to_column(asv_countrel, "x")
 asv_countrel$readSum <- rowSums(asv_countrel[,-1])
-asv_countrel <- asv_countrel %>% mutate_at(vars(-x, -readSum), funs(100*./readSum))
+asv_countrel <- asv_countrel %>% mutate_at(vars(-x, -readSum), list(~(100*./readSum)))
 asv_countrel <- asv_countrel %>% select(-readSum)
 asv_countrel_rotated1 <- asv_countrel
 asv_countrel_rotated2 <- asv_countrel
@@ -244,8 +248,9 @@ if (sitelabelFlag == TRUE) { #Will expect "sites" column
   asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = temp_colnames[3]))))
   asv_countrel_join <- asv_countrel_join %>% select(-Sample)
   rep_group <- asv_countrel_join %>% group_by(sites) %>% 
-    summarise_all(funs(mean))
+    summarise_all(mean)
   rep_group <- rep_group %>% rename(x = sites)
+  rep_group <- as.data.frame(rep_group)
   row.names(rep_group) <- rep_group$x
   rep_group <- rep_group %>% select(-x)
   rep_group <- as.data.frame(t(rep_group))
@@ -261,12 +266,12 @@ if (replicateFlag == TRUE) { #Will expect "replicates" column
   asv_countrel_join <- asv_countrel_join %>% filter(!is.na(eval(parse(text = temp_colnames[3]))))
   asv_countrel_join <- asv_countrel_join %>% select(-Sample)
   rep_group <- asv_countrel_join %>% group_by(replicates) %>% 
-    summarise_all(funs(mean))
+    summarise_all(mean)
   rep_group <- rep_group %>% rename(x = replicates)
+  rep_group <- as.data.frame(rep_group)
   row.names(rep_group) <- rep_group$x
   rep_group <- rep_group %>% select(-x)
   rep_group <- as.data.frame(t(rep_group))
   rep_group <- tibble::rownames_to_column(rep_group, "x")
   write.table(rep_group, "ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund_groupedByReplicates.tsv", sep="\t", quote=F, col.names=TRUE, row.names = FALSE)
 }
-
