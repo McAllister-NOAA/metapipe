@@ -5,10 +5,10 @@
 ####################################################
 primerF=GYGGTGCATGGCCGTTSKTRGTT
 primerR=GTGTGYACAAAGGBCAGGGAC
-ampliconSize=370 #bp including primers
+blastLengthCutoff=370 #bp length under which BLAST hits are not considered
 systemmemoryMB=32000
 locationNTdatabase=/Users/mcallister/software/blastdb
-speciesGenusCutoffs=97,95,80 #Percent ID cutoffs for ID to species,genus,order
+taxonomyCutoffs=97,95,90,80,70,60 #Percent ID cutoffs for ID to S,G,F,O,C,P
 #removeASVsFILE=/Users/mcallister/Desktop/chris_test/remove_contaminants.txt
 
 ###DADA2 Filtering options:

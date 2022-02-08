@@ -126,10 +126,10 @@ if [[ $pflag -eq 0 || $sflag -eq 0 || $rflag -eq 0 || $oflag -eq 0 || $fflag -eq
 ##########################################################################################
 unset primerF
 unset primerR
-unset ampliconSize
+unset blastLengthCutoff
 unset systemmemoryMB
 unset locationNTdatabase
-unset speciesGenusCutoffs  #TODO rename to speciesGenusOrderCutoffs
+unset taxonomyCutoffs
 unset dada_minlength
 unset dada_phix
 unset dada_trunQ
@@ -143,11 +143,11 @@ removeASVsFILE=NULL
 
 source $parameterfilepath
 
-temp_holder=$speciesGenusCutoffs
-speciesGenusCutoffs=`echo $temp_holder | sed -E 's/[^0-9]/,/g'`
+temp_holder=$taxonomyCutoffs
+taxonomyCutoffs=`echo $temp_holder | sed -E 's/[^0-9]/,/g'`
 
 #TEMP Holding:
-#echo "<<<$speciesGenusCutoffs>>>"
+#echo "<<<$taxonomyCutoffs>>>"
 #sed -E 's/^\D//' | sed -E 's/\D$//' 
 
 ##########################################################################################
@@ -161,6 +161,7 @@ speciesGenusCutoffs=`echo $temp_holder | sed -E 's/[^0-9]/,/g'`
 cutadaptFinished=FALSE
 dada2_Finished=FALSE
 blastFinished=FALSE
+blastformattingFinished=FALSE
 taxonomyscriptFinished=FALSE
 figuresFinished=FALSE
 
@@ -668,26 +669,37 @@ else
   cp $optionalUserBLASTResult ${outdirectory}/blast_results/ASV_blastn_nt.btab
   fi
 
-
-##########################################################################################
-##
-##    Reformat BLAST output
-##
-##########################################################################################
-  echo
-  echo "Reformatting BLAST output: `date`"
-  
-  let "insertSize=ampliconSize - ${#primerF} - ${#primerR}"
-  
-  Rscript --vanilla ${metapipedir}/assets/reformat_blast.R ${workingdirectory}/${outdirectory}/blast_results $insertSize \
-      1>> ${workingdirectory}/${outdirectory}/blast_results/blastreformatting_rscript_out.log 2>&1
-  
   echo
   
   echo "blastFinished=TRUE" >> ${outdirectory}/progress.txt
 
 fi
 
+##########################################################################################
+##
+##    Reformat BLAST output
+##
+##########################################################################################
+if [[ "${blastformattingFinished}" = "TRUE" ]]; then
+  echo "BLAST formatting from prior run"
+else
+  if [ -f "${outdirectory}/blast_results/ASV_blastn_nt_formatted.txt" ]; then
+    rm ${outdirectory}/blast_results/ASV_blastn_nt_formatted.txt
+  fi
+
+  echo
+  echo "Reformatting BLAST output: `date`"
+  
+  #let "insertSize=ampliconSize - ${#primerF} - ${#primerR}"
+  
+  Rscript --vanilla ${metapipedir}/assets/reformat_blast.R ${workingdirectory}/${outdirectory}/blast_results $blastLengthCutoff \
+      1>> ${workingdirectory}/${outdirectory}/blast_results/blastreformatting_rscript_out.log 2>&1
+  
+  echo
+  
+  echo "blastformattingFinished=TRUE" >> ${outdirectory}/progress.txt
+
+fi
 
 ##########################################################################################
 ##
@@ -762,7 +774,7 @@ else
     cd ${outdirectory}/ASV2Taxonomy
   
     perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt \
-        -t reformatted_taxonkit_out.txt -f $speciesGenusCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
+        -t reformatted_taxonkit_out.txt -f $taxonomyCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
     cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
     cd ${workingdirectory}
     cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt | cut -f1 | sed -E 's/$/	/' > ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
@@ -784,7 +796,7 @@ else
     cd ${outdirectory}/ASV2Taxonomy
     
     perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt -d $removeASVsFILE \
-        -t reformatted_taxonkit_out.txt -f $speciesGenusCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
+        -t reformatted_taxonkit_out.txt -f $taxonomyCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
     
     #Move non-filtered files to folder, replace with files from "IGNORING_ASVs" directory
     mkdir unfiltered_files

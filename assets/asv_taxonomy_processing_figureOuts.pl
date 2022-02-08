@@ -22,7 +22,7 @@ if ($options{h})
         print "-a = ASV counts table (make sure there is text in the upperleft)\n";
         print "-s = DADA2 taxonomy output (w/ headers ASV Perc Len TaxID correction)\n";
         print "-t = reformatted taxonkit output (TaxID\tsimplified taxonomy)\n";
-        print "-f = filtering options Species,Genus,Order (e.g. 97,95,90)\n";
+        print "-f = filtering options Species,Genus,Family,Order,Class,Phylum (e.g. 97,95,90,80,70,60)\n";
         print "-n = Allin Output basename\n";
         print '-c = Location of common names file (grep "genbank common name" from names.dmp NCBI taxonomy file)'; print "\n";
         print "-d = List of ASVs to ignore (one per line) for outputs ignoring contaminants and/or unknowns\n";
@@ -96,7 +96,7 @@ foreach my $line (@dada_dat)
 	{	chomp($line);
 		my @data = split('\t', $line);
 		my $blah = $data[0]; chomp($blah);
-		$ASV{$blah}{'perchit'} = $data[1];
+		$ASV{$blah}{'perchit'} = $data[1];                                                                         
 		$ASV{$blah}{'lenhit'} = $data[2];
 		$ASV{$blah}{'taxid'} = $data[3];
 		$ASV{$blah}{'correction'} = $data[4];
@@ -109,9 +109,18 @@ foreach my $line (@dada_dat)
 			{	$ASV{$blah}{'confidence'} = "GENUS";
 			}
 		if ($data[1] < $splitfilter[1] && $data[1] >= $splitfilter[2])
+			{	$ASV{$blah}{'confidence'} = "FAMILY";
+			}
+        if ($data[1] < $splitfilter[2] && $data[1] >= $splitfilter[3])
 			{	$ASV{$blah}{'confidence'} = "ORDER";
 			}
-		if ($data[1] < $splitfilter[2])
+        if ($data[1] < $splitfilter[3] && $data[1] >= $splitfilter[4])
+			{	$ASV{$blah}{'confidence'} = "CLASS";
+			}
+        if ($data[1] < $splitfilter[4] && $data[1] >= $splitfilter[5])
+			{	$ASV{$blah}{'confidence'} = "PHYLUM";
+			}
+		if ($data[1] < $splitfilter[5])
 			{	$ASV{$blah}{'confidence'} = "NOCONFIDENCE";
 			}
 	}
@@ -288,57 +297,43 @@ foreach my $i (sort keys %ASV)
 							$choice = $newwithout;
 						}
 				}
-			if ($ASV{$i}{'confidence'} eq "GENUS")
-				{	my $firstchoice = $TAXON{$tax_list[0]}{'taxastring'};
-					chomp($firstchoice);
-					my @splitmodtax = split(';', $firstchoice);
-					pop(@splitmodtax);
-					if ($splitmodtax[$#splitmodtax] ne "@@")
-						{	my $newmodtax = join(';', @splitmodtax);
-							$choice = $newmodtax;
-							$choiceindicator = 1;
-						}
-					else
-						{	my @pleasework;
-							foreach my $position (0..$#splitmodtax)
-								{	if ($splitmodtax[$position] eq "@@")
-										{	last;
-										}
-									else {
-										push(@pleasework, $splitmodtax[$position]);
-									}	
-								}
-							my $newwithout = join(';', @pleasework);
-							$choice = $newwithout;
-						}
-				}
-			if ($ASV{$i}{'confidence'} eq "ORDER")
-				{	my $firstchoice = $TAXON{$tax_list[0]}{'taxastring'};
-					chomp($firstchoice);
-					my @splitmodtax = split(';', $firstchoice);
-					pop(@splitmodtax); pop(@splitmodtax); pop(@splitmodtax);
-					if ($splitmodtax[$#splitmodtax] ne "@@")
-						{	my $newmodtax = join(';', @splitmodtax);
-							$choice = $newmodtax;
-							$choiceindicator = 1;
-						}
-					else
-						{	my @pleasework;
-							foreach my $position (0..$#splitmodtax)
-								{	if ($splitmodtax[$position] eq "@@")
-										{	last;
-										}
-									else {
-										push(@pleasework, $splitmodtax[$position]);
-									}	
-								}
-							my $newwithout = join(';', @pleasework);
-							$choice = $newwithout;
-						}
-				}
-			if ($ASV{$i}{'confidence'} eq "NOCONFIDENCE")
+            elsif ($ASV{$i}{'confidence'} eq "NOCONFIDENCE")
 				{	$choice = "Unknown";
 				}
+            else
+                {   my $firstchoice = $TAXON{$tax_list[0]}{'taxastring'};
+					chomp($firstchoice);
+					my @splitmodtax = split(';', $firstchoice);
+					my @conflist = qw | GENUS FAMILY ORDER CLASS PHYLUM |;
+                    my $numpops;
+                    foreach my $conf (0..$#conflist)
+                        {   if ($ASV{$i}{'confidence'} eq $conflist[$conf])
+                                {   $numpops = $conf;
+                                }
+                        }
+                    foreach my $popnum (0..$numpops)
+                        {   pop(@splitmodtax);
+                        }
+                    if ($splitmodtax[$#splitmodtax] ne "@@")
+						{	my $newmodtax = join(';', @splitmodtax);
+							$choice = $newmodtax;
+							$choiceindicator = 1;
+						}
+					else
+						{	my @pleasework;
+							foreach my $position (0..$#splitmodtax)
+								{	if ($splitmodtax[$position] eq "@@")
+										{	last;
+										}
+									else {
+										push(@pleasework, $splitmodtax[$position]);
+									}	
+								}
+							my $newwithout = join(';', @pleasework);
+							$choice = $newwithout;
+						}
+                }
+			
 			if ($#tax_list > 0) # SET COMPARISON taxonomy if taxid list has more than one
 				{	foreach my $heck (1..$#tax_list)
 						{	my $compare;
@@ -375,12 +370,24 @@ foreach my $i (sort keys %ASV)
 											
 										}
 								}
-							if ($ASV{$i}{'confidence'} eq "GENUS")
-								{	my $firstchoice = $TAXON{$tax_list[$heck]}{'taxastring'};
+                            elsif ($ASV{$i}{'confidence'} eq "NOCONFIDENCE")
+								{	$compare = "Unknown";
+								}
+                            else
+                                {   my $firstchoice = $TAXON{$tax_list[$heck]}{'taxastring'};
 									chomp($firstchoice);
 									my @splitmodtax = split(';', $firstchoice);
-									pop(@splitmodtax);
-									if ($splitmodtax[$#splitmodtax] ne "@@")
+									my @conflist = qw | GENUS FAMILY ORDER CLASS PHYLUM |;
+                                    my $numpops;
+                                    foreach my $conf (0..$#conflist)
+                                        {   if ($ASV{$i}{'confidence'} eq $conflist[$conf])
+                                                {   $numpops = $conf;
+                                                }
+                                        }
+                                    foreach my $popnum (0..$numpops)
+                                        {   pop(@splitmodtax);
+                                        }
+                                    if ($splitmodtax[$#splitmodtax] ne "@@")
 										{	my $newmodtax = join(';', @splitmodtax);
 											$compare = $newmodtax;
 											$compindicator = 1;
@@ -403,40 +410,9 @@ foreach my $i (sort keys %ASV)
 												{	$compare = $choice;
 												}
 										}
-								}
-							if ($ASV{$i}{'confidence'} eq "ORDER")
-								{	my $firstchoice = $TAXON{$tax_list[$heck]}{'taxastring'};
-									chomp($firstchoice);
-									my @splitmodtax = split(';', $firstchoice);
-									pop(@splitmodtax); pop(@splitmodtax); pop(@splitmodtax);
-									if ($splitmodtax[$#splitmodtax] ne "@@")
-										{	my $newmodtax = join(';', @splitmodtax);
-											$compare = $newmodtax;
-											$compindicator = 1;
-										}
-									else
-										{	if ($choiceindicator == 0)
-												{	my @pleasework;
-													foreach my $position (0..$#splitmodtax)
-														{	if ($splitmodtax[$position] eq "@@")
-																{	last;
-																}
-															else {
-																push(@pleasework, $splitmodtax[$position]);
-															}	
-														}
-													my $newwithout = join(';', @pleasework);
-													$compare = $newwithout;
-												}
-											if ($choiceindicator == 1)
-												{	$compare = $choice;	
-												}
-										}
-								}
-							if ($ASV{$i}{'confidence'} eq "NOCONFIDENCE")
-								{	$compare = "Unknown";
-								}
-							my @new_choice;
+                                }
+                                
+                            my @new_choice;
 							#print "$choice\t$compare\n";
 							unless ($compindicator == 1 && $choiceindicator == 0)
 								{
