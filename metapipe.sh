@@ -38,8 +38,9 @@ oflag=0
 fflag=0
 blastflag=FALSE
 bypassflag=FALSE
+keepIntermediateFiles=TRUE
 
-while getopts ":p:s:r:o:b:f:y" opt; do
+while getopts ":p:s:r:o:b:f:yk" opt; do
   case ${opt} in
     p ) pflag=1
         parameterfilepath=$OPTARG #metapipe_config.txt (see README)
@@ -62,6 +63,8 @@ while getopts ":p:s:r:o:b:f:y" opt; do
       ;;
     y ) bypassflag=TRUE
       ;;
+    k ) keepIntermediateFiles=FALSE
+      ;;
     \? ) echo "Invalid option: -$OPTARG"
          echo "Usage: metapipe.sh" #Invalid option provided
          echo "       -p Config File"
@@ -71,6 +74,9 @@ while getopts ":p:s:r:o:b:f:y" opt; do
          echo "       -o Output directory"
          echo "       -b User-supplied BLASTn btab result file (optional)"
          echo "       -y Bypass all terminal prompts (optional)"
+         echo "       -k Remove all intermediate files (optional)"
+         echo "          Not recommended for first run"
+         echo "          (best to rerun with -k after successful completion)"
          echo "       See README for details"
          exit
       ;;
@@ -83,6 +89,9 @@ while getopts ":p:s:r:o:b:f:y" opt; do
         echo "       -o Output directory"
         echo "       -b User-supplied BLASTn btab result file (optional)"
         echo "       -y Bypass all terminal prompts (optional)"
+        echo "       -k Remove all intermediate files (optional)"
+        echo "          Not recommended for first run"
+        echo "          (best to rerun with -k after successful completion)"
         echo "       See README for details"
         exit
       ;;
@@ -99,12 +108,15 @@ if [ $OPTIND -eq 1 ]
         echo "       -o Output directory"
         echo "       -b User-supplied BLASTn btab result file (optional)"
         echo "       -y Bypass all terminal prompts (optional)"
+        echo "       -k Remove all intermediate files (optional)"
+        echo "          Not recommended for first run"
+        echo "          (best to rerun with -k after successful completion)"
         echo "       See README for details"
         exit
     fi
 
 if [[ $pflag -eq 0 || $sflag -eq 0 || $rflag -eq 0 || $oflag -eq 0 || $fflag -eq 0 ]]
-  then echo "All options except -b and -y are required."
+  then echo "All options except -b, -y, and -k are required."
         echo "Usage: metapipe.sh" #Missing required options
         echo "       -p Config File"
         echo "       -f Figure config file"
@@ -113,6 +125,9 @@ if [[ $pflag -eq 0 || $sflag -eq 0 || $rflag -eq 0 || $oflag -eq 0 || $fflag -eq
         echo "       -o Output directory"
         echo "       -b User-supplied BLASTn btab result file (optional)"
         echo "       -y Bypass all terminal prompts (optional)"
+        echo "       -k Remove all intermediate files (optional)"
+        echo "          Not recommended for first run"
+        echo "          (best to rerun with -k after successful completion)"
         echo "       See README for details"
         exit
       fi
@@ -187,10 +202,13 @@ if [ -d "${outdirectory}" ]; then
   currenttime=`date | sed -E 's/[^A-Za-z0-9_]/_/g'`
   mv ${outdirectory}/run.log ${outdirectory}/run_logs/runlog_${currenttime}.txt
   touch ${outdirectory}/run.log
+  echo >> ${outdirectory}/Rscript_arguments.log
+  echo "New Run" >> ${outdirectory}/Rscript_arguments.log
 else
   mkdir ${outdirectory}
   touch ${outdirectory}/progress.txt
   touch ${outdirectory}/run.log
+  echo "First Run" >> ${outdirectory}/Rscript_arguments.log
   cp ${parameterfilepath} ${outdirectory}/config_file.txt
   cp ${samplemetafilepath} ${outdirectory}/sample_metadata.txt
 fi
@@ -365,6 +383,7 @@ else
       do
       Rscript --vanilla ${metapipedir}/assets/dada2_step1.R ${workingdirectory}/${outdirectory}/dada2 $dada_minlength $dada_phix $dada_trunQ $dada_maxEE1 $dada_maxEE2 $dada_trimRight $dada_trimLeft \
         1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+      echo "dada2_step1.R	${workingdirectory}/${outdirectory}/dada2 $dada_minlength $dada_phix $dada_trunQ $dada_maxEE1 $dada_maxEE2 $dada_trimRight $dada_trimLeft" >> ${outdirectory}/Rscript_arguments.log
       echo
       echo "DADA2 Filtering results:"
       echo "Sample	% Reads Passing"
@@ -414,6 +433,7 @@ else
     echo
     Rscript --vanilla ${metapipedir}/assets/dada2_step2.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB \
         1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+    echo "dada2_step2.R	${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB" >> ${outdirectory}/Rscript_arguments.log
     
     cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
     mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
@@ -448,6 +468,7 @@ else
       do
       Rscript --vanilla ${metapipedir}/assets/dada2_step1_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $dada_minlength $dada_phix $dada_trunQ $dada_maxEE1 $dada_maxEE2 $dada_trimRight $dada_trimLeft forward \
         1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+      echo "dada2_step1_mergeFail.R	${workingdirectory}/${outdirectory}/dada2 $dada_minlength $dada_phix $dada_trunQ $dada_maxEE1 $dada_maxEE2 $dada_trimRight $dada_trimLeft forward" >> ${outdirectory}/Rscript_arguments.log
       echo
       echo "DADA2 Filtering results:"
       echo "Sample	% Reads Passing"
@@ -497,6 +518,7 @@ else
     echo
     Rscript --vanilla ${metapipedir}/assets/dada2_step2_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB forward \
         1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+    echo "dada2_step2_mergeFail.R	${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB forward" >> ${outdirectory}/Rscript_arguments.log
     
     cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
     mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
@@ -531,6 +553,7 @@ else
       do
       Rscript --vanilla ${metapipedir}/assets/dada2_step1_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $dada_minlength $dada_phix $dada_trunQ $dada_maxEE1 $dada_maxEE2 $dada_trimRight $dada_trimLeft reverse \
         1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+      echo "dada2_step1_mergeFail.R	${workingdirectory}/${outdirectory}/dada2 $dada_minlength $dada_phix $dada_trunQ $dada_maxEE1 $dada_maxEE2 $dada_trimRight $dada_trimLeft reverse" >> ${outdirectory}/Rscript_arguments.log
       echo
       echo "DADA2 Filtering results:"
       echo "Sample	% Reads Passing"
@@ -580,6 +603,7 @@ else
     echo
     Rscript --vanilla ${metapipedir}/assets/dada2_step2_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB reverse \
         1>> ${workingdirectory}/${outdirectory}/dada2/dada2_rscripts_out.log 2>&1
+    echo "dada2_step2_mergeFail.R	${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB reverse" >> ${outdirectory}/Rscript_arguments.log
     
     cat ${outdirectory}/dada2/ASVs_counts.tsv | sed -E 's/^	/x	/' > ${outdirectory}/dada2/ASVs_counts_mod.tsv
     mv ${outdirectory}/dada2/ASVs_counts_mod.tsv ${outdirectory}/dada2/ASVs_counts.tsv
@@ -694,6 +718,7 @@ else
   
   Rscript --vanilla ${metapipedir}/assets/reformat_blast.R ${workingdirectory}/${outdirectory}/blast_results $blastLengthCutoff \
       1>> ${workingdirectory}/${outdirectory}/blast_results/blastreformatting_rscript_out.log 2>&1
+  echo "reformat_blast.R	${workingdirectory}/${outdirectory}/blast_results $blastLengthCutoff" >> ${outdirectory}/Rscript_arguments.log
   
   echo
   
@@ -864,8 +889,11 @@ fi
 ##    File cleanup
 ##
 ##########################################################################################
-rm -f ${outdirectory}/cutadapt/*_trimmed.fq.gz
-gzip -q -9 ${outdirectory}/blast_results/ASV_blastn_nt.btab
+if [[ "$keepIntermediateFiles" = "FALSE" ]]; then
+  rm -f ${outdirectory}/cutadapt/*_trimmed.fq.gz
+  rm -f ${outdirectory}/dada2/*_filtered.fq.gz
+  gzip -q -9 ${outdirectory}/blast_results/ASV_blastn_nt.btab
+fi
 
 ##########################################################################################
 ##
@@ -970,6 +998,7 @@ for ((f=1; f<=`awk '{print NF}' ${workingdirectory}/${outdirectory}/sample_metad
 mkdir ${outdirectory}/Figures/01_Maps
 Rscript --vanilla ${metapipedir}/assets/maps.R ${workingdirectory}/${outdirectory}/Figures/01_Maps ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_NO_UNKNOWNS_barchart.txt $filterPercent $pieScale \
     1>> ${workingdirectory}/${outdirectory}/Figures/01_Maps/maps_rscript_out.log 2>&1
+echo "maps.R	${workingdirectory}/${outdirectory}/Figures/01_Maps ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_NO_UNKNOWNS_barchart.txt $filterPercent $pieScale" >> ${outdirectory}/Rscript_arguments.log
 
 rm -f ${workingdirectory}/${outdirectory}/Figures/01_Maps/Rplot*
 
@@ -978,6 +1007,7 @@ perl ${metapipedir}/assets/barchart_filterLowAbund.pl -i ${outdirectory}/ASV2Tax
 
 Rscript --vanilla ${metapipedir}/assets/process_tables.R ${workingdirectory}/${outdirectory} ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $filterPercent $controlspresent $filterLowQualSamples $filterPercentLowQualSamples ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv $sites $replicates ${workingdirectory}/${outdirectory}/dada2/ASVs_counts.tsv \
   1>> ${workingdirectory}/${outdirectory}/processed_tables/table_rscript_out.log 2>&1
+echo "process_tables.R	${workingdirectory}/${outdirectory} ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $filterPercent $controlspresent $filterLowQualSamples $filterPercentLowQualSamples ${workingdirectory}/${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv $sites $replicates ${workingdirectory}/${outdirectory}/dada2/ASVs_counts.tsv" >> ${outdirectory}/Rscript_arguments.log
 perl ${metapipedir}/assets/filter_lowabundance_taxa.pl -a ${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt -p $filterPercent > ${outdirectory}/processed_tables/ASVTaxonomyTable_NOUNKNOWNS_replaceLowAbund2zzOther.txt
 
 if [[ "${controlspresent}" = "TRUE" ]]; then
@@ -1059,11 +1089,13 @@ fi
 #echo ${workingdirectory}/${outdirectory}/Figures ${workingdirectory} ${outdirectory} $controlspresent $filterLowQualSamples $replicates $sites $filterPercent $removeNA $providedTaxaOfInterest $groupsDefinedFlag $numberGroupsDefined $taxaOfInterestLevel $taxaOfInterestFile $chemData $locationChemHeaders
 Rscript --vanilla ${metapipedir}/assets/phyloseq.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory} ${outdirectory} $controlspresent $filterLowQualSamples $replicates $sites $filterPercent $removeNA $providedTaxaOfInterest $groupsDefinedFlag $numberGroupsDefined $taxaOfInterestLevel $taxaOfInterestFile $chemData $locationChemHeaders \
   1>> ${workingdirectory}/${outdirectory}/Figures/phyloseq_rscript_out.log 2>&1
+echo "phyloseq.R	${workingdirectory}/${outdirectory}/Figures ${workingdirectory} ${outdirectory} $controlspresent $filterLowQualSamples $replicates $sites $filterPercent $removeNA $providedTaxaOfInterest $groupsDefinedFlag $numberGroupsDefined $taxaOfInterestLevel $taxaOfInterestFile $chemData $locationChemHeaders" >> ${outdirectory}/Rscript_arguments.log
 
 rm -f ${workingdirectory}/${outdirectory}/Figures/02_Barcharts/read_count/Rplots.pdf
 
 Rscript --vanilla ${metapipedir}/assets/barchart_terminaltaxa.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR.txt ${workingdirectory}/${outdirectory}/sample_order.txt ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR_filtLowAbund_zzOther.txt \
  1>> ${workingdirectory}/${outdirectory}/Figures/phyloseq_rscript_out.log 2>&1
+echo "barchart_terminaltaxa.R	${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR.txt ${workingdirectory}/${outdirectory}/sample_order.txt ${workingdirectory}/${outdirectory}/ASV2Taxonomy/${outdirectory}_barchart_forR_filtLowAbund_zzOther.txt" >> ${outdirectory}/Rscript_arguments.log
 
 rm -f ${workingdirectory}/${outdirectory}/Figures/02_Barcharts/relative_abundance/Rplots.pdf
 
@@ -1071,6 +1103,7 @@ mkdir -p ${outdirectory}/Figures/08_EnvironmentFit_Ordination/ASV_based
 mkdir -p ${outdirectory}/Figures/08_EnvironmentFit_Ordination/Taxonomy_merge_based
 Rscript --vanilla ${metapipedir}/assets/environment_fit_ordination.R ${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_percentabund.tsv ${workingdirectory}/${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites $chemData $locationChemHeaders \
   1>> ${workingdirectory}/${outdirectory}/Figures/08_EnvironmentFit_Ordination/envfit_rscript_out.log 2>&1
+echo "environment_fit_ordination.R	${workingdirectory}/${outdirectory}/Figures ${workingdirectory}/${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_percentabund.tsv ${workingdirectory}/${outdirectory}/processed_tables/ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.tsv ${workingdirectory}/${outdirectory}/sample_metadata_forR.txt $replicates $sites $chemData $locationChemHeaders" >> ${outdirectory}/Rscript_arguments.log
 
 #Replicate section
 if [[ "${replicates}" = "TRUE" ]]; then
@@ -1116,29 +1149,23 @@ if [[ "${replicates}" = "TRUE" ]]; then
   if [[ "${controlspresent}" = "FALSE" && "${filterLowQualSamples}" = "FALSE" ]]; then
   Rscript --vanilla ${metapipedir}/assets/replicate_abundance_boxplot.R ${workingdirectory}/${outdirectory}/Figures/ReadsVSReplicateDetection ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_allsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_allsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_allsamples.txt \
     1>> ${workingdirectory}/${outdirectory}/Figures/ReadsVSReplicateDetection/violinboxplot_rscript_out.log 2>&1
+  echo "replicate_abundance_boxplot.R	${workingdirectory}/${outdirectory}/Figures/ReadsVSReplicateDetection ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_allsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_allsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_allsamples.txt" >> ${outdirectory}/Rscript_arguments.log
   else
   Rscript --vanilla ${metapipedir}/assets/replicate_abundance_boxplot.R ${workingdirectory}/${outdirectory}/Figures/ReadsVSReplicateDetection ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_filtsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_filtsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_filtsamples.txt \
     1>> ${workingdirectory}/${outdirectory}/Figures/ReadsVSReplicateDetection/violinboxplot_rscript_out.log 2>&1
+  echo "replicate_abundance_boxplot.R	${workingdirectory}/${outdirectory}/Figures/ReadsVSReplicateDetection ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_withUnknowns_filtsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_ASVbased_NoUnknowns_filtsamples.txt ${workingdirectory}/${outdirectory}/processed_tables/replicate_based_detection/compRelAbund_replicateDetection_TAXAbased_NoUnknowns_filtsamples.txt" >> ${outdirectory}/Rscript_arguments.log
   fi
   
 
 fi #replicate if
 
-
-
-  
-  
-  
-
-  
-  
-  
+echo "figuresFinished=TRUE" >> ${outdirectory}/progress.txt
   
 fi #Final fi for if Figures folder present statement
 
-
 echo "YOU MADE IT!"
 
+sleep 1
 
 
 
