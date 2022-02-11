@@ -3,15 +3,15 @@ args <- commandArgs(trailingOnly = TRUE)
 
 ########################################
 #TEMP WHILE WORKING ON SCRIPT
-#args[1]<-"/Users/mcallister/Desktop/test_out/dada2" #working directory
-#args[2]<-120 #minlength 
-#args[3]<-TRUE #rm.phix
-#args[4]<-2 #truncQ
-#args[5]<-2 #maxEE No .1
-#args[6]<-2 #maxEE No. 2
-#args[7]<-0 #trimRight
-#args[8]<-0 #trimLeft
-#args[9]<-"forward" #which read direction to keep
+# args[1]<-"/Users/mcallister/Desktop/Illumina/1_WOAC/WOAC/metapipe_run/COI/COI_WOAC_RUN3_debug/dada2" #working directory
+# args[2]<-100 #minlength
+# args[3]<-TRUE #rm.phix
+# args[4]<-2 #truncQ
+# args[5]<-2 #maxEE No .1
+# args[6]<-2 #maxEE No. 2
+# args[7]<-0 #trimRight
+# args[8]<-0 #trimLeft
+# args[9]<-"forward" #which read direction to keep
 ########################################
 library(dada2)
 
@@ -28,7 +28,7 @@ if (as.character(args[9]) == "forward") {
   rawFQuality <- plotQualityProfile(forward_reads)
   setwd(as.character(args[1]))
   pdf(file='rawFQualityPlot.pdf', width=11, height = 7*(sample_num/7))
-  rawFQuality
+  print(rawFQuality)
   dev.off()
   
   setwd(paste0(as.character(args[1]), "/../cutadapt"))
@@ -47,7 +47,7 @@ if (as.character(args[9]) == "forward") {
   
   trimFQuality <- plotQualityProfile(filtered_forward_reads)
   pdf(file='trimFQualityPlot.pdf', width=11, height = 7*(sample_num/7))
-  trimFQuality
+  print(trimFQuality)
   dev.off()
 }
 
@@ -59,7 +59,7 @@ if (as.character(args[9]) == "reverse") {
   rawRQuality <- plotQualityProfile(reverse_reads)
   setwd(as.character(args[1]))
   pdf(file='rawRQualityPlot.pdf', width=11, height = 7*(sample_num/7))
-  rawRQuality
+  print(rawRQuality)
   dev.off()
  
   setwd(paste0(as.character(args[1]), "/../cutadapt"))
@@ -78,6 +78,6 @@ if (as.character(args[9]) == "reverse") {
   
   trimRQuality <- plotQualityProfile(filtered_reverse_reads)
   pdf(file='trimRQualityPlot.pdf', width=11, height = 7*(sample_num/7))
-  trimRQuality
+  print(trimRQuality)
   dev.off()
 }

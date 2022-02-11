@@ -29,14 +29,14 @@ setwd(paste0(as.character(args[1]), "/../cutadapt"))
 rawFQuality <- plotQualityProfile(forward_reads)
 setwd(as.character(args[1]))
 pdf(file='rawFQualityPlot.pdf', width=11, height = 7*(sample_num/7))
-rawFQuality
+print(rawFQuality)
 dev.off()
 
 setwd(paste0(as.character(args[1]), "/../cutadapt"))
 rawRQuality <- plotQualityProfile(reverse_reads)
 setwd(as.character(args[1]))
 pdf(file='rawRQualityPlot.pdf', width=11, height = 7*(sample_num/7))
-rawRQuality
+print(rawRQuality)
 dev.off()
 
 setwd(paste0(as.character(args[1]), "/../cutadapt"))
@@ -57,10 +57,10 @@ write.table(filtered_out, file='filtered_out_stats.txt', sep= '\t', quote=FALSE)
 
 trimFQuality <- plotQualityProfile(filtered_forward_reads)
 pdf(file='trimFQualityPlot.pdf', width=11, height = 7*(sample_num/7))
-trimFQuality
+print(trimFQuality)
 dev.off()
 
 trimRQuality <- plotQualityProfile(filtered_reverse_reads)
 pdf(file='trimRQualityPlot.pdf', width=11, height = 7*(sample_num/7))
-trimRQuality
+print(trimRQuality)
 dev.off()
