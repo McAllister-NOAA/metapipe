@@ -19,6 +19,12 @@ bar_chart <- read.delim(as.character(args[2]), header=TRUE, stringsAsFactors=FAL
 sample_order <- read.delim(as.character(args[3]), header=FALSE, stringsAsFactors=FALSE)
 sample_order <- as.vector(sample_order)
 
+base_term_count <- as.numeric(system(paste0("cat ",as.character(args[2])," | cut -f3 | grep -v ","\"","TerminalTaxa","\""," | sort | uniq | wc -l", sep = ""),
+                                       intern = TRUE))
+w_choice <- 6.4 + ((base_term_count*2.3)/20)
+
+
+
 setwd(paste0(as.character(args[1]), "/02_Barcharts/relative_abundance"))
 bar_plot <- ggplot(bar_chart, aes(x = Sample, y = Value, fill = TerminalTaxa)) +
   geom_bar(position="fill", stat="identity") + 
@@ -28,7 +34,7 @@ bar_plot$data$Sample <- factor(bar_plot$data$Sample, levels = sample_order$V1)
 bar_plot_legend <- get_legend(bar_plot)
 bar_plot <- bar_plot + theme(legend.position='none')
 
-pdf(file='barplot_relabund_allsamples_uniqueTerminalTaxa_withUnknowns_legend.pdf', width = 40, height = 6)
+pdf(file='barplot_relabund_allsamples_uniqueTerminalTaxa_withUnknowns_legend.pdf', width = w_choice, height = 6)
 print(as_ggplot(bar_plot_legend))
 dev.off()
 pdf(file='barplot_relabund_allsamples_uniqueTerminalTaxa_withUnknowns.pdf', width = 11, height = 8.5)
@@ -44,7 +50,7 @@ bar_plot$data$Sample <- factor(bar_plot$data$Sample, levels = sample_order$V1)
 bar_plot_legend <- get_legend(bar_plot)
 bar_plot <- bar_plot + theme(legend.position='none')
 
-pdf(file='barplot_readcount_allsamples_uniqueTerminalTaxa_withUnknowns_legend.pdf', width = 40, height = 6)
+pdf(file='barplot_readcount_allsamples_uniqueTerminalTaxa_withUnknowns_legend.pdf', width = w_choice, height = 6)
 print(as_ggplot(bar_plot_legend))
 dev.off()
 pdf(file='barplot_readcount_allsamples_uniqueTerminalTaxa_withUnknowns.pdf', width = 11, height = 8.5)
@@ -65,7 +71,7 @@ bar_plot$data$Sample <- factor(bar_plot$data$Sample, levels = sample_order$V1)
 bar_plot_legend <- get_legend(bar_plot)
 bar_plot <- bar_plot + theme(legend.position='none')
 
-pdf(file='barplot_relabund_allsamples_uniqueTerminalTaxa_noUnknowns_legend.pdf', width = 40, height = 6)
+pdf(file='barplot_relabund_allsamples_uniqueTerminalTaxa_noUnknowns_legend.pdf', width = w_choice, height = 6)
 print(as_ggplot(bar_plot_legend))
 dev.off()
 pdf(file='barplot_relabund_allsamples_uniqueTerminalTaxa_noUnknowns.pdf', width = 11, height = 8.5)
@@ -81,7 +87,7 @@ bar_plot$data$Sample <- factor(bar_plot$data$Sample, levels = sample_order$V1)
 bar_plot_legend <- get_legend(bar_plot)
 bar_plot <- bar_plot + theme(legend.position='none')
 
-pdf(file='barplot_readcount_allsamples_uniqueTerminalTaxa_noUnknowns_legend.pdf', width = 40, height = 6)
+pdf(file='barplot_readcount_allsamples_uniqueTerminalTaxa_noUnknowns_legend.pdf', width = w_choice, height = 6)
 print(as_ggplot(bar_plot_legend))
 dev.off()
 pdf(file='barplot_readcount_allsamples_uniqueTerminalTaxa_noUnknowns.pdf', width = 11, height = 8.5)
