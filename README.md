@@ -1,11 +1,69 @@
-# metapipe
-Metabarcoding Pipeline
+# MetaPipe
 
-Created by Sean McAllister, Matt Galaska, Chris Paight
+Metabarcoding Pipeline - Currently In Development
 
-##Required input files
-*Raw reads
-*Program settings
+Created by Sean McAllister, Matt Galaska, and Chris Paight
+
+Developed by the 'Omics Group at <a class="ui-tooltip" title="Pacific Marine Environmental Laboratory"><span style="cursor: help;">PMEL</span></a> (<a class="ui-tooltip" title="National Oceanic and Atmospheric Administration"><span style="cursor: help;">NOAA</span></a>) in cooperation with <a class="ui-tooltip" title="Cooperative Institute for Climate, Ocean, & Ecosystem Studies"><span style="cursor: help;">CICOES</span></a> (<a class="ui-tooltip" title="University of Washington"><span style="cursor: help;">UW</span></a>)
+
+## Citation
+
+**If you find MetaPipe useful in your research, please cite...**
+
+```
+
+```
+
+**MetaPipe employs several programs internally, which should also be cited:**
+
+* dada2 (including blog post)
+* cutadapt
+* blast
+* KRONA
+* taxonkit
+* phyloseq
+* vegan
+
+## Wiki
+Check the MetaPipe Wiki for more information on how MetaPipe works.
+
+## Installation
+### Easy Installation
+Docker TBD
+
+### Installation outside of Docker
+
+```
+git clone https://github.com/McAllister-NOAA/metapipe.git
+
+```
+
+Add ```metapipe.sh``` to your PATH
+
+Install the necessary dependencies, stand alone packages and in R (below)
+##### Dependencies
+* R (Rscript)
+* dada2 – v.1.14.1
+* dbplyr - v.1.4.2
+* vegan - v.2.5-6
+* mapping packages
+* ggplot2 - v.3.3.0
+* blastn - v.x
+* cutadapt - v.2.8
+* taxonkit - v.0.5.0
+* krona
+* subtree (taxonomy...)
+* perl : List::MoreUtils
+* And many more...
+
+## Toy Test dataset
+TBD
+
+## Quick Start Guide
+
+### Required input files
+* Raw reads
+* Program settings
 primer sequence F
 primer sequence R
 force merge? T/F [F]
@@ -18,34 +76,15 @@ control samples (positive/negative)
 contaminant taxa list
 taxid of interest list
 
-*Sample metadata
+* Sample metadata
 sample order
 sample groups
 sample lat/long
 replicate indication
 chemistry
 
-##Dependencies
-R (Rscript)
-dada2 – v.1.14.1
-dbplyr - v.1.4.2
-vegan - v.2.5-6
-mapping packages
-ggplot2 - v.3.3.0
-
-blastn - v.x
-cutadapt - v.2.8
-taxonkit - v.0.5.0
-krona
-subtree (taxonomy...)
-
-perl : List::MoreUtils
-...
-
-acknowledge citations for dada2 (including blog post), cutadapt
-
-
-##Test dataset
+## MetaPipe Results
+TBD
 
 #### Legal Disclaimer
 *This repository is a software product and is not official communication

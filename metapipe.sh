@@ -904,7 +904,7 @@ fi
 filterPercent=5
 filterLowQualSamples="FALSE"
 filterPercentLowQualSamples=30
-pieScale=5 #TODO assign appropriate default
+pieScale=6 #TODO assign appropriate default
 removeNA="FALSE"
 providedTaxaOfInterest="FALSE"
 taxaOfInterestFile="NULL"
