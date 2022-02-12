@@ -152,6 +152,19 @@ if (sitelabelFlag == TRUE) {
 ########################
 setwd(paste0(as.character(args[1]), "/02_Barcharts/read_count", sep = ""))
 
+base_Phylum_count <- as.numeric(system(paste0("cat ",as.character(args[2])," | cut -f3 | grep -v ","\"","Phylum","\""," | sort | uniq | wc -l", sep = ""),
+                                       intern = TRUE))
+base_Class_count <- as.numeric(system(paste0("cat ",as.character(args[2])," | cut -f4 | grep -v ","\"","Class","\""," | sort | uniq | wc -l", sep = ""),
+                                      intern = TRUE))
+base_Order_count <- as.numeric(system(paste0("cat ",as.character(args[2])," | cut -f5 | grep -v ","\"","Order","\""," | sort | uniq | wc -l", sep = ""),
+                                      intern = TRUE))
+base_Family_count <- as.numeric(system(paste0("cat ",as.character(args[2])," | cut -f6 | grep -v ","\"","Family","\""," | sort | uniq | wc -l", sep = ""),
+                                       intern = TRUE))
+base_Genus_count <- as.numeric(system(paste0("cat ",as.character(args[2])," | cut -f7 | grep -v ","\"","Genus","\""," | sort | uniq | wc -l", sep = ""),
+                                      intern = TRUE))
+base_Species_count <- as.numeric(system(paste0("cat ",as.character(args[2])," | cut -f8 | grep -v ","\"","Species","\""," | sort | uniq | wc -l", sep = ""),
+                                        intern = TRUE))
+
 tryCatch({
 for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
   if (NAremoveFlag == TRUE) {
@@ -168,7 +181,9 @@ for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
   bar_plot$data$Sample <- factor(bar_plot$data$Sample, levels = sample_order$V1)
   bar_plot_legend <- get_legend(bar_plot)
   bar_plot <- bar_plot + theme(legend.position='none')
-  pdf(file=paste0('barplot_rawcount_allsamples_alltaxa_',i,'_legend.pdf', sep = ""), width = 22, height = 6)
+  legend_call <- eval(parse(text = paste0("base_",i,"_count")))
+  w_choice <- 6.4 + ((legend_call*2.3)/20)
+  pdf(file=paste0('barplot_rawcount_allsamples_alltaxa_',i,'_legend.pdf', sep = ""), width = w_choice, height = 6)
   print(as_ggplot(bar_plot_legend))
   dev.off()
   pdf(file=paste0('barplot_rawcount_allsamples_alltaxa_',i,'.pdf', sep = ""), width = 11, height = 8.5)
@@ -257,7 +272,9 @@ for (i in c("Phylum", "Class", "Order", "Family", "Genus", "Species")) {
   bar_plot$data$Sample <- factor(bar_plot$data$Sample, levels = sample_order$V1)
   bar_plot_legend <- get_legend(bar_plot)
   bar_plot <- bar_plot + theme(legend.position='none')
-  pdf(file=paste0('barplot_relabund_allsamples_alltaxa_',i,'_legend.pdf', sep = ""), width = 22, height = 6)
+  legend_call <- eval(parse(text = paste0("base_",i,"_count")))
+  w_choice <- 6.4 + ((legend_call*2.3)/20)
+  pdf(file=paste0('barplot_relabund_allsamples_alltaxa_',i,'_legend.pdf', sep = ""), width = w_choice, height = 6)
   print(as_ggplot(bar_plot_legend))
   dev.off()
   pdf(file=paste0('barplot_relabund_allsamples_alltaxa_',i,'.pdf', sep = ""), width = 11, height = 8.5)
@@ -4420,7 +4437,9 @@ if (taxaofinterestFlag == TRUE) {
     bar_plot$data$Sample <- factor(bar_plot$data$Sample, levels = sample_order$V1)
     bar_plot_legend <- get_legend(bar_plot)
     bar_plot <- bar_plot + theme(legend.position='none')
-    pdf(file=paste0('barplot_rawcount_allsamples_alltaxa_',i,'_legend.pdf', sep = ""), width = 22, height = 6)
+    legend_call <- eval(parse(text = paste0("base_",i,"_count")))
+    w_choice <- 6.4 + ((legend_call*2.3)/20)
+    pdf(file=paste0('barplot_rawcount_allsamples_alltaxa_',i,'_legend.pdf', sep = ""), width = w_choice, height = 6)
     print(as_ggplot(bar_plot_legend))
     dev.off()
     pdf(file=paste0('barplot_rawcount_allsamples_alltaxa_',i,'.pdf', sep = ""), width = 11, height = 8.5)
@@ -4483,7 +4502,9 @@ if (taxaofinterestFlag == TRUE) {
     bar_plot$data$Sample <- factor(bar_plot$data$Sample, levels = sample_order$V1)
     bar_plot_legend <- get_legend(bar_plot)
     bar_plot <- bar_plot + theme(legend.position='none')
-    pdf(file=paste0('barplot_relabund_allsamples_alltaxa_',i,'_legend.pdf', sep = ""), width = 22, height = 6)
+    legend_call <- eval(parse(text = paste0("base_",i,"_count")))
+    w_choice <- 6.4 + ((legend_call*2.3)/20)
+    pdf(file=paste0('barplot_relabund_allsamples_alltaxa_',i,'_legend.pdf', sep = ""), width = w_choice, height = 6)
     print(as_ggplot(bar_plot_legend))
     dev.off()
     pdf(file=paste0('barplot_relabund_allsamples_alltaxa_',i,'.pdf', sep = ""), width = 11, height = 8.5)
