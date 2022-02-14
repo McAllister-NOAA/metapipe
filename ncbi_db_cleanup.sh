@@ -22,12 +22,12 @@ echo
 echo "Preparing files for Metapipe..."
 grep "genbank common name" names.dmp > common_names.dmp
 
-grep "scientific name" names.dmp | grep "uncultured" | cut -f1 > taxids_to_ignore.txt
-grep "scientific name" names.dmp | grep "environmental samples" | cut -f1 >> taxids_to_ignore.txt
-grep "scientific name" names.dmp | grep "metagenome" | cut -f1 >> taxids_to_ignore.txt
-grep "scientific name" names.dmp | grep "unidentified" | cut -f1 >> taxids_to_ignore.txt
+grep "scientific name" names.dmp | grep -i "uncultured" | cut -f1 > taxids_to_ignore.txt
+grep "scientific name" names.dmp | grep -i "environmental samples" | cut -f1 >> taxids_to_ignore.txt
+grep "scientific name" names.dmp | grep -i "metagenome" | cut -f1 >> taxids_to_ignore.txt
+grep "scientific name" names.dmp | grep -i "unidentified" | cut -f1 >> taxids_to_ignore.txt
 subtree -t nodes.dmp -i taxids_to_ignore.txt > taxid_exclusion_list_leavesinUnclassified.txt
-grep "scientific name" names.dmp | grep "unclassified" | cut -f1 >> taxids_to_ignore.txt
+grep "scientific name" names.dmp | grep -i "unclassified" | cut -f1 >> taxids_to_ignore.txt
 subtree -t nodes.dmp -i taxids_to_ignore.txt > taxid_exclusion_list_removesUnclassified.txt
 rm taxids_to_ignore.txt
 
