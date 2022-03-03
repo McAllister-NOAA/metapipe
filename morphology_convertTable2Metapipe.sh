@@ -72,7 +72,7 @@ while getopts ":i:s:n:o:t:c:f:y" opt; do
          echo "       -n Filter NAs from figures (optional)"
          echo "       -t Taxa of interest file (one per line) (optional)"
          echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
-         echo "       -y Bypass some terminal prompts (optional)"
+         echo "       -y Automate filling in taxonkit output (recommended; optional)"
          exit
       ;;
     : ) echo "Option is missing an argument: -$OPTARG"
@@ -84,7 +84,7 @@ while getopts ":i:s:n:o:t:c:f:y" opt; do
         echo "       -n Filter NAs from figures (optional)"
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
-        echo "       -y Bypass some terminal prompts (optional)"
+        echo "       -y Automate filling in taxonkit output (recommended; optional)"
         exit
       ;;
   esac
@@ -100,7 +100,7 @@ if [ $OPTIND -eq 1 ]
         echo "       -n Filter NAs from figures (optional)"
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
-        echo "       -y Bypass some terminal prompts (optional)"
+        echo "       -y Automate filling in taxonkit output (recommended; optional)"
         exit
     fi
 
@@ -114,7 +114,7 @@ if [[ $iflag -eq 0 || $sflag -eq 0 || $oflag -eq 0 || $fflag -eq 0 ]]
         echo "       -n Filter NAs from figures (optional)"
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
-        echo "       -y Bypass some terminal prompts (optional)"
+        echo "       -y Automate filling in taxonkit output (recommended; optional)"
         exit
       fi
 ##########################################################################################

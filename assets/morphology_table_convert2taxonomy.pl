@@ -611,11 +611,11 @@ foreach my $unique_measurement (2..$#headers)
         close(ASV_count);
     }
     
-open(SAMP, ">".$options{o}."/sample_order.txt");
-foreach my $i (sort @unique_sampleHeaders)
-    {   print SAMP "$i\n";
-    }
-close(SAMP);
+#open(SAMP, ">".$options{o}."/sample_order.txt");
+#foreach my $i (sort @unique_sampleHeaders)
+#    {   print SAMP "$i\n";
+#    }
+#close(SAMP);
 
 #Run filter_lowabundance_taxa.pl on outfiles to create zzOther taxonomy file
 foreach my $unique_measurement (2..$#headers)
