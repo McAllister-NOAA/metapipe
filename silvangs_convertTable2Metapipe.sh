@@ -63,7 +63,7 @@ while getopts ":i:s:n:o:t:c:f:y" opt; do
     y ) bypassflag=TRUE
       ;;
     \? ) echo "Invalid option: -$OPTARG"
-         echo "Usage: metapipe.sh" #Invalid option provided
+         echo "Usage: silvangs_convertTable2Metapipe.sh" #Invalid option provided
          echo "       -i Input SILVAngs exports/x---[ls]su---otus.csv spreadsheet"
          echo "       -s Sample metadata file"
          echo "       -o Output directory"
@@ -74,7 +74,7 @@ while getopts ":i:s:n:o:t:c:f:y" opt; do
          exit
       ;;
     : ) echo "Option is missing an argument: -$OPTARG"
-        echo "Usage: metapipe.sh" #Arg for a called option not provided
+        echo "Usage: silvangs_convertTable2Metapipe.sh" #Arg for a called option not provided
         echo "       -i Input SILVAngs exports/x---[ls]su---otus.csv spreadsheet"
         echo "       -s Sample metadata file"
         echo "       -o Output directory"
@@ -89,7 +89,7 @@ done
 shift $((OPTIND -1))
 
 if [ $OPTIND -eq 1 ]
-  then echo "Usage: metapipe.sh" #No options passed
+  then echo "Usage: silvangs_convertTable2Metapipe.sh" #No options passed
         echo "       -i Input SILVAngs exports/x---[ls]su---otus.csv spreadsheet"
         echo "       -s Sample metadata file"
         echo "       -o Output directory"
@@ -102,7 +102,7 @@ if [ $OPTIND -eq 1 ]
 
 if [[ $iflag -eq 0 || $sflag -eq 0 || $oflag -eq 0 || $fflag -eq 0 ]]
   then echo "All options except -n, -t, and -c are required."
-        echo "Usage: metapipe.sh" #Missing required options
+        echo "Usage: silvangs_convertTable2Metapipe.sh" #Missing required options
         echo "       -i Input SILVAngs exports/x---[ls]su---otus.csv spreadsheet"
         echo "       -s Sample metadata file"
         echo "       -o Output directory"
