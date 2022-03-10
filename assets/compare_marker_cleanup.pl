@@ -237,6 +237,25 @@ foreach my $i (sort keys %META)
     }
 close(METOUT);
 
+#Create file showing only the ASVs shared by more than one marker
+open(MULTI, ">".$options{o}."/MergedMarkers_listASVsSharedBy_multipleMarkers.txt");
+print MULTI "New_ASV_Name\tMarkers\n";
+foreach my $i (sort keys %TAXA)
+    {   my @markercount;
+        foreach my $j (@samples)
+            {   if ($TAXA{$i}{$j} > 0)
+                    {   my $samplename = $j;
+                        $samplename =~ s/^(.+)_MP_.+$/$1/;
+                        push(@markercount, $samplename);
+                    }
+            }
+        my @uniq_marker = uniq @markercount;
+        if (scalar(@uniq_marker) > 1)
+            {   my $markerstring = join(';', @uniq_marker);
+                print MULTI "$TAXA{$i}{'new_asvID'}\t$markerstring\n";
+            }
+    }
+close(MULTI);
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # - - - - - S U B R O U T I N E S - - - - - - - - - - -

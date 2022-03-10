@@ -204,7 +204,9 @@ done
 
 rm -f ${workingdirectory}/${outdirectory}/Figures/VennDiagrams/Rplots.pdf
 
-
+if [[ $numVennComp -lt 2 || $numVennComp -gt 5 ]]; then
+  rmdir ${workingdirectory}/${outdirectory}/Figures/VennDiagrams
+fi
 
 echo "YOU MADE IT!"
 
