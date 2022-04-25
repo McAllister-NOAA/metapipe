@@ -208,6 +208,33 @@ foreach my $i (sort keys %TAXON)
 							}
 						else {$TAXON{$i}{'taxastring'} = "Environmental Unknown;@@;@@;@@;@@;@@;@@";}
 					}
+                elsif ($#splitstring < 6) #TODO Think about this rare case more
+                    {   foreach my $j (0..6)
+							{	if (exists $splitstring[$j] && $splitstring[$j] eq '')
+									{	$splitstring[$j] = "@@";
+										my $next = $j + 1;
+										foreach my $k ($next..6)
+											{	$splitstring[$k] = "@@";
+											}
+										last;	
+									}
+                                elsif (exists $splitstring[$j] && $splitstring[$j] ne '')
+                                    {}
+                                else
+                                    {   $splitstring[$j] = "@@";
+										my $next = $j + 1;
+										foreach my $k ($next..6)
+											{	$splitstring[$k] = "@@";
+											}
+										last;	
+                                    }
+							}
+						my $newgoodats = join(';', @splitstring);
+						if ($newgoodats !~ m/^Eukaryota;@/)
+							{	$TAXON{$i}{'taxastring'} = $newgoodats;
+							}
+						else {$TAXON{$i}{'taxastring'} = "Environmental Unknown;@@;@@;@@;@@;@@;@@";}
+                    }
 				else {die "\nYou forgot to load the reformatted taxonkit file with K/P/C/O/F/G/S only!\n\n";}
 			}
 	}

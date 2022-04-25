@@ -11,12 +11,13 @@ use List::MoreUtils qw(uniq);
 
 # - - - - - C O M M A N D    L I N E    O P T I O N S - - - - - - - -
 my %options=();
-getopts("a:t:h", \%options);
+getopts("a:t:o:h", \%options);
 
 if ($options{h})
     {   print "\n\nHelp called:\nOptions:\n";
         print "-a = DADA2 ASVs_counts.tsv file\n";
         print "-t = ASV taxonomy table from processing script (x_asvTaxonomyTable.txt)\n";
+        print "-o = Output directory\n";
         print "-h = This help message\n\n";
         die;
     }
@@ -25,6 +26,7 @@ if ($options{h})
 my %ASV;
 my %TAX;
 my %NEW_ASV;
+my @taxHier = qw | Kingdom Phylum Class Order Family Genus Species |;
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # - - - - - M A I N - - - - - - - - - - - - - - - - - - - -
@@ -89,3 +91,360 @@ foreach my $i (sort keys %NEW_ASV)
             }
         print "\n";
     }
+    
+#Print out ASV table combining asv2Taxonomy with perc abundance for human viewing
+open(OUT, ">".$options{o}."/taxonomy2PercentAbundance_humanReadable.txt");
+
+my @sample_totals;
+my @sample_totals_sansUnknowns;
+my @sample_totals_Eukaryota;
+my @sample_totals_Prokaryotes;
+push(@sample_totals, "NULL");
+push(@sample_totals_sansUnknowns, "NULL");
+push(@sample_totals_Eukaryota, "NULL");
+push(@sample_totals_Prokaryotes, "NULL");
+foreach my $i (1..$#file_sample_headers)
+    {   my $sample = $file_sample_headers[$i];
+        chomp($sample);
+        my $thisSampleTotal = 0;
+        my $thisSampleNoUNKNOWN = 0;
+        my $thisSampleEuk = 0;
+        my $thisSampleProk = 0;
+        foreach my $j (sort keys %NEW_ASV)
+            {   $thisSampleTotal += $NEW_ASV{$j}{$sample};
+                my $taxa = $NEW_ASV{$j}{'taxonomy'};
+                chomp($taxa);
+                unless ($taxa =~ m/^Unknown/)
+                    {   $thisSampleNoUNKNOWN += $NEW_ASV{$j}{$sample};}
+                if ($taxa =~ m/^Eukaryota/)
+                    {   $thisSampleEuk += $NEW_ASV{$j}{$sample};}
+                if ($taxa =~ m/^Bacteria/ || $taxa =~ m/^Archaea/)
+                    {   $thisSampleProk += $NEW_ASV{$j}{$sample};}
+            }
+        push(@sample_totals, $thisSampleTotal);
+        push(@sample_totals_sansUnknowns, $thisSampleNoUNKNOWN);
+        push(@sample_totals_Eukaryota, $thisSampleEuk);
+        push(@sample_totals_Prokaryotes, $thisSampleProk);
+    }
+
+my %orderedDB;
+foreach my $i (sort keys %NEW_ASV)
+    {   my $taxa = $NEW_ASV{$i}{'taxonomy'};
+        $orderedDB{$taxa}{'asv_key'} = $i;
+        foreach my $j (1..$#file_sample_headers)
+            {   my $sample = $file_sample_headers[$j];
+                chomp($sample);
+                my $value = $NEW_ASV{$i}{$sample};
+                $orderedDB{$taxa}{$sample} = $value;
+            }
+    }
+
+print OUT "All percentages range 0-100% of the total count for either Eukaryotes or Prokaryotes, with exception of the first three data rows (% Known, % Eukaryote, % Prokaryote), which represent %s of total reads.\n";
+print OUT "Taxonomy String (K->S)\t";
+print OUT "Terminal Taxa";
+foreach my $i (1..$#file_sample_headers)
+    {   my $sample = $file_sample_headers[$i];
+        chomp($sample);
+        print OUT "\t$sample";
+    }
+print OUT "\n";
+
+print OUT "\t% Known";
+foreach my $i (1..$#file_sample_headers)
+    {   my $sample = $file_sample_headers[$i];
+        chomp($sample);
+        my $number = 100 * ($sample_totals_sansUnknowns[$i] / $sample_totals[$i]);
+        my $roundnum = &ROUND($number,2);
+        if ($roundnum == 0 && $number > 0)
+            {   print OUT "\tD";
+            }
+        else
+            {   print OUT "\t$roundnum";   
+            }
+    }
+print OUT "\n";
+
+print OUT "\t% Eukaryote";
+foreach my $i (1..$#file_sample_headers)
+    {   my $sample = $file_sample_headers[$i];
+        chomp($sample);
+        my $number = 100 * ($sample_totals_Eukaryota[$i] / $sample_totals[$i]);
+        my $roundnum = &ROUND($number,2);
+        if ($roundnum == 0 && $number > 0)
+            {   print OUT "\tD";
+            }
+        else
+            {   print OUT "\t$roundnum";   
+            }
+    }
+print OUT "\n";
+
+print OUT "\t% Prokaryote";
+foreach my $i (1..$#file_sample_headers)
+    {   my $sample = $file_sample_headers[$i];
+        chomp($sample);
+        my $number = 100 * ($sample_totals_Prokaryotes[$i] / $sample_totals[$i]);
+        my $roundnum = &ROUND($number,2);
+        if ($roundnum == 0 && $number > 0)
+            {   print OUT "\tD";
+            }
+        else
+            {   print OUT "\t$roundnum";   
+            }
+    }
+print OUT "\n";
+
+my $previousPhyla = "";
+my $previousClass = "";
+
+foreach my $i (sort keys %orderedDB)
+    {   my @taxa_array = split(';', $i);
+        my $taxastring = $i;
+        chomp($taxastring);
+        my $phylum = $taxa_array[1];
+        my $class = $taxa_array[2];
+        my $order = $taxa_array[3];
+        my $family = $taxa_array[4];
+        my $lastReal;
+        foreach my $j (reverse 0..$#taxa_array)
+            {   if ($taxa_array[$j] ne "NA")
+                    {   $lastReal = $j;
+                        last;
+                    }
+            }
+        my $termtax = $taxa_array[$lastReal];
+        if ($taxa_array[0] eq "Eukaryota")
+            {   if ($phylum eq $previousPhyla)
+                    {   if ($class eq $previousClass)
+                            {   print OUT "$taxastring\t";
+                                print OUT "$termtax";
+                                foreach my $j (1..$#file_sample_headers)
+                                    {   my $sample = $file_sample_headers[$j];
+                                        chomp($sample);
+                                        my $number;
+                                        if ($sample_totals_Eukaryota[$j] == 0)
+                                            {   $number = 0;}
+                                        else
+                                            {   $number = 100 * ($orderedDB{$i}{$sample} / $sample_totals_Eukaryota[$j]);}
+                                        my $roundnum = &ROUND($number,2);
+                                        if ($roundnum == 0 && $number > 0)
+                                            {   print OUT "\tD";
+                                            }
+                                        else
+                                            {   print OUT "\t$roundnum";   
+                                            }
+                                    }
+                                print OUT "\n";
+                            }
+                        else
+                            {   $previousClass = $class;
+                                if ($phylum eq "Arthropoda" || $phylum eq "Chordata")
+                                    {   print OUT "\t<<<$phylum, $class>>>\n";
+                                    }
+                                print OUT "$taxastring\t";
+                                print OUT "$termtax";
+                                foreach my $j (1..$#file_sample_headers)
+                                    {   my $sample = $file_sample_headers[$j];
+                                        chomp($sample);
+                                        my $number;
+                                        if ($sample_totals_Eukaryota[$j] == 0)
+                                            {   $number = 0;}
+                                        else
+                                            {   $number = 100 * ($orderedDB{$i}{$sample} / $sample_totals_Eukaryota[$j]);
+                                            }
+                                        my $roundnum = &ROUND($number,2);
+                                        if ($roundnum == 0 && $number > 0)
+                                            {   print OUT "\tD";
+                                            }
+                                        else
+                                            {   print OUT "\t$roundnum";   
+                                            }
+                                    }
+                                print OUT "\n";
+                            }
+                    }
+                else
+                    {   $previousPhyla = $phylum;
+                        $previousClass = $class;
+                        if ($phylum eq "Arthropoda" || $phylum eq "Chordata")
+                            {   print OUT "\t<<<$phylum, $class>>>\n";   
+                            }
+                        elsif ($phylum eq "NA")
+                            {   print OUT "\t<<<Unknown Eukaryote>>>\n"; 
+                            }
+                        else
+                            {   print OUT "\t<<<$phylum>>>\n";
+                            }
+                        print OUT "$taxastring\t";
+                        print OUT "$termtax";
+                        foreach my $j (1..$#file_sample_headers)
+                            {   my $sample = $file_sample_headers[$j];
+                                chomp($sample);
+                                my $number;
+                                if ($sample_totals_Eukaryota[$j] == 0)
+                                    {   $number = 0;}
+                                else
+                                    {   $number = 100 * ($orderedDB{$i}{$sample} / $sample_totals_Eukaryota[$j]);
+                                    }
+                                my $roundnum = &ROUND($number,2);
+                                if ($roundnum == 0 && $number > 0)
+                                    {   print OUT "\tD";
+                                    }
+                                else
+                                    {   print OUT "\t$roundnum";   
+                                    }
+                            }
+                        print OUT "\n";
+                    }
+            }
+    }
+    
+$previousPhyla = "";
+foreach my $i (sort keys %orderedDB)
+    {   my @taxa_array = split(';', $i);
+        my $taxastring = $i;
+        chomp($taxastring);
+        my $phylum = $taxa_array[1]; chomp($phylum);
+        my $class = $taxa_array[2]; chomp($class);
+        my $order = $taxa_array[3]; chomp($order);
+        my $family = $taxa_array[4]; chomp($family);
+        my $lastReal;
+        foreach my $j (reverse 0..$#taxa_array)
+            {   if ($taxa_array[$j] ne "NA")
+                    {   $lastReal = $j;
+                        last;
+                    }
+            }
+        my $termtax = $taxa_array[$lastReal]; chomp($termtax);
+        if ($taxa_array[0] eq "Bacteria" || $taxa_array[0] eq "Archaea")
+            {   if ($phylum eq $previousPhyla)
+                    {   print OUT "$taxastring\t";
+                        print OUT "$termtax";
+                        foreach my $j (1..$#file_sample_headers)
+                            {   my $sample = $file_sample_headers[$j];
+                                chomp($sample);
+                                my $number;
+                                if ($sample_totals_Prokaryotes[$j] == 0)
+                                    {   $number = 0;}
+                                else
+                                    {   $number = 100 * ($orderedDB{$i}{$sample} / $sample_totals_Prokaryotes[$j]);
+                                    }
+                                my $roundnum = &ROUND($number,2);
+                                if ($roundnum == 0 && $number > 0)
+                                    {   print OUT "\tD";
+                                    }
+                                else
+                                    {   print OUT "\t$roundnum";   
+                                    }
+                            }
+                        print OUT "\n";
+                    }
+                else
+                    {   $previousPhyla = $phylum;
+                        if ($phylum eq "NA")
+                            {   print OUT "\t<<<Unknown $taxa_array[0]>>>\n";
+                            }
+                        else
+                            {   print OUT "\t<<<$phylum>>>\n";
+                            }
+                        print OUT "$taxastring\t";
+                        print OUT "$termtax";
+                        foreach my $j (1..$#file_sample_headers)
+                            {   my $sample = $file_sample_headers[$j];
+                                chomp($sample);
+                                my $number;
+                                if ($sample_totals_Prokaryotes[$j] == 0)
+                                    {   $number = 0;}
+                                else
+                                    {   $number = 100 * ($orderedDB{$i}{$sample} / $sample_totals_Prokaryotes[$j]);
+                                    }
+                                my $roundnum = &ROUND($number,2);
+                                if ($roundnum == 0 && $number > 0)
+                                    {   print OUT "\tD";
+                                    }
+                                else
+                                    {   print OUT "\t$roundnum";   
+                                    }
+                            }
+                        print OUT "\n";
+                    }
+            }
+    }
+
+$previousPhyla = "";
+foreach my $i (sort keys %orderedDB)
+    {   my @taxa_array = split(';', $i);
+        my $taxastring = $i;
+        chomp($taxastring);
+        my $phylum = $taxa_array[1]; chomp($phylum);
+        my $class = $taxa_array[2]; chomp($class);
+        my $order = $taxa_array[3]; chomp($order);
+        my $family = $taxa_array[4]; chomp($family);
+        my $lastReal;
+        foreach my $j (reverse 0..$#taxa_array)
+            {   if ($taxa_array[$j] ne "NA")
+                    {   $lastReal = $j;
+                        last;
+                    }
+            }
+        my $termtax = $taxa_array[$lastReal]; chomp($termtax);
+        if ($taxa_array[0] ne "Bacteria" && $taxa_array[0] ne "Archaea" && $taxa_array[0] ne "Eukaryota" && $taxa_array[0] ne "Unknown")
+            {   if ($phylum eq $previousPhyla)
+                    {   print OUT "$taxastring\t";
+                        print OUT "$termtax";
+                        foreach my $j (1..$#file_sample_headers)
+                            {   my $sample = $file_sample_headers[$j];
+                                chomp($sample);
+                                my $number = 100 * ($orderedDB{$i}{$sample} / $sample_totals[$j]);
+                                my $roundnum = &ROUND($number,2);
+                                if ($roundnum == 0 && $number > 0)
+                                    {   print OUT "\tD";
+                                    }
+                                else
+                                    {   print OUT "\t$roundnum";   
+                                    }
+                            }
+                        print OUT "\n";
+                    }
+                else
+                    {   $previousPhyla = $phylum;
+                        if ($phylum eq "NA")
+                            {   print OUT "\t<<<$taxa_array[0], Unknown Phylum (% out of total)>>>\n";
+                            }
+                        else
+                            {   print OUT "\t<<<$taxa_array[0], $phylum (% out of total)>>>\n";
+                            }
+                        print OUT "$taxastring\t";
+                        print OUT "$termtax";
+                        foreach my $j (1..$#file_sample_headers)
+                            {   my $sample = $file_sample_headers[$j];
+                                chomp($sample);
+                                my $number = 100 * ($orderedDB{$i}{$sample} / $sample_totals[$j]);
+                                my $roundnum = &ROUND($number,2);
+                                if ($roundnum == 0 && $number > 0)
+                                    {   print OUT "\tD";
+                                    }
+                                else
+                                    {   print OUT "\t$roundnum";   
+                                    }
+                            }
+                        print OUT "\n";
+                    }
+            }
+    }
+
+
+close(OUT);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - S U B R O U T I N E S - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub ROUND
+{	my $num = shift(@_);
+	my $decimals = shift(@_);
+	my $roundnum = int(($num * 10**$decimals) + 0.5)/(10**$decimals);
+	return $roundnum;
+}
+

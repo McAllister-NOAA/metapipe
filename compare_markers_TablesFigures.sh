@@ -1,9 +1,10 @@
 #!/bin/bash
 
-#NOTES:Requires FILE1) ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.txt, FILE2) x_asvTaxonomyTable_NOUNKNOWNS.txt, FILE3) sample_metadata_forR.txt
-# Copy these files into a single folder (-i) with the following three folders within it:
-# "ASV_relabund" "ASV_taxonomy" "Sample_metadata"
+#NOTES:Requires FILE1) ASVs_counts_NOUNKNOWNS_collapsedOnTaxonomy_percentabund.txt, FILE2) x_asvTaxonomyTable_NOUNKNOWNS.txt, FILE3) sample_metadata_forR.txt, FILE4) taxonomy2PercentAbundance_humanReadable.txt
+# Copy these files into a single folder (-i) with the following four folders within it:
+# "ASV_relabund" "ASV_taxonomy" "Sample_metadata" "Taxa_relabund_Human"
 # Rename the files in each folder to be "Marker.txt" (i.e. "COI.txt").
+# Will also need a file for sample equivalents with no header: "Marker(no .txt)\tMarkerSample\tReferenceSample" (human readable comparisons to reference marker/method only).
 # Note: If the "group#" do not align between marker sample metadata files, those groups will not match across markers and resulting figures based on groups should be ignored.
 
 #NO spaces or quotes or other weird characters in file paths
@@ -13,6 +14,8 @@ unset inputfolder
 unset outdirectory
 unset taxaOfInterestFile
 unset taxaOfInterestCategory
+unset sampleEquivalents
+unset refMarker
 
 workingdirectory=`pwd`
 
@@ -31,16 +34,22 @@ iflag=0
 oflag=0
 providedTaxaOfInterest=FALSE
 taxaOfInterestCategory=FALSE
+runHumanReadableComparisons=FALSE
 
-while getopts ":i:o:t:c:" opt; do
+while getopts ":i:o:s:r:t:c:" opt; do
   case ${opt} in
     i ) iflag=1
-        inputdirectory=$OPTARG #Input folder with three folders as described above
+        inputdirectory=$OPTARG #Input folder with four folders as described above
         inputdirectory=`echo $inputdirectory | sed -E 's/\/$//'`
       ;;
     o ) oflag=1
         outdirectory=$OPTARG #Location for output files
         outdirectory=`echo $outdirectory | sed -E 's/\/$//'`
+      ;;
+    s ) runHumanReadableComparisons=TRUE
+        sampleEquivalents=$OPTARG #Location of sample equivalents file
+      ;;
+    r ) refMarker=$OPTARG #Choice of marker as reference in comparison (marker.txt)
       ;;
     t ) providedTaxaOfInterest=TRUE
         taxaOfInterestFile=$OPTARG #Location of taxa of interest file
@@ -49,18 +58,22 @@ while getopts ":i:o:t:c:" opt; do
       ;;
     \? ) echo "Invalid option: -$OPTARG"
          echo "Usage: compare_markers_TablesFigures.sh" #Invalid option provided
-         echo "       -i Input folder with internal folders: ASV_relabund, ASV_taxonomy, and Sample_metadata"
+         echo "       -i Input folder with internal folders: ASV_relabund (req), ASV_taxonomy (req), Sample_metadata (req), and Taxa_relabund_Human (opt)"
          echo "          Each folder should have their corresponding files renamed to Marker.txt (i.e. COI.txt)"
          echo "       -o Output directory"
+         echo "       -s Sample equivalents file (Marker tab MarkerSample tab ReferenceSample) (optional)"
+         echo "       -r Reference marker file name (Marker.txt) (required if -s is called)"
          echo "       -t Taxa of interest file (one per line) (optional)"
          echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
          exit
       ;;
     : ) echo "Option is missing an argument: -$OPTARG"
         echo "Usage: compare_markers_TablesFigures.sh" #Arg for a called option not provided
-        echo "       -i Input folder with internal folders: ASV_relabund, ASV_taxonomy, and Sample_metadata"
+        echo "       -i Input folder with internal folders: ASV_relabund (req), ASV_taxonomy (req), Sample_metadata (req), and Taxa_relabund_Human (opt)"
         echo "          Each folder should have their corresponding files renamed to Marker.txt (i.e. COI.txt)"
         echo "       -o Output directory"
+        echo "       -s Sample equivalents file (Marker tab MarkerSample tab ReferenceSample) (optional)"
+        echo "       -r Reference marker file name (Marker.txt) (required if -s is called)"
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
         exit
@@ -71,20 +84,24 @@ shift $((OPTIND -1))
 
 if [ $OPTIND -eq 1 ]
   then echo "Usage: compare_markers_TablesFigures.sh" #No options passed
-       echo "       -i Input folder with internal folders: ASV_relabund, ASV_taxonomy, and Sample_metadata"
+       echo "       -i Input folder with internal folders: ASV_relabund (req), ASV_taxonomy (req), Sample_metadata (req), and Taxa_relabund_Human (opt)"
        echo "          Each folder should have their corresponding files renamed to Marker.txt (i.e. COI.txt)"
        echo "       -o Output directory"
+       echo "       -s Sample equivalents file (Marker tab MarkerSample tab ReferenceSample) (optional)"
+       echo "       -r Reference marker file name (Marker.txt) (required if -s is called)"
        echo "       -t Taxa of interest file (one per line) (optional)"
        echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
        exit
     fi
 
 if [[ $iflag -eq 0 || $oflag -eq 0 ]]
-  then echo "All options except -t and -c are required."
+  then echo "All options except -s, -r, -t, and -c are required."
         echo "Usage: compare_markers_TablesFigures.sh" #Missing required options
-        echo "       -i Input folder with internal folders: ASV_relabund, ASV_taxonomy, and Sample_metadata"
+        echo "       -i Input folder with internal folders: ASV_relabund (req), ASV_taxonomy (req), Sample_metadata (req), and Taxa_relabund_Human (opt)"
         echo "          Each folder should have their corresponding files renamed to Marker.txt (i.e. COI.txt)"
         echo "       -o Output directory"
+        echo "       -s Sample equivalents file (Marker tab MarkerSample tab ReferenceSample) (optional)"
+        echo "       -r Reference marker file name (Marker.txt) (required if -s is called)"
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
         exit
@@ -101,6 +118,7 @@ mkdir -p ${outdirectory}/Tables
 mkdir -p ${outdirectory}/Figures/Ordination
 mkdir -p ${outdirectory}/Figures/Network
 mkdir -p ${outdirectory}/Figures/VennDiagrams
+
 
 cp -r $inputdirectory ${outdirectory}/comparisons_inputDir
 
@@ -119,7 +137,13 @@ echo
 #Copy taxa of interest file to outdirectory:
 if [[ "${providedTaxaOfInterest}" = "TRUE" ]]; then
   cp $taxaOfInterestFile ${outdirectory}/taxaOfInterest.txt
-  fi
+fi
+
+#Make area for human readable comparisons
+if [[ "${runHumanReadableComparisons}" = "TRUE" ]]; then
+  mkdir -p ${outdirectory}/Tables/HumanReadable
+  cat ${sampleEquivalents} | sed "s/$(printf '\r')\$//" > ${outdirectory}/Tables/HumanReadable/sampleEquivalents.txt
+fi
 
 ##########################################################################################
 ##########################################################################################
@@ -144,6 +168,18 @@ fi
 ##
 ##########################################################################################
 perl ${metapipedir}/assets/compare_marker_cleanup.pl -i $inputdirectory -o $outdirectory
+
+##########################################################################################
+##########################################################################################
+
+##########################################################################################
+##
+##    Run perl script compare_humanReadableTables.pl to create comparison table (optional)
+##
+##########################################################################################
+if [[ "${runHumanReadableComparisons}" = "TRUE" ]]; then
+  perl ${metapipedir}/assets/compare_humanReadableTables.pl -i ${inputdirectory}/Taxa_relabund_Human -r $refMarker -s ${outdirectory}/Tables/HumanReadable/sampleEquivalents.txt > ${outdirectory}/Tables/HumanReadable/comparison_HumanReadableTables_2_Reference.txt
+fi
 
 ##########################################################################################
 ##########################################################################################
@@ -209,26 +245,3 @@ if [[ $numVennComp -lt 2 || $numVennComp -gt 5 ]]; then
 fi
 
 echo "YOU MADE IT!"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
