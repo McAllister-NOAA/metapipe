@@ -240,25 +240,58 @@ foreach my $i (sort keys %TAXON)
 	}
 
 #CHOOSE TAXONOMY for output
+open(OUT_MULTI, ">".$options{n}."_singleBlastHits_with_MULTItaxid.txt");
+print OUT_MULTI "ASV\tMulti_taxID_entry\tUSED\n";
 foreach my $i (sort keys %ASV)
 	{   my $passTaxTest = "FALSE";
         if (exists $ASV{$i}{'taxid'})	#TEST exists taxonomic assignment for taxid
 		{	my $asv_taxid = $ASV{$i}{'taxid'};
 			my @tax_list;
-			if ($asv_taxid =~ m/\;/ || $asv_taxid =~ m/\,/)
-				{	my @multi = split(',', $asv_taxid);
-					foreach my $j (@multi)
+			if ($asv_taxid =~ m/\;/ && $asv_taxid =~ m/\,/)
+                {   my @multi = split(',', $asv_taxid);
+					my $totalMulti = scalar(@multi);
+                    my $totalSemi = 0;
+                    foreach my $j (@multi)
 						{	$j =~ s/\ //;
 							if ($j =~ m/\;/)
-								{	my @multipli = split(';', $j);
-									foreach my $k (@multipli)
-										{	push(@tax_list, $k);	
-										}
+								{   $totalSemi += 1;
 								}
-							else {push(@tax_list, $j);}
 						}
-				}
-			else {push(@tax_list, $asv_taxid);}
+                    if ($totalSemi < $totalMulti) #purge semicolon hits to remove sequences with multiple potential taxonomies
+                        {   foreach my $j (@multi)
+                                {	$j =~ s/\ //;
+                                    unless ($j =~ m/\;/)
+                                        {	push(@tax_list, $j);
+                                        }
+                                }
+                        }
+                    elsif ($totalSemi == $totalMulti)
+                        {   foreach my $j (@multi)
+                                {	$j =~ s/\ //;
+                                    if ($j =~ m/\;/)
+                                        {	my @multipli = split(';', $j);
+                                            foreach my $k (@multipli)
+                                                {	push(@tax_list, $k);	
+                                                }
+                                        }
+                                    else {push(@tax_list, $j);}
+                                }
+                        }
+                }
+            elsif ($asv_taxid =~ m/\;/ && $asv_taxid !~ m/\,/)
+                {   my @multi = split(';', $asv_taxid);
+                    foreach my $j (@multi)
+                        {   push(@tax_list, $j);   
+                        }
+                }
+            elsif ($asv_taxid =~ m/\,/ && $asv_taxid !~ m/\;/)
+                {   my @multi = split(',', $asv_taxid);
+					foreach my $j (@multi)
+						{	$j =~ s/\ //;
+							push(@tax_list, $j);
+						}
+                }
+            else {push(@tax_list, $asv_taxid);}
             my @new_tax_list;
             foreach my $keepTaxHits (@tax_list)
                 {   if (exists $TAXON{$keepTaxHits})
@@ -273,19 +306,53 @@ foreach my $i (sort keys %ASV)
         if (exists $ASV{$i}{'taxid'} && $passTaxTest eq "TRUE")	#CREATE list of taxids to consider
 		{	my $asv_taxid = $ASV{$i}{'taxid'};
 			my @tax_list;
-			if ($asv_taxid =~ m/\;/ || $asv_taxid =~ m/\,/)
-				{	my @multi = split(',', $asv_taxid);
-					foreach my $j (@multi)
+            if ($asv_taxid =~ m/\;/ && $asv_taxid =~ m/\,/)
+                {   my @multi = split(',', $asv_taxid);
+					my $totalMulti = scalar(@multi);
+                    my $totalSemi = 0;
+                    foreach my $j (@multi)
 						{	$j =~ s/\ //;
 							if ($j =~ m/\;/)
-								{	my @multipli = split(';', $j);
-									foreach my $k (@multipli)
-										{	push(@tax_list, $k);	
-										}
+								{   $totalSemi += 1;
 								}
-							else {push(@tax_list, $j);}
 						}
-				}
+                    if ($totalSemi < $totalMulti) #purge semicolon hits to remove sequences with multiple potential taxonomies
+                        {   foreach my $j (@multi)
+                                {	$j =~ s/\ //;
+                                    unless ($j =~ m/\;/)
+                                        {	push(@tax_list, $j);
+                                        }
+                                }
+                            print OUT_MULTI "$i\t$asv_taxid\tFALSE\n";
+                        }
+                    elsif ($totalSemi == $totalMulti)
+                        {   foreach my $j (@multi)
+                                {	$j =~ s/\ //;
+                                    if ($j =~ m/\;/)
+                                        {	my @multipli = split(';', $j);
+                                            foreach my $k (@multipli)
+                                                {	push(@tax_list, $k);	
+                                                }
+                                        }
+                                    else {push(@tax_list, $j);}
+                                }
+                            print OUT_MULTI "$i\t$asv_taxid\tTRUE\n";
+                        }
+                }
+            elsif ($asv_taxid =~ m/\;/ && $asv_taxid !~ m/\,/)
+                {   my @multi = split(';', $asv_taxid);
+                    foreach my $j (@multi)
+                        {   push(@tax_list, $j);   
+                        }
+                    print OUT_MULTI "$i\t$asv_taxid\tTRUE\n";
+                }
+            elsif ($asv_taxid =~ m/\,/ && $asv_taxid !~ m/\;/)
+                {   my @multi = split(',', $asv_taxid);
+					foreach my $j (@multi)
+						{	$j =~ s/\ //;
+							push(@tax_list, $j);
+						}
+                }
 			else {push(@tax_list, $asv_taxid);}
             my @new_tax_list;
             foreach my $keepTaxHits (@tax_list)
@@ -523,6 +590,7 @@ foreach my $i (sort keys %ASV)
 		}
 		else {$ASV{$i}{'finaltaxachoice'} = "Unknown";}
 	}
+close(OUT_MULTI);
 
 
 ##Outputs
@@ -1095,27 +1163,60 @@ foreach my $i (sort keys %ASV)
 				if (exists $ASV{$i}{'taxid'})
 					{	print UNKNOWNS "$ASV{$i}{'taxid'}\t";
 						my $string = $ASV{$i}{'taxid'};
-						if ($string =~ m/\,/ || $string =~ m/\;/)
-							{	my @unknown_tax_list;
-								my @multi = split(',', $string);
-								foreach my $j (@multi)
-									{	$j =~ s/\ //;
-										if ($j =~ m/\;/)
-											{	my @multipli = split(';', $j);
-												foreach my $k (@multipli)
-													{	push(@unknown_tax_list, $k);
-													}
-											}
-										else {push(@unknown_tax_list, $j);}
-									}
-								foreach my $entry (@unknown_tax_list)
+                        my @unknown_tax_list;
+                        if ($string =~ m/\;/ && $string =~ m/\,/)
+                            {   my @multi = split(',', $string);
+                                my $totalMulti = scalar(@multi);
+                                my $totalSemi = 0;
+                                foreach my $j (@multi)
+                                    {	$j =~ s/\ //;
+                                        if ($j =~ m/\;/)
+                                            {   $totalSemi += 1;
+                                            }
+                                    }
+                                if ($totalSemi < $totalMulti) #purge semicolon hits to remove sequences with multiple potential taxonomies
+                                    {   foreach my $j (@multi)
+                                            {	$j =~ s/\ //;
+                                                unless ($j =~ m/\;/)
+                                                    {	push(@unknown_tax_list, $j);
+                                                    }
+                                            }
+                                    }
+                                elsif ($totalSemi == $totalMulti)
+                                    {   foreach my $j (@multi)
+                                            {	$j =~ s/\ //;
+                                                if ($j =~ m/\;/)
+                                                    {	my @multipli = split(';', $j);
+                                                        foreach my $k (@multipli)
+                                                            {	push(@unknown_tax_list, $k);	
+                                                            }
+                                                    }
+                                                else {push(@unknown_tax_list, $j);}
+                                            }
+                                    }
+                            }
+                        elsif ($string =~ m/\;/ && $string !~ m/\,/)
+                            {   my @multi = split(';', $string);
+                                foreach my $j (@multi)
+                                    {   push(@unknown_tax_list, $j);   
+                                    }
+                            }
+                        elsif ($string =~ m/\,/ && $string !~ m/\;/)
+                            {   my @multi = split(',', $string);
+                                foreach my $j (@multi)
+                                    {	$j =~ s/\ //;
+                                        push(@unknown_tax_list, $j);
+                                    }
+                            }
+                        if (scalar(@unknown_tax_list) > 1)
+                            {   foreach my $entry (@unknown_tax_list)
 									{   if (exists $TAXON{$entry}{'taxastring'})
-                                        {print UNKNOWNS "$TAXON{$entry}{'taxastring'}\t";}
+                                            {print UNKNOWNS "$TAXON{$entry}{'taxastring'}\t";}
                                         else
                                             {print UNKNOWNS "TaxaStringDeleted_or_DoesNotExist\t";}
 									}
 								print UNKNOWNS "\n";
-							}
+                            }
 						else
 						{   if (exists $TAXON{$string}{'taxastring'})
                                 {   print UNKNOWNS "$TAXON{$string}{'taxastring'}\n";
