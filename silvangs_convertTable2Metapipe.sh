@@ -37,8 +37,9 @@ bypassflag=FALSE
 filterNAs=FALSE
 providedTaxaOfInterest=FALSE
 taxaOfInterestCategory=FALSE
+mergeNCBISILVAeuks=FALSE
 
-while getopts ":i:s:n:o:t:c:f:y" opt; do
+while getopts ":i:s:n:m:o:t:c:f:y" opt; do
   case ${opt} in
     i ) iflag=1
         inputspreadsheet=$OPTARG #Input SILVA spreadsheet
@@ -60,6 +61,8 @@ while getopts ":i:s:n:o:t:c:f:y" opt; do
       ;;
     c ) taxaOfInterestCategory=$OPTARG #Taxonomic category represented in the Taxa of Interest File
       ;;
+    m ) mergeNCBISILVAeuks=TRUE #Optional switch to create new folder with merged Eukaryotic assignments from NCBI with SILVA Bact/Arch assignments
+      ;;
     y ) bypassflag=TRUE
       ;;
     \? ) echo "Invalid option: -$OPTARG"
@@ -71,6 +74,7 @@ while getopts ":i:s:n:o:t:c:f:y" opt; do
          echo "       -n Filter NAs from figures (optional)"
          echo "       -t Taxa of interest file (one per line) (optional)"
          echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
+         echo "       -m Merge NCBI Eukaryote taxa assignments with SILVA Bacteria/Archaea assignments (optional)"
          exit
       ;;
     : ) echo "Option is missing an argument: -$OPTARG"
@@ -82,6 +86,7 @@ while getopts ":i:s:n:o:t:c:f:y" opt; do
         echo "       -n Filter NAs from figures (optional)"
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
+        echo "       -m Merge NCBI Eukaryote taxa assignments with SILVA Bacteria/Archaea assignments (optional)"
         exit
       ;;
   esac
@@ -97,11 +102,12 @@ if [ $OPTIND -eq 1 ]
         echo "       -n Filter NAs from figures (optional)"
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
+        echo "       -m Merge NCBI Eukaryote taxa assignments with SILVA Bacteria/Archaea assignments (optional)"
         exit
     fi
 
 if [[ $iflag -eq 0 || $sflag -eq 0 || $oflag -eq 0 || $fflag -eq 0 ]]
-  then echo "All options except -n, -t, and -c are required."
+  then echo "All options except -n, -t, -c, and -m are required."
         echo "Usage: silvangs_convertTable2Metapipe.sh" #Missing required options
         echo "       -i Input SILVAngs exports/x---[ls]su---otus.csv spreadsheet"
         echo "       -s Sample metadata file"
@@ -110,6 +116,7 @@ if [[ $iflag -eq 0 || $sflag -eq 0 || $oflag -eq 0 || $fflag -eq 0 ]]
         echo "       -n Filter NAs from figures (optional)"
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
+        echo "       -m Merge NCBI Eukaryote taxa assignments with SILVA Bacteria/Archaea assignments (optional)"
         exit
       fi
 ##########################################################################################
@@ -139,11 +146,11 @@ if [[ "${providedTaxaOfInterest}" = "TRUE" ]]; then
   cp $taxaOfInterestFile ${outdirectory}/taxaOfInterest.txt
   fi
 
-#Create ordered sample name file
-cat ${samplemetafilepath} | cut -f1 | grep -v "Sample" | sed -E 's/[^A-Za-z0-9_]/_/g' | sed -E 's/^/MP_/' > ${outdirectory}/sample_order.txt
-
 #Create sample metadata file with identical manipulation of sample names for downstream R work
-cat ${samplemetafilepath} | awk 'FNR==NR {gsub("[^a-zA-Z0-9]", "_", $1)} 1' OFS="\t" | sed -e '2,$ s/^/MP_/' | grep -v "^MP_$" | sed "s/$(printf '\r')\$//" > ${outdirectory}/sample_metadata_forR.txt
+perl ${metapipedir}/assets/sampleMetadata_fileCleanup.pl -i ${samplemetafilepath} > ${outdirectory}/sample_metadata_forR.txt
+
+#Create ordered sample name file
+cat ${outdirectory}/sample_metadata_forR.txt | cut -f1 | grep -v "Sample" > ${outdirectory}/sample_order.txt
 
 ##########################################################################################
 ##########################################################################################
@@ -153,7 +160,11 @@ cat ${samplemetafilepath} | awk 'FNR==NR {gsub("[^a-zA-Z0-9]", "_", $1)} 1' OFS=
 ##    Run perl script morphology_table_convert2taxonomy.pl
 ##
 ##########################################################################################
-perl ${metapipedir}/assets/silvangs_convert.pl -i ${inputspreadsheet} -m ${metapipedir} -o ${outdirectory} -f ${filterPercent}
+if [[ "${mergeNCBISILVAeuks}" = "TRUE" ]]; then
+  perl ${metapipedir}/assets/silvangs_convert.pl -i ${inputspreadsheet} -m ${metapipedir} -o ${outdirectory} -f ${filterPercent} -a
+else
+  perl ${metapipedir}/assets/silvangs_convert.pl -i ${inputspreadsheet} -m ${metapipedir} -o ${outdirectory} -f ${filterPercent}
+fi
 
 ##########################################################################################
 ##########################################################################################

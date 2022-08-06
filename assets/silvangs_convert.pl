@@ -3,12 +3,13 @@ use strict;
 use Getopt::Std;
 use List::MoreUtils qw(uniq);
 
-$|=1;
+$|=1; #Autoflush so pauses within this script are pushed up to the shell script during run.
 
 # - - - - - H E A D E R - - - - - - - - - - - - - - - - -
 #Goals of script:
 #Import SILVAngs export ".../exports/x---xsu---otus.csv
-#Output tables for use in MetaPipe. Collapse on taxonomy versions only.
+#Output tables for use in MetaPipe. Collapse on taxonomy versions only (Nanopore use).
+#Create additional option for merged taxonomy from NCBI Eukaryotes.
 
 # - - - - - C O M M A N D    L I N E    O P T I O N S - - - - - - - -
 my %options=();
@@ -18,7 +19,7 @@ if ($options{h})
     {   print "\n\nHelp called:\nOptions:\n";
         print "-i = SILVAngs export otu file (labelled csv but actually tab-delimited)\n";
         print "-m = Location of metapipe directory\n";
-        #print "-a = Set to automatically fill in taxonkit output (as done in metapipe)\n";
+        print "-a = Switch to turn on merge of NCBI Eukaryote taxonomy assignments with SILVA Bacteria/Archaeal assignments\n";
         print "-f = Filter cutoff for zzOther\n";
         print "-o = Output directory\n";
         print "-h = This help message\n\n";
@@ -30,14 +31,13 @@ my %TAXA;
 my $asv_count = 1;
 my @sample_headers;
 
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # - - - - - M A I N - - - - - - - - - - - - - - - - - - - -
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 system("mkdir -p ".$options{o});
 
 #Import SILVAngs export file
-#Expected format: [0] = sample name; [3] = # sequences; [8] = ncbi taxonomic classification; [9] = silva taxonomic classification
+#Expected format: [0] = sample name; [3] = # sequences; [6] = sequence data; [8] = ncbi taxonomic classification; [9] = silva taxonomic classification
 
 open(IN, "<$options{i}") or die "\n\nThere is no $options{i} file!!\n\n";
 my @data = <IN>; close(IN); shift(@data);
@@ -68,7 +68,13 @@ foreach my $line (@data)
             }
         else {$silva_tax = "Unknown";}
         my $keytax = $silva_tax.','.$ncbi_tax;
+        my $sequencedata = "BLANK";
+        if ($split_line[6] ne "")
+            {$sequencedata = $split_line[6];}
         $TAXA{$keytax}{$sample}{'count'} += $split_line[3];
+        unless (exists $TAXA{$keytax}{'sequence'} && $TAXA{$keytax}{'sequence'} ne "BLANK")
+            {   $TAXA{$keytax}{'sequence'} = $sequencedata;
+            }
         unless (exists $TAXA{$keytax}{'asv'})
             {   $TAXA{$keytax}{'asv'} = "ASV_".$asv_count;
                 $asv_count += 1;
@@ -293,12 +299,60 @@ foreach my $i (sort keys %TAXA)
         $TAXA{$i}{'cleaned_silva'} = $joinreassign;
     }
 
+if ($options{a}) #Populate $TAXA{$i}{'cleaned_merged'} filling in Euk assignments from NCBI
+    {   open(EUKMERGE, ">".$options{o}."merged_NCBI_SILVA_Eukaryotes_info.txt");
+        print EUKMERGE "ASV\tOriginalSILVA\tNewMergedAssignmet\n";
+        foreach my $i (sort keys %TAXA)
+            {   my $ncbi_clean = $TAXA{$i}{'cleaned_ncbi'};
+                my $silva_clean = $TAXA{$i}{'cleaned_silva'};
+                if ($silva_clean =~ m/Bacteria\;Cyanobacteria\;Cyanobacteriia\;Chloroplast/)
+                    {   print EUKMERGE "$TAXA{$i}{'asv'}\t";
+                        my @split_ncbi = split(';', $ncbi_clean);
+                        if ($split_ncbi[0] eq "Eukaryota")
+                            {   $TAXA{$i}{'cleaned_merged'} = $ncbi_clean;
+                                print EUKMERGE "$silva_clean\t$ncbi_clean\n";
+                            }
+                        else
+                            {   $TAXA{$i}{'cleaned_merged'} = "Eukaryota;NA;NA;NA;NA;NA;NA";
+                                print EUKMERGE "$silva_clean\tEukaryota;NA;NA;NA;NA;NA;NA\n";
+                            }
+                    }
+                elsif ($silva_clean =~ m/Bacteria\;Proteobacteria\;Alphaproteobacteria\;Rickettsiales\;Mitochondria/)
+                    {   print EUKMERGE "$TAXA{$i}{'asv'}\t";
+                        my @split_ncbi = split(';', $ncbi_clean);
+                        if ($split_ncbi[0] eq "Eukaryota")
+                            {   $TAXA{$i}{'cleaned_merged'} = $ncbi_clean;
+                                print EUKMERGE "$silva_clean\t$ncbi_clean\n";
+                            }
+                        else
+                            {   $TAXA{$i}{'cleaned_merged'} = "Eukaryota;NA;NA;NA;NA;NA;NA";
+                                print EUKMERGE "$silva_clean\tEukaryota;NA;NA;NA;NA;NA;NA\n";
+                            }
+                    }
+                else
+                    {   $TAXA{$i}{'cleaned_merged'} = $silva_clean;
+                    }
+            }
+        close(EUKMERGE);
+    }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # - - - - - - - - M A I N - O U T P U T - - - - - - - - - - -
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 system("mkdir -p ".$options{o}."/ncbi_taxonomy");
 system("mkdir -p ".$options{o}."/silva_taxonomy");
+if ($options{a}) {system("mkdir -p ".$options{o}."/merged_taxonomy");}
+
+my @taxTypes;
+if ($options{a})
+    {   @taxTypes = qw | silva ncbi merged |;
+        
+    }
+else
+    {   @taxTypes = qw | silva ncbi |;
+        
+    }
+
 
 #ASVs_counts.tsv = Plain counts for all "ASVs". In this case, each ASV simply represents a unique taxa.
 open(ASV_count, ">".$options{o}."/ASVs_counts.tsv");
@@ -325,7 +379,6 @@ foreach my $i (sort keys %TAXA)
 close(ASV_count);
 
 #ASVs_counts_NOUNKNOWNS.tsv = Plain counts for all "ASVs", except those with unknown taxonomy.
-my @taxTypes = qw | silva ncbi |;
 foreach my $taxonomyType (0..$#taxTypes)
     {   open(ASV_count, ">".$options{o}."/".$taxTypes[$taxonomyType]."_taxonomy/ASVs_counts_NOUNKNOWNS.tsv");
         print ASV_count "x";
@@ -515,6 +568,14 @@ foreach my $i (@taxTypes)
     {   print HEADS "${i}\n";
     }
 close(HEADS);
+
+open(SEQDATA, ">".$options{o}."/ASVs.fa");
+foreach my $i (sort keys %TAXA)
+    {   print SEQDATA ">$TAXA{$i}{'asv'}\n";
+        print SEQDATA "$TAXA{$i}{'sequence'}\n";
+    }
+close(SEQDATA);
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # - - - - - S U B R O U T I N E S - - - - - - - - - - -

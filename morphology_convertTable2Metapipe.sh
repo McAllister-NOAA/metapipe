@@ -144,11 +144,11 @@ if [[ "${providedTaxaOfInterest}" = "TRUE" ]]; then
   cp $taxaOfInterestFile ${outdirectory}/taxaOfInterest.txt
   fi
 
-#Create ordered sample name file
-cat ${samplemetafilepath} | cut -f1 | grep -v "Sample" | sed -E 's/[^A-Za-z0-9_]/_/g' | sed -E 's/^/MP_/' > ${outdirectory}/sample_order.txt
-
 #Create sample metadata file with identical manipulation of sample names for downstream R work
-cat ${samplemetafilepath} | awk 'FNR==NR {gsub("[^a-zA-Z0-9]", "_", $1)} 1' OFS="\t" | sed -e '2,$ s/^/MP_/' | grep -v "^MP_$" | sed "s/$(printf '\r')\$//" > ${outdirectory}/sample_metadata_forR.txt
+perl ${metapipedir}/assets/sampleMetadata_fileCleanup.pl -i ${samplemetafilepath} > ${outdirectory}/sample_metadata_forR.txt
+
+#Create ordered sample name file
+cat ${outdirectory}/sample_metadata_forR.txt | cut -f1 | grep -v "Sample" > ${outdirectory}/sample_order.txt
 
 ##########################################################################################
 ##########################################################################################
