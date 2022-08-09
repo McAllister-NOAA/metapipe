@@ -97,7 +97,7 @@ foreach my $i (sort keys %TAXA)
 close(NCBI);
 
 print "\nEdit the NCBI taxonomy file to match a K/P/C/O/F/G/S architecture with tab delimiter\n";
-print "Leave the FIRST column AS IS\n";
+print "Leave the FIRST column AS IS (remember not to run replace search in that column)\n";
 print "Rename to have _mod.txt at the end of the file name\n";
 print "Once finished...press ENTER\n";
 my $hold1 = <STDIN>;
@@ -109,6 +109,7 @@ foreach my $line (@data2)
 	{	chomp($line);
         $line =~ s/ /\+/g;
         $line =~ s/\t/\*/g;
+        $line =~ s/\r//;
         $line =~ s/\s//;
         $line =~ s/\+/ /g;
         $line =~ s/\*/\t/g;
@@ -300,7 +301,7 @@ foreach my $i (sort keys %TAXA)
     }
 
 if ($options{a}) #Populate $TAXA{$i}{'cleaned_merged'} filling in Euk assignments from NCBI
-    {   open(EUKMERGE, ">".$options{o}."merged_NCBI_SILVA_Eukaryotes_info.txt");
+    {   open(EUKMERGE, ">".$options{o}."/merged_NCBI_SILVA_Eukaryotes_info.txt");
         print EUKMERGE "ASV\tOriginalSILVA\tNewMergedAssignmet\n";
         foreach my $i (sort keys %TAXA)
             {   my $ncbi_clean = $TAXA{$i}{'cleaned_ncbi'};
