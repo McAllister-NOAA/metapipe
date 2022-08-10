@@ -301,7 +301,8 @@ foreach my $i (sort keys %TAXA)
     }
 
 if ($options{a}) #Populate $TAXA{$i}{'cleaned_merged'} filling in Euk assignments from NCBI
-    {   open(EUKMERGE, ">".$options{o}."/merged_NCBI_SILVA_Eukaryotes_info.txt");
+    {   system("mkdir -p ".$options{o}."/merged_taxonomy");
+        open(EUKMERGE, ">".$options{o}."/merged_taxonomy/merged_NCBI_SILVA_Eukaryotes_info.txt");
         print EUKMERGE "ASV\tOriginalSILVA\tNewMergedAssignmet\n";
         foreach my $i (sort keys %TAXA)
             {   my $ncbi_clean = $TAXA{$i}{'cleaned_ncbi'};
@@ -342,7 +343,6 @@ if ($options{a}) #Populate $TAXA{$i}{'cleaned_merged'} filling in Euk assignment
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 system("mkdir -p ".$options{o}."/ncbi_taxonomy");
 system("mkdir -p ".$options{o}."/silva_taxonomy");
-if ($options{a}) {system("mkdir -p ".$options{o}."/merged_taxonomy");}
 
 my @taxTypes;
 if ($options{a})
