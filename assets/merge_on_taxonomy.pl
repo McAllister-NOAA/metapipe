@@ -94,6 +94,7 @@ foreach my $i (sort keys %NEW_ASV)
     
 #Print out ASV table combining asv2Taxonomy with perc abundance for human viewing
 open(OUT, ">".$options{o}."/taxonomy2PercentAbundance_humanReadable.txt");
+open(OUT_NOROUND, ">".$options{o}."/taxonomy2PercentAbundance_humanReadable_NoRounding.txt");
 
 my @sample_totals;
 my @sample_totals_sansUnknowns;
@@ -142,14 +143,20 @@ foreach my $i (sort keys %NEW_ASV)
 print OUT "All percentages range 0-100% of the total count for either Eukaryotes or Prokaryotes, with exception of the first three data rows (% Known, % Eukaryote, % Prokaryote), which represent %s of total reads.\n";
 print OUT "Taxonomy String (K->S)\t";
 print OUT "Terminal Taxa";
+print OUT_NOROUND "All percentages range 0-100% of the total count for either Eukaryotes or Prokaryotes, with exception of the first three data rows (% Known, % Eukaryote, % Prokaryote), which represent %s of total reads.\n";
+print OUT_NOROUND "Taxonomy String (K->S)\t";
+print OUT_NOROUND "Terminal Taxa";
 foreach my $i (1..$#file_sample_headers)
     {   my $sample = $file_sample_headers[$i];
         chomp($sample);
         print OUT "\t$sample";
+        print OUT_NOROUND "\t$sample";
     }
 print OUT "\n";
+print OUT_NOROUND "\n";
 
 print OUT "\t% Known";
+print OUT_NOROUND "\t% Known";
 foreach my $i (1..$#file_sample_headers)
     {   my $sample = $file_sample_headers[$i];
         chomp($sample);
@@ -161,10 +168,13 @@ foreach my $i (1..$#file_sample_headers)
         else
             {   print OUT "\t$roundnum";   
             }
+        print OUT_NOROUND "\t$number";
     }
 print OUT "\n";
+print OUT_NOROUND "\n";
 
 print OUT "\t% Eukaryote";
+print OUT_NOROUND "\t% Eukaryote";
 foreach my $i (1..$#file_sample_headers)
     {   my $sample = $file_sample_headers[$i];
         chomp($sample);
@@ -176,10 +186,13 @@ foreach my $i (1..$#file_sample_headers)
         else
             {   print OUT "\t$roundnum";   
             }
+        print OUT_NOROUND "\t$number";
     }
 print OUT "\n";
+print OUT_NOROUND "\n";
 
 print OUT "\t% Prokaryote";
+print OUT_NOROUND "\t% Prokaryote";
 foreach my $i (1..$#file_sample_headers)
     {   my $sample = $file_sample_headers[$i];
         chomp($sample);
@@ -191,8 +204,10 @@ foreach my $i (1..$#file_sample_headers)
         else
             {   print OUT "\t$roundnum";   
             }
+        print OUT_NOROUND "\t$number";
     }
 print OUT "\n";
+print OUT_NOROUND "\n";
 
 my $previousPhyla = "";
 my $previousClass = "";
@@ -218,6 +233,8 @@ foreach my $i (sort keys %orderedDB)
                     {   if ($class eq $previousClass)
                             {   print OUT "$taxastring\t";
                                 print OUT "$termtax";
+                                print OUT_NOROUND "$taxastring\t";
+                                print OUT_NOROUND "$termtax";
                                 foreach my $j (1..$#file_sample_headers)
                                     {   my $sample = $file_sample_headers[$j];
                                         chomp($sample);
@@ -233,16 +250,21 @@ foreach my $i (sort keys %orderedDB)
                                         else
                                             {   print OUT "\t$roundnum";   
                                             }
+                                        print OUT_NOROUND "\t$number";
                                     }
                                 print OUT "\n";
+                                print OUT_NOROUND "\n";
                             }
                         else
                             {   $previousClass = $class;
                                 if ($phylum eq "Arthropoda" || $phylum eq "Chordata")
                                     {   print OUT "\t<<<$phylum, $class>>>\n";
+                                        print OUT_NOROUND "\t<<<$phylum, $class>>>\n";
                                     }
                                 print OUT "$taxastring\t";
                                 print OUT "$termtax";
+                                print OUT_NOROUND "$taxastring\t";
+                                print OUT_NOROUND "$termtax";
                                 foreach my $j (1..$#file_sample_headers)
                                     {   my $sample = $file_sample_headers[$j];
                                         chomp($sample);
@@ -259,24 +281,31 @@ foreach my $i (sort keys %orderedDB)
                                         else
                                             {   print OUT "\t$roundnum";   
                                             }
+                                        print OUT_NOROUND "\t$number";
                                     }
                                 print OUT "\n";
+                                print OUT_NOROUND "\n";
                             }
                     }
                 else
                     {   $previousPhyla = $phylum;
                         $previousClass = $class;
                         if ($phylum eq "Arthropoda" || $phylum eq "Chordata")
-                            {   print OUT "\t<<<$phylum, $class>>>\n";   
+                            {   print OUT "\t<<<$phylum, $class>>>\n";
+                                print OUT_NOROUND "\t<<<$phylum, $class>>>\n";
                             }
                         elsif ($phylum eq "NA")
-                            {   print OUT "\t<<<Unknown Eukaryote>>>\n"; 
+                            {   print OUT "\t<<<Unknown Eukaryote>>>\n";
+                                print OUT_NOROUND "\t<<<Unknown Eukaryote>>>\n";
                             }
                         else
                             {   print OUT "\t<<<$phylum>>>\n";
+                                print OUT_NOROUND "\t<<<$phylum>>>\n";
                             }
                         print OUT "$taxastring\t";
                         print OUT "$termtax";
+                        print OUT_NOROUND "$taxastring\t";
+                        print OUT_NOROUND "$termtax";
                         foreach my $j (1..$#file_sample_headers)
                             {   my $sample = $file_sample_headers[$j];
                                 chomp($sample);
@@ -293,8 +322,10 @@ foreach my $i (sort keys %orderedDB)
                                 else
                                     {   print OUT "\t$roundnum";   
                                     }
+                                print OUT_NOROUND "\t$number";
                             }
                         print OUT "\n";
+                        print OUT_NOROUND "\n";
                     }
             }
     }
@@ -320,6 +351,8 @@ foreach my $i (sort keys %orderedDB)
             {   if ($phylum eq $previousPhyla)
                     {   print OUT "$taxastring\t";
                         print OUT "$termtax";
+                        print OUT_NOROUND "$taxastring\t";
+                        print OUT_NOROUND "$termtax";
                         foreach my $j (1..$#file_sample_headers)
                             {   my $sample = $file_sample_headers[$j];
                                 chomp($sample);
@@ -336,19 +369,25 @@ foreach my $i (sort keys %orderedDB)
                                 else
                                     {   print OUT "\t$roundnum";   
                                     }
+                                print OUT_NOROUND "\t$number"; 
                             }
                         print OUT "\n";
+                        print OUT_NOROUND "\n";
                     }
                 else
                     {   $previousPhyla = $phylum;
                         if ($phylum eq "NA")
                             {   print OUT "\t<<<Unknown $taxa_array[0]>>>\n";
+                                print OUT_NOROUND "\t<<<Unknown $taxa_array[0]>>>\n";
                             }
                         else
                             {   print OUT "\t<<<$phylum>>>\n";
+                                print OUT_NOROUND "\t<<<$phylum>>>\n";
                             }
                         print OUT "$taxastring\t";
                         print OUT "$termtax";
+                        print OUT_NOROUND "$taxastring\t";
+                        print OUT_NOROUND "$termtax";
                         foreach my $j (1..$#file_sample_headers)
                             {   my $sample = $file_sample_headers[$j];
                                 chomp($sample);
@@ -365,8 +404,10 @@ foreach my $i (sort keys %orderedDB)
                                 else
                                     {   print OUT "\t$roundnum";   
                                     }
+                                print OUT_NOROUND "\t$number";
                             }
                         print OUT "\n";
+                        print OUT_NOROUND "\n";
                     }
             }
     }
@@ -392,6 +433,8 @@ foreach my $i (sort keys %orderedDB)
             {   if ($phylum eq $previousPhyla)
                     {   print OUT "$taxastring\t";
                         print OUT "$termtax";
+                        print OUT_NOROUND "$taxastring\t";
+                        print OUT_NOROUND "$termtax";
                         foreach my $j (1..$#file_sample_headers)
                             {   my $sample = $file_sample_headers[$j];
                                 chomp($sample);
@@ -403,19 +446,25 @@ foreach my $i (sort keys %orderedDB)
                                 else
                                     {   print OUT "\t$roundnum";   
                                     }
+                                print OUT_NOROUND "\t$number";  
                             }
                         print OUT "\n";
+                        print OUT_NOROUND "\n";
                     }
                 else
                     {   $previousPhyla = $phylum;
                         if ($phylum eq "NA")
                             {   print OUT "\t<<<$taxa_array[0], Unknown Phylum (% out of total)>>>\n";
+                                print OUT_NOROUND "\t<<<$taxa_array[0], Unknown Phylum (% out of total)>>>\n";
                             }
                         else
                             {   print OUT "\t<<<$taxa_array[0], $phylum (% out of total)>>>\n";
+                                print OUT_NOROUND "\t<<<$taxa_array[0], $phylum (% out of total)>>>\n";
                             }
                         print OUT "$taxastring\t";
                         print OUT "$termtax";
+                        print OUT_NOROUND "$taxastring\t";
+                        print OUT_NOROUND "$termtax";
                         foreach my $j (1..$#file_sample_headers)
                             {   my $sample = $file_sample_headers[$j];
                                 chomp($sample);
@@ -427,14 +476,17 @@ foreach my $i (sort keys %orderedDB)
                                 else
                                     {   print OUT "\t$roundnum";   
                                     }
+                                print OUT_NOROUND "\t$number";
                             }
                         print OUT "\n";
+                        print OUT_NOROUND "\n";
                     }
             }
     }
 
 
 close(OUT);
+close(OUT_NOROUND);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
