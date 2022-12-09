@@ -3,6 +3,11 @@
 #Run from inside the folder where your nt database is held.
 #Run to update nt, taxonomy dmp, and prep files for metapipe.
 #Requires blast+, wget, and taxonomy-tools (https://github.com/pmenzel/taxonomy-tools), all in PATH
+echo "Date of last update to the nt database:" >> nt_lastupdate.txt
+date >> nt_lastupdate.txt
+echo >> nt_lastupdate.txt
+echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" >> nt_lastupdate.txt
+echo >> nt_lastupdate.txt
 
 echo
 echo "Updating nt BLAST database..."
