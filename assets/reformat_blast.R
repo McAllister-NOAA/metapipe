@@ -10,7 +10,7 @@ library(dplyr)
 setwd(as.character(args[1]))
 
 all_results <- read.delim("ASV_blastn_nt.btab", header=FALSE, stringsAsFactors=FALSE)
-colnames(all_results) <- c("ASV", "percent", "length", "taxid")
+colnames(all_results) <- c("ASV", "percent", "length", "taxid", "accession")
 all_results_trimLength <- all_results[all_results$length>=(as.numeric(args[2])), ]
 all_results_trimLength$correction <- all_results_trimLength$percent/100 *all_results_trimLength$length
 all_results_trimLength_filter <- all_results_trimLength %>% group_by(ASV) %>% filter(percent == max(percent))

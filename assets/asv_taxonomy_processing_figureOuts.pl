@@ -7,7 +7,7 @@ use List::MoreUtils qw(uniq);
 # - - - - - H E A D E R - - - - - - - - - - - - - - - - -
 #Goals of script:
 #Take ASV count table, taxAssignX.txt, reformatted_taxonkit_out, genbank common names from NCBI.
-#Required settings: filtering options for species and genus cutoffs, output name.
+#Required settings: filtering options for species, genus, etc cutoffs, output name.
 #Optional inputs: list of ASVs to ignore, list of samples in the order desired for output.
 #Outputs: Reformatted out with one ASV per sample per line, Krona plots, Bar charts (with and without unknowns),
 #         multi-ASV taxa heatmap, common names outputs, list of unknown ASVs. All with and without filtering.
@@ -20,7 +20,7 @@ getopts("a:s:t:n:f:c:d:o:h", \%options);
 if ($options{h})
     {   print "\n\nHelp called:\nOptions:\n";
         print "-a = ASV counts table (make sure there is text in the upperleft)\n";
-        print "-s = DADA2 taxonomy output (w/ headers ASV Perc Len TaxID correction)\n";
+        print "-s = reformatted blast output (ASV_blastn_nt_formatted.txt; w/ headers ASV percent length taxid accession correction)\n";
         print "-t = reformatted taxonkit output (TaxID\tsimplified taxonomy)\n";
         print "-f = filtering options Species,Genus,Family,Order,Class,Phylum (e.g. 97,95,90,80,70,60)\n";
         print "-n = Allin Output basename\n";
@@ -89,7 +89,7 @@ foreach my $i (sort keys %ASV)
 	}
 
 
-#IMPORT DADA2 taxonomy output
+#IMPORT blast reformatted taxonomy output
 open(IN2, "<$options{s}") or die "\n\nThere is no $options{s} file!!\n\n";
 my @dada_dat = <IN2>; close(IN2); shift(@dada_dat);
 foreach my $line (@dada_dat)
@@ -99,7 +99,7 @@ foreach my $line (@dada_dat)
 		$ASV{$blah}{'perchit'} = $data[1];                                                                         
 		$ASV{$blah}{'lenhit'} = $data[2];
 		$ASV{$blah}{'taxid'} = $data[3];
-		$ASV{$blah}{'correction'} = $data[4];
+		$ASV{$blah}{'correction'} = $data[5];
 		my $filterinfo = $options{f};
 		my @splitfilter = split(',', $filterinfo);
 		if ($data[1] >= $splitfilter[0])
