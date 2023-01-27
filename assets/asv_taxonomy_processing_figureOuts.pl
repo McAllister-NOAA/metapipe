@@ -3,6 +3,7 @@
 use Getopt::Std;
 use List::MoreUtils qw(uniq);
 
+$|=1; #Autoflush so pauses within this script are pushed up to the shell script during run.
 
 # - - - - - H E A D E R - - - - - - - - - - - - - - - - -
 #Goals of script:
@@ -15,7 +16,7 @@ use List::MoreUtils qw(uniq);
 
 # - - - - - C O M M A N D    L I N E    O P T I O N S - - - - - - - -
 my %options=();
-getopts("a:s:t:n:f:c:d:o:h", \%options);
+getopts("a:s:t:n:f:c:d:o:y:z:eh", \%options);
 
 if ($options{h})
     {   print "\n\nHelp called:\nOptions:\n";
@@ -28,6 +29,9 @@ if ($options{h})
         print "-d = List of ASVs to ignore (one per line) for outputs ignoring contaminants and/or unknowns\n";
         print "-o = List of samples (one per line) in the order you want them exported. Must be exact matches to ASV counts table.\n";
         print "       Does not have to include all samples.\n";
+        print "-e = Toggle use of SILVAngs taxonomy assignments by ASV (optional)\n";
+        print "-y = SILVAngs results/[ls]su/exports/*---otus.csv File\n";
+        print "-z = SILVAngs results/[ls]su/stats/sequence_cluster_map/data/*.fa.clstr File\n";
         print "-h = This help message\n\n";
         die;
     }
@@ -38,6 +42,8 @@ my %TAXON;
 my @uniq_bartaxa_ig;
 my @sample_headers;
 my @file_sample_headers;
+my @commondat;
+my $ignore_ASV_string;
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # - - - - - M A I N - - - - - - - - - - - - - - - - - - - -
@@ -88,510 +94,813 @@ foreach my $i (sort keys %ASV)
 			}
 	}
 
-
-#IMPORT blast reformatted taxonomy output
-open(IN2, "<$options{s}") or die "\n\nThere is no $options{s} file!!\n\n";
-my @dada_dat = <IN2>; close(IN2); shift(@dada_dat);
-foreach my $line (@dada_dat)
-	{	chomp($line);
-		my @data = split('\t', $line);
-		my $blah = $data[0]; chomp($blah);
-		$ASV{$blah}{'perchit'} = $data[1];                                                                         
-		$ASV{$blah}{'lenhit'} = $data[2];
-		$ASV{$blah}{'taxid'} = $data[3];
-		$ASV{$blah}{'correction'} = $data[5];
-		my $filterinfo = $options{f};
-		my @splitfilter = split(',', $filterinfo);
-		if ($data[1] >= $splitfilter[0])
-			{	$ASV{$blah}{'confidence'} = "SPECIES";	
-			}
-		if ($data[1] < $splitfilter[0] && $data[1] >= $splitfilter[1])
-			{	$ASV{$blah}{'confidence'} = "GENUS";
-			}
-		if ($data[1] < $splitfilter[1] && $data[1] >= $splitfilter[2])
-			{	$ASV{$blah}{'confidence'} = "FAMILY";
-			}
-        if ($data[1] < $splitfilter[2] && $data[1] >= $splitfilter[3])
-			{	$ASV{$blah}{'confidence'} = "ORDER";
-			}
-        if ($data[1] < $splitfilter[3] && $data[1] >= $splitfilter[4])
-			{	$ASV{$blah}{'confidence'} = "CLASS";
-			}
-        if ($data[1] < $splitfilter[4] && $data[1] >= $splitfilter[5])
-			{	$ASV{$blah}{'confidence'} = "PHYLUM";
-			}
-		if ($data[1] < $splitfilter[5])
-			{	$ASV{$blah}{'confidence'} = "NOCONFIDENCE";
-			}
-	}
-
-#IMPORT reformatted taxonkit taxonomy out
-open(IN3, "<$options{t}") or die "\n\nThere is no $options{t} file!!\n\n";
-my @taxon_dat = <IN3>; close(IN3);
-foreach my $lines (@taxon_dat)
-	{	chomp($lines);
-		my @taxon_split = split('\t', $lines);
-		my $taxonclean = $taxon_split[0];
-		chomp($taxonclean);
-		my $cleantaxastring = $taxon_split[1];
-		chomp($cleantaxastring);
-		$TAXON{$taxonclean}{'taxastring'} = $cleantaxastring;
-	}
-
-#IMPORT common names
-open(INT, "<$options{c}") or die "\n\nThere is no $options{c} file!!\n\n";
-my @commondat = <INT>; close(INT);
-foreach my $linet (@commondat)
-	{	chomp($linet);
-		my @common_split = split('\t', $linet);
-		my $taxid_clean = $common_split[0];
-		chomp($taxid_clean);
-		my $common_name_clean = $common_split[2];
-		chomp($common_name_clean);
-		if (exists $TAXON{$taxid_clean})
-			{	$TAXON{$taxid_clean}{'common_name'} = $common_name_clean;
-			}
-	}
-	
-#IMPORT List of ASVs to ingore in output
-my @ignore_array;
-my $ignore_ASV_string;
-my $output_ignore_string;
-if ($options{d})
-	{	open(IGNORE, "<$options{d}") or die "\n\nThere is no $options{d} file!!\n\n";
-		my @igdat = <IGNORE>; close(IGNORE);
-		foreach my $linei (@igdat)
-			{	chomp($linei);
-				push(@ignore_array, $linei);
-			}
-		foreach my $i (@ignore_array)
-			{	$ignore_ASV_string .= "_".$i."_";
-                $output_ignore_string .= $i.";";
-			}
-        my @ignoreASVarray = split(';', $output_ignore_string);
-        open(ASVsToIG, ">".$options{n}."_ASVs_to_IGNORE.txt");
-        foreach my $igasv (@ignoreASVarray)
-            {   chomp($igasv);
-                print ASVsToIG "$igasv\n";
+if ($options{e})
+    {   #Import SILVAngs export file
+        #Expected format: [2] = cluster ACC (ASV_#); [3] = # sequences; [8] = ncbi taxonomic classification; [9] = silva taxonomic classification
+        my %SILVATAX;
+        
+        open(SILVAIN1, "<$options{y}") or die "\n\nThere is no $options{y} file!!\n\n";
+        my @silvadata1 = <SILVAIN1>; close(SILVAIN1); shift(@silvadata1);
+        my $heads = shift(@silvadata1);
+        if ($heads !~ m/^sample name/)
+            {   die "\n\nSILVA export header location has changed and will break this program. Ask for modification.\n\n";
             }
-        close(ASVsToIG);
-	}
-
-	
-#Basic filtering of taxonomy to:
-#1) replace ;;;;;;;string with Environmental unknown
-#2) replace and double ;; with ;@@; for later trimming and detection
-#3) replace Eukarya;; with Environmental unknown
-
-foreach my $i (sort keys %TAXON)
-	{	my $taxastring = $TAXON{$i}{'taxastring'};
-		if ($taxastring =~ m/^;/)
-			{	$TAXON{$i}{'taxastring'} = "Environmental Unknown;@@;@@;@@;@@;@@;@@";
-				$taxastring = $TAXON{$i}{'taxastring'};
-			}
-		if ($taxastring =~ m/;;/)
-			{	my @splitstring = split(';', $taxastring);
-				if ($#splitstring == 6)
-					{	foreach my $j (0..$#splitstring)
-							{	if ($splitstring[$j] eq '')
-									{	$splitstring[$j] = "@@";
-										my $next = $j + 1;
-										foreach my $k ($next..$#splitstring)
-											{	$splitstring[$k] = "@@";
-											}
-										last;	
-									}
-							}
-						my $newgoodats = join(';', @splitstring);
-						if ($newgoodats !~ m/^Eukaryota;@/)
-							{	$TAXON{$i}{'taxastring'} = $newgoodats;
-							}
-						else {$TAXON{$i}{'taxastring'} = "Environmental Unknown;@@;@@;@@;@@;@@;@@";}
-					}
-                elsif ($#splitstring < 6) #TODO Think about this rare case more
-                    {   foreach my $j (0..6)
-							{	if (exists $splitstring[$j] && $splitstring[$j] eq '')
-									{	$splitstring[$j] = "@@";
-										my $next = $j + 1;
-										foreach my $k ($next..6)
-											{	$splitstring[$k] = "@@";
-											}
-										last;	
-									}
-                                elsif (exists $splitstring[$j] && $splitstring[$j] ne '')
-                                    {}
-                                else
-                                    {   $splitstring[$j] = "@@";
-										my $next = $j + 1;
-										foreach my $k ($next..6)
-											{	$splitstring[$k] = "@@";
-											}
-										last;	
-                                    }
-							}
-						my $newgoodats = join(';', @splitstring);
-						if ($newgoodats !~ m/^Eukaryota;@/)
-							{	$TAXON{$i}{'taxastring'} = $newgoodats;
-							}
-						else {$TAXON{$i}{'taxastring'} = "Environmental Unknown;@@;@@;@@;@@;@@;@@";}
+        foreach my $line (@silvadata1)
+            {	chomp($line);
+                my @split_line = split('\t', $line);
+                my $asv = $split_line[2];
+                chomp($asv);
+                my $ncbi_tax;
+                if ($split_line[8] ne "")
+                    {   $ncbi_tax = $split_line[8];
+                        $ncbi_tax =~ s/^ncbi\|.+\|.+\|//;
+                        $ncbi_tax =~ s/[^A-Za-z0-9; ]/_/g;    
                     }
-				else {die "\nYou forgot to load the reformatted taxonkit file with K/P/C/O/F/G/S only!\n\n";}
-			}
-	}
-
-#CHOOSE TAXONOMY for output
-open(OUT_MULTI, ">".$options{n}."_singleBlastHits_with_MULTItaxid.txt");
-print OUT_MULTI "ASV\tMulti_taxID_entry\tUSED\n";
-foreach my $i (sort keys %ASV)
-	{   my $passTaxTest = "FALSE";
-        if (exists $ASV{$i}{'taxid'})	#TEST exists taxonomic assignment for taxid
-		{	my $asv_taxid = $ASV{$i}{'taxid'};
-			my @tax_list;
-			if ($asv_taxid =~ m/\;/ && $asv_taxid =~ m/\,/)
-                {   my @multi = split(',', $asv_taxid);
-					my $totalMulti = scalar(@multi);
-                    my $totalSemi = 0;
-                    foreach my $j (@multi)
-						{	$j =~ s/\ //;
-							if ($j =~ m/\;/)
-								{   $totalSemi += 1;
-								}
-						}
-                    if ($totalSemi < $totalMulti) #purge semicolon hits to remove sequences with multiple potential taxonomies
-                        {   foreach my $j (@multi)
-                                {	$j =~ s/\ //;
-                                    unless ($j =~ m/\;/)
-                                        {	push(@tax_list, $j);
-                                        }
-                                }
-                        }
-                    elsif ($totalSemi == $totalMulti)
-                        {   foreach my $j (@multi)
-                                {	$j =~ s/\ //;
-                                    if ($j =~ m/\;/)
-                                        {	my @multipli = split(';', $j);
-                                            foreach my $k (@multipli)
-                                                {	push(@tax_list, $k);	
+                else {$ncbi_tax = "Unknown";}
+                my $silva_tax;
+                if ($split_line[9] ne "")
+                    {   $silva_tax = $split_line[9];
+                        $silva_tax =~ s/^silva\|.+\|.+\|//;
+                        $silva_tax =~ s/[^A-Za-z0-9; ]/_/g;
+                    }
+                else {$silva_tax = "Unknown";}
+                $SILVATAX{$asv}{'silva'} = $silva_tax;
+                $SILVATAX{$asv}{'ncbi'} = $ncbi_tax;
+                if ($split_line[3] > 1)
+                    {   $SILVATAX{$asv}{'multi'} = "TRUE";
+                    }
+                else
+                    {   $SILVATAX{$asv}{'multi'} = "FALSE";
+                    }
+            }
+        
+        #Clean up taxonomy
+        open(NCBI, ">ncbiTaxonomy_TOCLEANUP.txt");
+        foreach my $i (sort keys %SILVATAX)
+            {   my $ncbi = $SILVATAX{$i}{'ncbi'};
+                my @ncbi_taxa = split(';', $ncbi);
+                print NCBI "$i";
+                foreach my $j (@ncbi_taxa)
+                    {   print NCBI "\t$j"
+                    }
+                print NCBI "\n";
+            }
+        close(NCBI);
+        
+        print "\nEdit the NCBI taxonomy file (ncbiTaxonomy_TOCLEANUP.txt) to match a K/P/C/O/F/G/S architecture with tab delimiter\n";
+        print "Leave the FIRST column AS IS; NO NA's\n";
+        print "Rename to have _mod.txt at the end of the file name\n";
+        print "Once finished...press ENTER\n";
+        my $hold1 = <STDIN>;
+        
+        #import and set the NCBI taxonomy
+        open(NCBICLEAN, "<ncbiTaxonomy_TOCLEANUP_mod.txt") or die "\n\nThere is no ncbiTaxonomy_TOCLEANUP_mod.txt in the outdirectory!!\n\n";
+        my @ncbiclean = <NCBICLEAN>; close(NCBICLEAN);
+        foreach my $line (@ncbiclean)
+            {	chomp($line);
+                $line =~ s/ /\+/g;
+                $line =~ s/\t/\*/g;
+                $line =~ s/\r//;
+                $line =~ s/\s//;
+                $line =~ s/\+/ /g;
+                $line =~ s/\*/\t/g;
+                $line =~ s/\"//g;
+                my @split_line = split('\t', $line);
+                my $original_key = $split_line[0];
+                my @ntax;
+                foreach my $i (1..$#split_line)
+                    {   unless ($split_line[$i] eq "")
+                            {   push(@ntax, $split_line[$i]);
+                            }
+                    }
+                if (scalar @ntax <= 7)
+                    {   if (exists $SILVATAX{$original_key})
+                            {   my $newncbitax = join(';', @ntax);
+                                $SILVATAX{$original_key}{'cleaned_ncbi'} = $newncbitax;
+                            }
+                        else
+                            {   print "\nError matching taxonomy key string $original_key\n";
+                            }
+                    }
+                else
+                    {   if (scalar @ntax > 7)
+                            {   die "\n\nYour NCBI modified taxonomy has extra columns\n\n";}
+                    }
+            }
+        
+        foreach my $i (sort keys %SILVATAX)
+            {   unless (exists $SILVATAX{$i}{'cleaned_ncbi'})
+                    {   die "\n\nSome of the taxa (like $i) are missing a cleaned NCBI taxonomy\n\n";
+                    }
+            }
+        
+        
+        open(TAXCHOICES, ">silvangs_silvaTaxonomyChoices.txt");
+        
+        my %SOLVEDTAXA;
+        foreach my $i (sort keys %SILVATAX)
+            {   my $silva = $SILVATAX{$i}{'silva'};
+                my @silva_taxa = split(';', $silva);
+                my $newtax = "none";
+                if (exists $SOLVEDTAXA{$silva})
+                    {   $newtax = $SOLVEDTAXA{$silva};
+                    }
+                else
+                    {   if (scalar @silva_taxa <= 6)
+                            {   if ($silva_taxa[0] eq "Bacteria" || $silva_taxa[0] eq "Archaea")
+                                {   foreach my $j (0..$#silva_taxa)
+                                        {   unless ($j == 3)
+                                                {   if ($silva_taxa[$j] =~ m/ales$/)
+                                                        {   print "\nCheck taxa w/ order-stye name in incorrect column:\n";
+                                                            print TAXCHOICES "\nCheck taxa w/ order-stye name in incorrect column:\n";
+                                                            print "$silva\n";
+                                                            print TAXCHOICES "$silva\n";
+                                                            print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
+                                                            $newtax = <STDIN>;
+                                                            chomp($newtax);
+                                                            $SOLVEDTAXA{$silva} = $newtax;
+                                                            print TAXCHOICES "Chose:\n";
+                                                            print TAXCHOICES "$newtax\n";
+                                                            
+                                                        }
                                                 }
                                         }
-                                    else {push(@tax_list, $j);}
-                                }
-                        }
-                }
-            elsif ($asv_taxid =~ m/\;/ && $asv_taxid !~ m/\,/)
-                {   my @multi = split(';', $asv_taxid);
-                    foreach my $j (@multi)
-                        {   push(@tax_list, $j);   
-                        }
-                }
-            elsif ($asv_taxid =~ m/\,/ && $asv_taxid !~ m/\;/)
-                {   my @multi = split(',', $asv_taxid);
-					foreach my $j (@multi)
-						{	$j =~ s/\ //;
-							push(@tax_list, $j);
-						}
-                }
-            else {push(@tax_list, $asv_taxid);}
-            my @new_tax_list;
-            foreach my $keepTaxHits (@tax_list)
-                {   if (exists $TAXON{$keepTaxHits})
-                        {   push(@new_tax_list, $keepTaxHits);
-                        }
-                }
-            @tax_list = @new_tax_list;
-            if (scalar @tax_list > 0)
-                {   $passTaxTest = "TRUE";
-                }
-        }
-        if (exists $ASV{$i}{'taxid'} && $passTaxTest eq "TRUE")	#CREATE list of taxids to consider
-		{	my $asv_taxid = $ASV{$i}{'taxid'};
-			my @tax_list;
-            if ($asv_taxid =~ m/\;/ && $asv_taxid =~ m/\,/)
-                {   my @multi = split(',', $asv_taxid);
-					my $totalMulti = scalar(@multi);
-                    my $totalSemi = 0;
-                    foreach my $j (@multi)
-						{	$j =~ s/\ //;
-							if ($j =~ m/\;/)
-								{   $totalSemi += 1;
-								}
-						}
-                    if ($totalSemi < $totalMulti) #purge semicolon hits to remove sequences with multiple potential taxonomies
-                        {   foreach my $j (@multi)
-                                {	$j =~ s/\ //;
-                                    unless ($j =~ m/\;/)
-                                        {	push(@tax_list, $j);
-                                        }
-                                }
-                            print OUT_MULTI "$i\t$asv_taxid\tFALSE\n";
-                        }
-                    elsif ($totalSemi == $totalMulti)
-                        {   foreach my $j (@multi)
-                                {	$j =~ s/\ //;
-                                    if ($j =~ m/\;/)
-                                        {	my @multipli = split(';', $j);
-                                            foreach my $k (@multipli)
-                                                {	push(@tax_list, $k);	
+                                    foreach my $j (0..$#silva_taxa)
+                                        {   unless ($j == 4)
+                                                {   if ($silva_taxa[$j] =~ m/aceae$/)
+                                                        {   print "\nCheck taxa w/ family-stye name in incorrect column:\n";
+                                                            print TAXCHOICES "\nCheck taxa w/ family-stye name in incorrect column:\n";
+                                                            print "$silva\n";
+                                                            print TAXCHOICES "$silva\n";
+                                                            print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
+                                                            $newtax = <STDIN>;
+                                                            chomp($newtax);
+                                                            $SOLVEDTAXA{$silva} = $newtax;
+                                                            print TAXCHOICES "Chose:\n";
+                                                            print TAXCHOICES "$newtax\n";
+                                                        }
                                                 }
                                         }
-                                    else {push(@tax_list, $j);}
+                                }
+                            else
+                                {   print "\nCheck lineage:\n";
+                                    print TAXCHOICES "\nCheck lineage:\n";
+                                    print "$silva\n";
+                                    print TAXCHOICES "$silva\n";
+                                    print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
+                                    $newtax = <STDIN>;
+                                    chomp($newtax);
+                                    $SOLVEDTAXA{$silva} = $newtax;
+                                    print TAXCHOICES "Chose:\n";
+                                    print TAXCHOICES "$newtax\n";
+                                }
+                            }
+                        else
+                            {   if ($silva_taxa[0] eq "Bacteria" || $silva_taxa[0] eq "Archaea")
+                                    {   print "\nCheck taxa w/ larger than expected hierarchy for Bacteria/Archaea:\n";
+                                        print TAXCHOICES "\nCheck taxa w/ larger than expected hierarchy for Bacteria/Archaea:\n";
+                                        print "$silva\n";
+                                        print TAXCHOICES "$silva\n";
+                                        print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
+                                        $newtax = <STDIN>;
+                                        chomp($newtax);
+                                        $SOLVEDTAXA{$silva} = $newtax;
+                                        print TAXCHOICES "Chose:\n";
+                                        print TAXCHOICES "$newtax\n";
+                                    }
+                                elsif ($silva_taxa[0] eq "Eukaryota")
+                                    {   print "\nCheck Eukaryota lineage:\n";
+                                        print TAXCHOICES "\nCheck Eukaryota lineage:\n";
+                                        print "$silva\n";
+                                        print TAXCHOICES "$silva\n";
+                                        print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
+                                        $newtax = <STDIN>;
+                                        chomp($newtax);
+                                        $SOLVEDTAXA{$silva} = $newtax;
+                                        print TAXCHOICES "Chose:\n";
+                                        print TAXCHOICES "$newtax\n";
+                                    }
+                                else
+                                    {   print "\nCheck unknown lineage:\n";
+                                        print TAXCHOICES "\nCheck unknown lineage:\n";
+                                        print "$silva\n";
+                                        print TAXCHOICES "$silva\n";
+                                        print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
+                                        print "If you wish to remove this taxa, simply press enter\n";
+                                        $newtax = <STDIN>;
+                                        chomp($newtax);
+                                        $SOLVEDTAXA{$silva} = $newtax;
+                                        print TAXCHOICES "Chose:\n";
+                                        print TAXCHOICES "$newtax\n";
+                                    }
+                            }
+                    }
+                my $final_silva_taxa;
+                if ($newtax eq "none")
+                    {   $final_silva_taxa = join(';', @silva_taxa);
+                        $final_silva_taxa =~ s/\;uncultured$//;
+                    }
+                elsif ($newtax eq "")
+                    {   $final_silva_taxa = "DELETE";
+                    }
+                else
+                    {   my @splitnew = split(';', $newtax);
+                        @silva_taxa = @splitnew;
+                        $final_silva_taxa = join(';', @silva_taxa);
+                    }
+                $SILVATAX{$i}{'cleaned_silva'} = $final_silva_taxa;
+            }
+        close(TAXCHOICES);
+        
+        foreach my $i (sort keys %SILVATAX)
+            {   unless (exists $SILVATAX{$i}{'cleaned_silva'})
+                    {   die "\n\nSome of the taxa (like $i) are missing a cleaned SILVA taxonomy\n\n";
+                    }
+            }
+        
+        foreach my $i (sort keys %SILVATAX)
+            {   if ($SILVATAX{$i}{'cleaned_silva'} eq "DELETE")
+                    {   delete $SILVATAX{$i};}
+            }
+        
+        
+        
+        #Populate $TAXA{$i}{'cleaned_merged'} filling in Euk assignments from NCBI
+        open(EUKMERGE, ">merged_NCBI_SILVA_Eukaryotes_info.txt");
+        print EUKMERGE "ASV\tOriginalSILVA\tNewMergedAssignmet\n";
+        foreach my $i (sort keys %SILVATAX)
+            {   my $ncbi_clean = $SILVATAX{$i}{'cleaned_ncbi'};
+                my $silva_clean = $SILVATAX{$i}{'cleaned_silva'};
+                if ($silva_clean =~ m/Bacteria\;Cyanobacteria\;Cyanobacteriia\;Chloroplast/)
+                    {   print EUKMERGE "$i\t";
+                        my @split_ncbi = split(';', $ncbi_clean);
+                        if ($split_ncbi[0] eq "Eukaryota")
+                            {   $SILVATAX{$i}{'cleaned_merged'} = $ncbi_clean;
+                                print EUKMERGE "$silva_clean\t$ncbi_clean\n";
+                            }
+                        else
+                            {   $SILVATAX{$i}{'cleaned_merged'} = "Eukaryota";
+                                print EUKMERGE "$silva_clean\tEukaryota;Chloroplast\n";
+                            }
+                    }
+                elsif ($silva_clean =~ m/Bacteria\;Proteobacteria\;Alphaproteobacteria\;Rickettsiales\;Mitochondria/)
+                    {   print EUKMERGE "$i\t";
+                        my @split_ncbi = split(';', $ncbi_clean);
+                        if ($split_ncbi[0] eq "Eukaryota")
+                            {   $SILVATAX{$i}{'cleaned_merged'} = $ncbi_clean;
+                                print EUKMERGE "$silva_clean\t$ncbi_clean\n";
+                            }
+                        else
+                            {   $SILVATAX{$i}{'cleaned_merged'} = "Eukaryota";
+                                print EUKMERGE "$silva_clean\tEukaryota;Mitochondria\n";
+                            }
+                    }
+                else
+                    {   $SILVATAX{$i}{'cleaned_merged'} = $silva_clean;
+                    }
+            }
+        close(EUKMERGE);
+        
+        open(SILVAIN2, "<$options{z}") or die "\n\nThere is no $options{z} file!!\n\n";
+        my @silvadata2 = <SILVAIN2>; close(SILVAIN2);
+        my %SILVACLUST;
+        my $repseq;
+        foreach my $line (@silvadata2)
+            {   if ($line =~ m/^>ASV/)
+                    {   $line =~ m/^>(ASV_[0-9]+)/;
+                        $repseq = $1;
+                    }
+                else
+                    {   $line =~ m/.+>(ASV_[0-9]+).+/;
+                        my $clustermember = $1;
+                        unless ($clustermember eq $repseq)
+                            {   $SILVACLUST{$repseq}{'other'} .= $clustermember.";";
+                            }
+                    }
+            }
+        foreach my $i (sort keys %SILVACLUST)
+            {   my $otherasv = $SILVACLUST{$i}{'other'};
+                my @otherASVs = split(';', $otherasv);
+                foreach my $j (@otherASVs)
+                    {   if (exists $SILVATAX{$i}{'cleaned_merged'})
+                            {   $SILVATAX{$j}{'cleaned_merged'} = $SILVATAX{$i}{'cleaned_merged'};
+                            }
+                    }
+            }
+        
+        foreach my $i (sort keys %ASV)
+            {   if (exists $SILVATAX{$i}{'cleaned_merged'})
+                    {   $ASV{$i}{'finaltaxachoice'} = $SILVATAX{$i}{'cleaned_merged'};
+                    }
+                else
+                    {   $ASV{$i}{'finaltaxachoice'} = "Unknown";
+                    }
+            }
+    }
+    
+else
+    {   #IMPORT blast reformatted taxonomy output
+        open(IN2, "<$options{s}") or die "\n\nThere is no $options{s} file!!\n\n";
+        my @dada_dat = <IN2>; close(IN2); shift(@dada_dat);
+        foreach my $line (@dada_dat)
+            {	chomp($line);
+                my @data = split('\t', $line);
+                my $blah = $data[0]; chomp($blah);
+                $ASV{$blah}{'perchit'} = $data[1];                                                                         
+                $ASV{$blah}{'lenhit'} = $data[2];
+                $ASV{$blah}{'taxid'} = $data[3];
+                $ASV{$blah}{'correction'} = $data[5];
+                my $filterinfo = $options{f};
+                my @splitfilter = split(',', $filterinfo);
+                if ($data[1] >= $splitfilter[0])
+                    {	$ASV{$blah}{'confidence'} = "SPECIES";	
+                    }
+                if ($data[1] < $splitfilter[0] && $data[1] >= $splitfilter[1])
+                    {	$ASV{$blah}{'confidence'} = "GENUS";
+                    }
+                if ($data[1] < $splitfilter[1] && $data[1] >= $splitfilter[2])
+                    {	$ASV{$blah}{'confidence'} = "FAMILY";
+                    }
+                if ($data[1] < $splitfilter[2] && $data[1] >= $splitfilter[3])
+                    {	$ASV{$blah}{'confidence'} = "ORDER";
+                    }
+                if ($data[1] < $splitfilter[3] && $data[1] >= $splitfilter[4])
+                    {	$ASV{$blah}{'confidence'} = "CLASS";
+                    }
+                if ($data[1] < $splitfilter[4] && $data[1] >= $splitfilter[5])
+                    {	$ASV{$blah}{'confidence'} = "PHYLUM";
+                    }
+                if ($data[1] < $splitfilter[5])
+                    {	$ASV{$blah}{'confidence'} = "NOCONFIDENCE";
+                    }
+            }
+        
+        #IMPORT reformatted taxonkit taxonomy out
+        open(IN3, "<$options{t}") or die "\n\nThere is no $options{t} file!!\n\n";
+        my @taxon_dat = <IN3>; close(IN3);
+        foreach my $lines (@taxon_dat)
+            {	chomp($lines);
+                my @taxon_split = split('\t', $lines);
+                my $taxonclean = $taxon_split[0];
+                chomp($taxonclean);
+                my $cleantaxastring = $taxon_split[1];
+                chomp($cleantaxastring);
+                $TAXON{$taxonclean}{'taxastring'} = $cleantaxastring;
+            }
+        
+        #IMPORT common names
+        open(INT, "<$options{c}") or die "\n\nThere is no $options{c} file!!\n\n";
+        @commondat = <INT>; close(INT);
+        foreach my $linet (@commondat)
+            {	chomp($linet);
+                my @common_split = split('\t', $linet);
+                my $taxid_clean = $common_split[0];
+                chomp($taxid_clean);
+                my $common_name_clean = $common_split[2];
+                chomp($common_name_clean);
+                if (exists $TAXON{$taxid_clean})
+                    {	$TAXON{$taxid_clean}{'common_name'} = $common_name_clean;
+                    }
+            }
+            
+        #IMPORT List of ASVs to ingore in output
+        my @ignore_array;
+        my $output_ignore_string;
+        if ($options{d})
+            {	open(IGNORE, "<$options{d}") or die "\n\nThere is no $options{d} file!!\n\n";
+                my @igdat = <IGNORE>; close(IGNORE);
+                foreach my $linei (@igdat)
+                    {	chomp($linei);
+                        push(@ignore_array, $linei);
+                    }
+                foreach my $i (@ignore_array)
+                    {	$ignore_ASV_string .= "_".$i."_";
+                        $output_ignore_string .= $i.";";
+                    }
+                my @ignoreASVarray = split(';', $output_ignore_string);
+                open(ASVsToIG, ">".$options{n}."_ASVs_to_IGNORE.txt");
+                foreach my $igasv (@ignoreASVarray)
+                    {   chomp($igasv);
+                        print ASVsToIG "$igasv\n";
+                    }
+                close(ASVsToIG);
+            }
+        
+            
+        #Basic filtering of taxonomy to:
+        #1) replace ;;;;;;;string with Environmental unknown
+        #2) replace and double ;; with ;@@; for later trimming and detection
+        #3) replace Eukarya;; with Environmental unknown
+        
+        foreach my $i (sort keys %TAXON)
+            {	my $taxastring = $TAXON{$i}{'taxastring'};
+                if ($taxastring =~ m/^;/)
+                    {	$TAXON{$i}{'taxastring'} = "Environmental Unknown;@@;@@;@@;@@;@@;@@";
+                        $taxastring = $TAXON{$i}{'taxastring'};
+                    }
+                if ($taxastring =~ m/;;/)
+                    {	my @splitstring = split(';', $taxastring);
+                        if ($#splitstring == 6)
+                            {	foreach my $j (0..$#splitstring)
+                                    {	if ($splitstring[$j] eq '')
+                                            {	$splitstring[$j] = "@@";
+                                                my $next = $j + 1;
+                                                foreach my $k ($next..$#splitstring)
+                                                    {	$splitstring[$k] = "@@";
+                                                    }
+                                                last;	
+                                            }
+                                    }
+                                my $newgoodats = join(';', @splitstring);
+                                if ($newgoodats !~ m/^Eukaryota;@/)
+                                    {	$TAXON{$i}{'taxastring'} = $newgoodats;
+                                    }
+                                else {$TAXON{$i}{'taxastring'} = "Environmental Unknown;@@;@@;@@;@@;@@;@@";}
+                            }
+                        elsif ($#splitstring < 6) #TODO Think about this rare case more
+                            {   foreach my $j (0..6)
+                                    {	if (exists $splitstring[$j] && $splitstring[$j] eq '')
+                                            {	$splitstring[$j] = "@@";
+                                                my $next = $j + 1;
+                                                foreach my $k ($next..6)
+                                                    {	$splitstring[$k] = "@@";
+                                                    }
+                                                last;	
+                                            }
+                                        elsif (exists $splitstring[$j] && $splitstring[$j] ne '')
+                                            {}
+                                        else
+                                            {   $splitstring[$j] = "@@";
+                                                my $next = $j + 1;
+                                                foreach my $k ($next..6)
+                                                    {	$splitstring[$k] = "@@";
+                                                    }
+                                                last;	
+                                            }
+                                    }
+                                my $newgoodats = join(';', @splitstring);
+                                if ($newgoodats !~ m/^Eukaryota;@/)
+                                    {	$TAXON{$i}{'taxastring'} = $newgoodats;
+                                    }
+                                else {$TAXON{$i}{'taxastring'} = "Environmental Unknown;@@;@@;@@;@@;@@;@@";}
+                            }
+                        else {die "\nYou forgot to load the reformatted taxonkit file with K/P/C/O/F/G/S only!\n\n";}
+                    }
+            }
+        
+        #CHOOSE TAXONOMY for output
+        open(OUT_MULTI, ">".$options{n}."_singleBlastHits_with_MULTItaxid.txt");
+        print OUT_MULTI "ASV\tMulti_taxID_entry\tUSED\n";
+        foreach my $i (sort keys %ASV)
+            {   my $passTaxTest = "FALSE";
+                if (exists $ASV{$i}{'taxid'})	#TEST exists taxonomic assignment for taxid
+                {	my $asv_taxid = $ASV{$i}{'taxid'};
+                    my @tax_list;
+                    if ($asv_taxid =~ m/\;/ && $asv_taxid =~ m/\,/)
+                        {   my @multi = split(',', $asv_taxid);
+                            my $totalMulti = scalar(@multi);
+                            my $totalSemi = 0;
+                            foreach my $j (@multi)
+                                {	$j =~ s/\ //;
+                                    if ($j =~ m/\;/)
+                                        {   $totalSemi += 1;
+                                        }
+                                }
+                            if ($totalSemi < $totalMulti) #purge semicolon hits to remove sequences with multiple potential taxonomies
+                                {   foreach my $j (@multi)
+                                        {	$j =~ s/\ //;
+                                            unless ($j =~ m/\;/)
+                                                {	push(@tax_list, $j);
+                                                }
+                                        }
+                                }
+                            elsif ($totalSemi == $totalMulti)
+                                {   foreach my $j (@multi)
+                                        {	$j =~ s/\ //;
+                                            if ($j =~ m/\;/)
+                                                {	my @multipli = split(';', $j);
+                                                    foreach my $k (@multipli)
+                                                        {	push(@tax_list, $k);	
+                                                        }
+                                                }
+                                            else {push(@tax_list, $j);}
+                                        }
+                                }
+                        }
+                    elsif ($asv_taxid =~ m/\;/ && $asv_taxid !~ m/\,/)
+                        {   my @multi = split(';', $asv_taxid);
+                            foreach my $j (@multi)
+                                {   push(@tax_list, $j);   
+                                }
+                        }
+                    elsif ($asv_taxid =~ m/\,/ && $asv_taxid !~ m/\;/)
+                        {   my @multi = split(',', $asv_taxid);
+                            foreach my $j (@multi)
+                                {	$j =~ s/\ //;
+                                    push(@tax_list, $j);
+                                }
+                        }
+                    else {push(@tax_list, $asv_taxid);}
+                    my @new_tax_list;
+                    foreach my $keepTaxHits (@tax_list)
+                        {   if (exists $TAXON{$keepTaxHits})
+                                {   push(@new_tax_list, $keepTaxHits);
+                                }
+                        }
+                    @tax_list = @new_tax_list;
+                    if (scalar @tax_list > 0)
+                        {   $passTaxTest = "TRUE";
+                        }
+                }
+                if (exists $ASV{$i}{'taxid'} && $passTaxTest eq "TRUE")	#CREATE list of taxids to consider
+                {	my $asv_taxid = $ASV{$i}{'taxid'};
+                    my @tax_list;
+                    if ($asv_taxid =~ m/\;/ && $asv_taxid =~ m/\,/)
+                        {   my @multi = split(',', $asv_taxid);
+                            my $totalMulti = scalar(@multi);
+                            my $totalSemi = 0;
+                            foreach my $j (@multi)
+                                {	$j =~ s/\ //;
+                                    if ($j =~ m/\;/)
+                                        {   $totalSemi += 1;
+                                        }
+                                }
+                            if ($totalSemi < $totalMulti) #purge semicolon hits to remove sequences with multiple potential taxonomies
+                                {   foreach my $j (@multi)
+                                        {	$j =~ s/\ //;
+                                            unless ($j =~ m/\;/)
+                                                {	push(@tax_list, $j);
+                                                }
+                                        }
+                                    print OUT_MULTI "$i\t$asv_taxid\tFALSE\n";
+                                }
+                            elsif ($totalSemi == $totalMulti)
+                                {   foreach my $j (@multi)
+                                        {	$j =~ s/\ //;
+                                            if ($j =~ m/\;/)
+                                                {	my @multipli = split(';', $j);
+                                                    foreach my $k (@multipli)
+                                                        {	push(@tax_list, $k);	
+                                                        }
+                                                }
+                                            else {push(@tax_list, $j);}
+                                        }
+                                    print OUT_MULTI "$i\t$asv_taxid\tTRUE\n";
+                                }
+                        }
+                    elsif ($asv_taxid =~ m/\;/ && $asv_taxid !~ m/\,/)
+                        {   my @multi = split(';', $asv_taxid);
+                            foreach my $j (@multi)
+                                {   push(@tax_list, $j);   
                                 }
                             print OUT_MULTI "$i\t$asv_taxid\tTRUE\n";
                         }
-                }
-            elsif ($asv_taxid =~ m/\;/ && $asv_taxid !~ m/\,/)
-                {   my @multi = split(';', $asv_taxid);
-                    foreach my $j (@multi)
-                        {   push(@tax_list, $j);   
-                        }
-                    print OUT_MULTI "$i\t$asv_taxid\tTRUE\n";
-                }
-            elsif ($asv_taxid =~ m/\,/ && $asv_taxid !~ m/\;/)
-                {   my @multi = split(',', $asv_taxid);
-					foreach my $j (@multi)
-						{	$j =~ s/\ //;
-							push(@tax_list, $j);
-						}
-                }
-			else {push(@tax_list, $asv_taxid);}
-            my @new_tax_list;
-            foreach my $keepTaxHits (@tax_list)
-                {   if (exists $TAXON{$keepTaxHits})
-                        {   push(@new_tax_list, $keepTaxHits);
-                        }
-                }
-            @tax_list = @new_tax_list;
-			my $choiceindicator = 0;
-			my $commonnameYES = 0;
-			my $desiredcommonname;
-			my $choice; # SET the first taxid in the list as the first choice
-			if ($ASV{$i}{'confidence'} eq "SPECIES") # SET depth of first choice based on confidence (%)
-				{   my $tap = $TAXON{$tax_list[0]}{'taxastring'};
-					if ($tap !~ m/@@/)
-						{	$choice = $TAXON{$tax_list[0]}{'taxastring'};
-							$choiceindicator = 1;
-							if (exists $TAXON{$tax_list[0]}{'common_name'})
-								{	$commonnameYES = 1;
-									$desiredcommonname = $TAXON{$tax_list[0]}{'common_name'};
-								}
-						}
-					else
-						{	my $newbie = $TAXON{$tax_list[0]}{'taxastring'};
-							my @split_newbie = split(';', $newbie);
-							my @pleasework;
-							foreach my $position (0..$#split_newbie)
-								{	if ($split_newbie[$position] eq "@@")
-										{	last;
-										}
-									else {
-										push(@pleasework, $split_newbie[$position]);
-									}	
-								}
-							my $newwithout = join(';', @pleasework);
-							$choice = $newwithout;
-						}
-				}
-            elsif ($ASV{$i}{'confidence'} eq "NOCONFIDENCE")
-				{	$choice = "Unknown";
-				}
-            else
-                {   my $firstchoice = $TAXON{$tax_list[0]}{'taxastring'};
-					chomp($firstchoice);
-					my @splitmodtax = split(';', $firstchoice);
-					my @conflist = qw | GENUS FAMILY ORDER CLASS PHYLUM |;
-                    my $numpops;
-                    foreach my $conf (0..$#conflist)
-                        {   if ($ASV{$i}{'confidence'} eq $conflist[$conf])
-                                {   $numpops = $conf;
+                    elsif ($asv_taxid =~ m/\,/ && $asv_taxid !~ m/\;/)
+                        {   my @multi = split(',', $asv_taxid);
+                            foreach my $j (@multi)
+                                {	$j =~ s/\ //;
+                                    push(@tax_list, $j);
                                 }
                         }
-                    foreach my $popnum (0..$numpops)
-                        {   pop(@splitmodtax);
+                    else {push(@tax_list, $asv_taxid);}
+                    my @new_tax_list;
+                    foreach my $keepTaxHits (@tax_list)
+                        {   if (exists $TAXON{$keepTaxHits})
+                                {   push(@new_tax_list, $keepTaxHits);
+                                }
                         }
-                    if ($splitmodtax[$#splitmodtax] ne "@@")
-						{	my $newmodtax = join(';', @splitmodtax);
-							$choice = $newmodtax;
-							$choiceindicator = 1;
-						}
-					else
-						{	my @pleasework;
-							foreach my $position (0..$#splitmodtax)
-								{	if ($splitmodtax[$position] eq "@@")
-										{	last;
-										}
-									else {
-										push(@pleasework, $splitmodtax[$position]);
-									}	
-								}
-							my $newwithout = join(';', @pleasework);
-							$choice = $newwithout;
-						}
-                }
-			
-			if ($#tax_list > 0) # SET COMPARISON taxonomy if taxid list has more than one
-				{	foreach my $heck (1..$#tax_list)
-						{	my $compare;
-							my $commonnameCOMP = 0;
-							my $compindicator = 0;
-							if ($ASV{$i}{'confidence'} eq "SPECIES")
-								{	my $tap = $TAXON{$tax_list[$heck]}{'taxastring'};
-									if ($tap !~ m/@@/)
-										{	$compare = $TAXON{$tax_list[$heck]}{'taxastring'};
-											$compindicator = 1;
-											if (exists $TAXON{$tax_list[$heck]}{'common_name'})
-												{	$commonnameCOMP = 1;
-												}
-										}
-									else
-										{	if ($choiceindicator == 0)	# any ;; would end up here
-												{	my $newbie = $TAXON{$tax_list[$heck]}{'taxastring'};
-													my @split_newbie = split(';', $newbie);
-													my @pleasework;
-													foreach my $position (0..$#split_newbie)
-														{	if ($split_newbie[$position] eq "@@")
-																{	last;
-																}
-															else {
-																push(@pleasework, $split_newbie[$position]);
-															}	
-														}
-													my $newwithout = join(';', @pleasework);
-													$compare = $newwithout;
-												}	
-											if ($choiceindicator == 1)	# only if no wonky tax assignment
-												{	$compare = $choice;
-												}
-											
-										}
-								}
-                            elsif ($ASV{$i}{'confidence'} eq "NOCONFIDENCE")
-								{	$compare = "Unknown";
-								}
+                    @tax_list = @new_tax_list;
+                    my $choiceindicator = 0;
+                    my $commonnameYES = 0;
+                    my $desiredcommonname;
+                    my $choice; # SET the first taxid in the list as the first choice
+                    if ($ASV{$i}{'confidence'} eq "SPECIES") # SET depth of first choice based on confidence (%)
+                        {   my $tap = $TAXON{$tax_list[0]}{'taxastring'};
+                            if ($tap !~ m/@@/)
+                                {	$choice = $TAXON{$tax_list[0]}{'taxastring'};
+                                    $choiceindicator = 1;
+                                    if (exists $TAXON{$tax_list[0]}{'common_name'})
+                                        {	$commonnameYES = 1;
+                                            $desiredcommonname = $TAXON{$tax_list[0]}{'common_name'};
+                                        }
+                                }
                             else
-                                {   my $firstchoice = $TAXON{$tax_list[$heck]}{'taxastring'};
-									chomp($firstchoice);
-									my @splitmodtax = split(';', $firstchoice);
-									my @conflist = qw | GENUS FAMILY ORDER CLASS PHYLUM |;
-                                    my $numpops;
-                                    foreach my $conf (0..$#conflist)
-                                        {   if ($ASV{$i}{'confidence'} eq $conflist[$conf])
-                                                {   $numpops = $conf;
+                                {	my $newbie = $TAXON{$tax_list[0]}{'taxastring'};
+                                    my @split_newbie = split(';', $newbie);
+                                    my @pleasework;
+                                    foreach my $position (0..$#split_newbie)
+                                        {	if ($split_newbie[$position] eq "@@")
+                                                {	last;
+                                                }
+                                            else {
+                                                push(@pleasework, $split_newbie[$position]);
+                                            }	
+                                        }
+                                    my $newwithout = join(';', @pleasework);
+                                    $choice = $newwithout;
+                                }
+                        }
+                    elsif ($ASV{$i}{'confidence'} eq "NOCONFIDENCE")
+                        {	$choice = "Unknown";
+                        }
+                    else
+                        {   my $firstchoice = $TAXON{$tax_list[0]}{'taxastring'};
+                            chomp($firstchoice);
+                            my @splitmodtax = split(';', $firstchoice);
+                            my @conflist = qw | GENUS FAMILY ORDER CLASS PHYLUM |;
+                            my $numpops;
+                            foreach my $conf (0..$#conflist)
+                                {   if ($ASV{$i}{'confidence'} eq $conflist[$conf])
+                                        {   $numpops = $conf;
+                                        }
+                                }
+                            foreach my $popnum (0..$numpops)
+                                {   pop(@splitmodtax);
+                                }
+                            if ($splitmodtax[$#splitmodtax] ne "@@")
+                                {	my $newmodtax = join(';', @splitmodtax);
+                                    $choice = $newmodtax;
+                                    $choiceindicator = 1;
+                                }
+                            else
+                                {	my @pleasework;
+                                    foreach my $position (0..$#splitmodtax)
+                                        {	if ($splitmodtax[$position] eq "@@")
+                                                {	last;
+                                                }
+                                            else {
+                                                push(@pleasework, $splitmodtax[$position]);
+                                            }	
+                                        }
+                                    my $newwithout = join(';', @pleasework);
+                                    $choice = $newwithout;
+                                }
+                        }
+                    
+                    if ($#tax_list > 0) # SET COMPARISON taxonomy if taxid list has more than one
+                        {	foreach my $heck (1..$#tax_list)
+                                {	my $compare;
+                                    my $commonnameCOMP = 0;
+                                    my $compindicator = 0;
+                                    if ($ASV{$i}{'confidence'} eq "SPECIES")
+                                        {	my $tap = $TAXON{$tax_list[$heck]}{'taxastring'};
+                                            if ($tap !~ m/@@/)
+                                                {	$compare = $TAXON{$tax_list[$heck]}{'taxastring'};
+                                                    $compindicator = 1;
+                                                    if (exists $TAXON{$tax_list[$heck]}{'common_name'})
+                                                        {	$commonnameCOMP = 1;
+                                                        }
+                                                }
+                                            else
+                                                {	if ($choiceindicator == 0)	# any ;; would end up here
+                                                        {	my $newbie = $TAXON{$tax_list[$heck]}{'taxastring'};
+                                                            my @split_newbie = split(';', $newbie);
+                                                            my @pleasework;
+                                                            foreach my $position (0..$#split_newbie)
+                                                                {	if ($split_newbie[$position] eq "@@")
+                                                                        {	last;
+                                                                        }
+                                                                    else {
+                                                                        push(@pleasework, $split_newbie[$position]);
+                                                                    }	
+                                                                }
+                                                            my $newwithout = join(';', @pleasework);
+                                                            $compare = $newwithout;
+                                                        }	
+                                                    if ($choiceindicator == 1)	# only if no wonky tax assignment
+                                                        {	$compare = $choice;
+                                                        }
+                                                    
                                                 }
                                         }
-                                    foreach my $popnum (0..$numpops)
-                                        {   pop(@splitmodtax);
+                                    elsif ($ASV{$i}{'confidence'} eq "NOCONFIDENCE")
+                                        {	$compare = "Unknown";
                                         }
-                                    if ($splitmodtax[$#splitmodtax] ne "@@")
-										{	my $newmodtax = join(';', @splitmodtax);
-											$compare = $newmodtax;
-											$compindicator = 1;
-										}
-									else
-										{	if ($choiceindicator == 0)
-												{	my @pleasework;
-													foreach my $position (0..$#splitmodtax)
-														{	if ($splitmodtax[$position] eq "@@")
-																{	last;
-																}
-															else {
-																push(@pleasework, $splitmodtax[$position]);
-															}	
-														}
-													my $newwithout = join(';', @pleasework);
-													$compare = $newwithout;
-												}
-											if ($choiceindicator == 1)
-												{	$compare = $choice;
-												}
-										}
+                                    else
+                                        {   my $firstchoice = $TAXON{$tax_list[$heck]}{'taxastring'};
+                                            chomp($firstchoice);
+                                            my @splitmodtax = split(';', $firstchoice);
+                                            my @conflist = qw | GENUS FAMILY ORDER CLASS PHYLUM |;
+                                            my $numpops;
+                                            foreach my $conf (0..$#conflist)
+                                                {   if ($ASV{$i}{'confidence'} eq $conflist[$conf])
+                                                        {   $numpops = $conf;
+                                                        }
+                                                }
+                                            foreach my $popnum (0..$numpops)
+                                                {   pop(@splitmodtax);
+                                                }
+                                            if ($splitmodtax[$#splitmodtax] ne "@@")
+                                                {	my $newmodtax = join(';', @splitmodtax);
+                                                    $compare = $newmodtax;
+                                                    $compindicator = 1;
+                                                }
+                                            else
+                                                {	if ($choiceindicator == 0)
+                                                        {	my @pleasework;
+                                                            foreach my $position (0..$#splitmodtax)
+                                                                {	if ($splitmodtax[$position] eq "@@")
+                                                                        {	last;
+                                                                        }
+                                                                    else {
+                                                                        push(@pleasework, $splitmodtax[$position]);
+                                                                    }	
+                                                                }
+                                                            my $newwithout = join(';', @pleasework);
+                                                            $compare = $newwithout;
+                                                        }
+                                                    if ($choiceindicator == 1)
+                                                        {	$compare = $choice;
+                                                        }
+                                                }
+                                        }
+                                        
+                                    my @new_choice;
+                                    #print "$choice\t$compare\n";
+                                    unless ($compindicator == 1 && $choiceindicator == 0)
+                                        {
+                                            if ($choice =~ m/;/ && $compare =~ m/;/)
+                                                {	my @choice_array = split(';', $choice);
+                                                    my @compare_array = split(';', $compare);
+                                                    foreach my $s (0..$#choice_array)
+                                                        {	if (exists $compare_array[$s])
+                                                                {	if ($choice_array[$s] eq $compare_array[$s])
+                                                                        {push(@new_choice, $choice_array[$s]);
+                                                                        }
+                                                                    else {last;}
+                                                                }
+                                                        }
+                                                }
+                                            if ($choice =~ m/;/ && $compare !~ m/;/)
+                                                {	my @choice_array = split(';', $choice);
+                                                    my @compare_array;
+                                                    push(@compare_array,$compare);
+                                                    foreach my $s (0)
+                                                        {	if ($choice_array[$s] eq $compare_array[$s])
+                                                                {push(@new_choice, $choice_array[$s]);
+                                                                }
+                                                            else {last;}
+                                                        }
+                                                }
+                                            if ($choice !~ m/;/ && $compare =~ m/;/)
+                                                {	my @choice_array;
+                                                    push(@choice_array, $choice);
+                                                    my @compare_array = split(';', $compare);
+                                                    foreach my $s (0)
+                                                        {	if ($choice_array[$s] eq $compare_array[$s])
+                                                                {push(@new_choice, $choice_array[$s]);
+                                                                }
+                                                            else {last;}
+                                                        }
+                                                }
+                                            if ($choice !~ m/;/ && $compare !~ m/;/)
+                                                {	if ($choice eq $compare)
+                                                        {	push(@new_choice, $choice);
+                                                        }
+                                                
+                                                }
+                                            if (scalar(@new_choice) == 0)
+                                                {$choice = "Unknown";}
+                                            else {	$choice = join(';', @new_choice);
+                                                if ($#new_choice != 6)
+                                                    {	$commonnameYES = 0;
+                                                    }
+                                                if ($#new_choice == 6)
+                                                    {	if ($commonnameCOMP == 1 && $commonnameYES == 1)
+                                                            {	my $choice_common = $desiredcommonname;
+                                                                my $compare_common = $TAXON{$tax_list[$heck]}{'common_name'};
+                                                                if ($choice_common ne $compare_common)
+                                                                    {	$commonnameYES = 0;
+                                                                    }
+                                                                
+                                                            }
+                                                        if ($commonnameCOMP == 1 && $commonnameYES == 0)
+                                                            {	$desiredcommonname = $TAXON{$tax_list[$heck]}{'common_name'};
+                                                                $commonnameYES = 1;
+                                                            }
+                                                    }
+                                                  }
+                                        }
+                                    if ($compindicator == 1 && $choiceindicator == 0)
+                                        {	$choice = $compare;
+                                            $choiceindicator = 1;
+                                            if ($commonnameCOMP == 1)
+                                                {	$desiredcommonname = $TAXON{$tax_list[$heck]}{'common_name'};
+                                                    $commonnameYES = 1;
+                                                }
+                                        }
+                                    
                                 }
-                                
-                            my @new_choice;
-							#print "$choice\t$compare\n";
-							unless ($compindicator == 1 && $choiceindicator == 0)
-								{
-									if ($choice =~ m/;/ && $compare =~ m/;/)
-										{	my @choice_array = split(';', $choice);
-											my @compare_array = split(';', $compare);
-											foreach my $s (0..$#choice_array)
-												{	if (exists $compare_array[$s])
-														{	if ($choice_array[$s] eq $compare_array[$s])
-																{push(@new_choice, $choice_array[$s]);
-																}
-															else {last;}
-														}
-												}
-										}
-									if ($choice =~ m/;/ && $compare !~ m/;/)
-										{	my @choice_array = split(';', $choice);
-											my @compare_array;
-											push(@compare_array,$compare);
-											foreach my $s (0)
-												{	if ($choice_array[$s] eq $compare_array[$s])
-														{push(@new_choice, $choice_array[$s]);
-														}
-													else {last;}
-												}
-										}
-									if ($choice !~ m/;/ && $compare =~ m/;/)
-										{	my @choice_array;
-											push(@choice_array, $choice);
-											my @compare_array = split(';', $compare);
-											foreach my $s (0)
-												{	if ($choice_array[$s] eq $compare_array[$s])
-														{push(@new_choice, $choice_array[$s]);
-														}
-													else {last;}
-												}
-										}
-									if ($choice !~ m/;/ && $compare !~ m/;/)
-										{	if ($choice eq $compare)
-												{	push(@new_choice, $choice);
-												}
-										
-										}
-									if (scalar(@new_choice) == 0)
-										{$choice = "Unknown";}
-									else {	$choice = join(';', @new_choice);
-										if ($#new_choice != 6)
-											{	$commonnameYES = 0;
-											}
-										if ($#new_choice == 6)
-											{	if ($commonnameCOMP == 1 && $commonnameYES == 1)
-													{	my $choice_common = $desiredcommonname;
-														my $compare_common = $TAXON{$tax_list[$heck]}{'common_name'};
-														if ($choice_common ne $compare_common)
-															{	$commonnameYES = 0;
-															}
-														
-													}
-												if ($commonnameCOMP == 1 && $commonnameYES == 0)
-													{	$desiredcommonname = $TAXON{$tax_list[$heck]}{'common_name'};
-														$commonnameYES = 1;
-													}
-											}
-									      }
-								}
-							if ($compindicator == 1 && $choiceindicator == 0)
-								{	$choice = $compare;
-									$choiceindicator = 1;
-									if ($commonnameCOMP == 1)
-										{	$desiredcommonname = $TAXON{$tax_list[$heck]}{'common_name'};
-											$commonnameYES = 1;
-										}
-								}
-							
-						}
-				}
-			$ASV{$i}{'finaltaxachoice'} = $choice;
-			if ($commonnameYES == 1)
-				{	$ASV{$i}{'common_name'} = $desiredcommonname;
-				}
-		}
-		else {$ASV{$i}{'finaltaxachoice'} = "Unknown";}
-	}
-close(OUT_MULTI);
-
+                        }
+                    $ASV{$i}{'finaltaxachoice'} = $choice;
+                    if ($commonnameYES == 1)
+                        {	$ASV{$i}{'common_name'} = $desiredcommonname;
+                        }
+                }
+                else {$ASV{$i}{'finaltaxachoice'} = "Unknown";}
+            }
+        close(OUT_MULTI);
+    }
 
 ##Outputs
 foreach my $i (0..$#sample_headers)
@@ -802,19 +1111,21 @@ foreach my $line (@commonname_last_dat)
             $CommonName_Term{$taxid_clean}{'name'} = $line_split[0];
             }
 	}
-open(COT, ">".$options{n}."_taxid_to_commonname_ALL.txt");
-foreach my $linet (@commondat)
-	{	chomp($linet);
-		my @common_split = split('\t', $linet);
-		my $taxid_clean = $common_split[0];
-		chomp($taxid_clean);
-		my $common_name_clean = $common_split[2];
-		chomp($common_name_clean);
-		if (exists $CommonName_Term{$taxid_clean})
-			{	print COT "$CommonName_Term{$taxid_clean}{'name'} (".$common_name_clean.")\t$taxid_clean\n";
-			}
-	}
 
+unless ($options{e})
+    {   open(COT, ">".$options{n}."_taxid_to_commonname_ALL.txt");
+        foreach my $linet (@commondat)
+            {	chomp($linet);
+                my @common_split = split('\t', $linet);
+                my $taxid_clean = $common_split[0];
+                chomp($taxid_clean);
+                my $common_name_clean = $common_split[2];
+                chomp($common_name_clean);
+                if (exists $CommonName_Term{$taxid_clean})
+                    {	print COT "$CommonName_Term{$taxid_clean}{'name'} (".$common_name_clean.")\t$taxid_clean\n";
+                    }
+            }
+    }
 
 
 unless (scalar(@commonnamebartaxa) == 0)
@@ -1151,87 +1462,100 @@ close(OUTDEEP1_ig);
 
 }
 
-open(UNKNOWNS, ">".$options{n}."_unknown_asvids.txt");
-foreach my $i (sort keys %ASV)
-	{	my $taxonunknown = $ASV{$i}{'finaltaxachoice'};
-		chomp($taxonunknown);
-		if ($taxonunknown eq "Unknown" || $taxonunknown eq "Environmental Unknown")
-			{	print UNKNOWNS "$i\t";
-				if (exists $ASV{$i}{'confidence'})
-					{	print UNKNOWNS "$ASV{$i}{'confidence'}\t";
-					}
-				if (exists $ASV{$i}{'taxid'})
-					{	print UNKNOWNS "$ASV{$i}{'taxid'}\t";
-						my $string = $ASV{$i}{'taxid'};
-                        my @unknown_tax_list;
-                        if ($string =~ m/\;/ && $string =~ m/\,/)
-                            {   my @multi = split(',', $string);
-                                my $totalMulti = scalar(@multi);
-                                my $totalSemi = 0;
-                                foreach my $j (@multi)
-                                    {	$j =~ s/\ //;
-                                        if ($j =~ m/\;/)
-                                            {   $totalSemi += 1;
-                                            }
-                                    }
-                                if ($totalSemi < $totalMulti) #purge semicolon hits to remove sequences with multiple potential taxonomies
-                                    {   foreach my $j (@multi)
-                                            {	$j =~ s/\ //;
-                                                unless ($j =~ m/\;/)
-                                                    {	push(@unknown_tax_list, $j);
-                                                    }
-                                            }
-                                    }
-                                elsif ($totalSemi == $totalMulti)
-                                    {   foreach my $j (@multi)
+if ($options{e})
+    {   open(UNKNOWNS, ">".$options{n}."_unknown_asvids.txt");
+        foreach my $i (sort keys %ASV)
+            {   my $taxonunknown = $ASV{$i}{'finaltaxachoice'};
+                chomp($taxonunknown);
+                if ($taxonunknown eq "Unknown" || $taxonunknown eq "Environmental Unknown")
+                    {   print UNKNOWNS "$i\t\n";
+                    }
+            }
+        close(UNKNOWNS);
+    }
+else
+    {   open(UNKNOWNS, ">".$options{n}."_unknown_asvids.txt");
+        foreach my $i (sort keys %ASV)
+            {	my $taxonunknown = $ASV{$i}{'finaltaxachoice'};
+                chomp($taxonunknown);
+                if ($taxonunknown eq "Unknown" || $taxonunknown eq "Environmental Unknown")
+                    {	print UNKNOWNS "$i\t";
+                        if (exists $ASV{$i}{'confidence'})
+                            {	print UNKNOWNS "$ASV{$i}{'confidence'}\t";
+                            }
+                        if (exists $ASV{$i}{'taxid'})
+                            {	print UNKNOWNS "$ASV{$i}{'taxid'}\t";
+                                my $string = $ASV{$i}{'taxid'};
+                                my @unknown_tax_list;
+                                if ($string =~ m/\;/ && $string =~ m/\,/)
+                                    {   my @multi = split(',', $string);
+                                        my $totalMulti = scalar(@multi);
+                                        my $totalSemi = 0;
+                                        foreach my $j (@multi)
                                             {	$j =~ s/\ //;
                                                 if ($j =~ m/\;/)
-                                                    {	my @multipli = split(';', $j);
-                                                        foreach my $k (@multipli)
-                                                            {	push(@unknown_tax_list, $k);	
+                                                    {   $totalSemi += 1;
+                                                    }
+                                            }
+                                        if ($totalSemi < $totalMulti) #purge semicolon hits to remove sequences with multiple potential taxonomies
+                                            {   foreach my $j (@multi)
+                                                    {	$j =~ s/\ //;
+                                                        unless ($j =~ m/\;/)
+                                                            {	push(@unknown_tax_list, $j);
                                                             }
                                                     }
-                                                else {push(@unknown_tax_list, $j);}
+                                            }
+                                        elsif ($totalSemi == $totalMulti)
+                                            {   foreach my $j (@multi)
+                                                    {	$j =~ s/\ //;
+                                                        if ($j =~ m/\;/)
+                                                            {	my @multipli = split(';', $j);
+                                                                foreach my $k (@multipli)
+                                                                    {	push(@unknown_tax_list, $k);	
+                                                                    }
+                                                            }
+                                                        else {push(@unknown_tax_list, $j);}
+                                                    }
                                             }
                                     }
-                            }
-                        elsif ($string =~ m/\;/ && $string !~ m/\,/)
-                            {   my @multi = split(';', $string);
-                                foreach my $j (@multi)
-                                    {   push(@unknown_tax_list, $j);   
+                                elsif ($string =~ m/\;/ && $string !~ m/\,/)
+                                    {   my @multi = split(';', $string);
+                                        foreach my $j (@multi)
+                                            {   push(@unknown_tax_list, $j);   
+                                            }
                                     }
-                            }
-                        elsif ($string =~ m/\,/ && $string !~ m/\;/)
-                            {   my @multi = split(',', $string);
-                                foreach my $j (@multi)
-                                    {	$j =~ s/\ //;
-                                        push(@unknown_tax_list, $j);
+                                elsif ($string =~ m/\,/ && $string !~ m/\;/)
+                                    {   my @multi = split(',', $string);
+                                        foreach my $j (@multi)
+                                            {	$j =~ s/\ //;
+                                                push(@unknown_tax_list, $j);
+                                            }
                                     }
-                            }
-                        if (scalar(@unknown_tax_list) > 1)
-                            {   foreach my $entry (@unknown_tax_list)
-									{   if (exists $TAXON{$entry}{'taxastring'})
-                                            {print UNKNOWNS "$TAXON{$entry}{'taxastring'}\t";}
-                                        else
-                                            {print UNKNOWNS "TaxaStringDeleted_or_DoesNotExist\t";}
-									}
-								print UNKNOWNS "\n";
-                            }
-						else
-						{   if (exists $TAXON{$string}{'taxastring'})
-                                {   print UNKNOWNS "$TAXON{$string}{'taxastring'}\n";
+                                if (scalar(@unknown_tax_list) > 1)
+                                    {   foreach my $entry (@unknown_tax_list)
+                                            {   if (exists $TAXON{$entry}{'taxastring'})
+                                                    {print UNKNOWNS "$TAXON{$entry}{'taxastring'}\t";}
+                                                else
+                                                    {print UNKNOWNS "TaxaStringDeleted_or_DoesNotExist\t";}
+                                            }
+                                        print UNKNOWNS "\n";
+                                    }
+                                else
+                                {   if (exists $TAXON{$string}{'taxastring'})
+                                        {   print UNKNOWNS "$TAXON{$string}{'taxastring'}\n";
+                                        }
+                                    else
+                                        {   print UNKNOWNS "TaxaStringDeleted_or_DoesNotExist\n";
+                                        }
                                 }
-                            else
-                                {   print UNKNOWNS "TaxaStringDeleted_or_DoesNotExist\n";
-                                }
-						}
-					}
-				else
-					{	print UNKNOWNS "NO TAXID ASSIGNMENT\n";
-					}
-			}
-	}
-close(UNKNOWNS);
+                            }
+                        else
+                            {	print UNKNOWNS "NO TAXID ASSIGNMENT\n";
+                            }
+                    }
+            }
+        close(UNKNOWNS);
+    }
 
 if ($options{d})
 	{	system("mkdir IGNORING_ASVs");

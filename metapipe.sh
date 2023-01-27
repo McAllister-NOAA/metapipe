@@ -17,6 +17,8 @@ unset readfolderpath
 unset outdirectory
 unset optionalUserBLASTResult
 unset figureparamfilepath
+unset silvangsInputExportFile
+unset silvangsInputClusterFile
 
 workingdirectory=`pwd`
 
@@ -36,11 +38,13 @@ sflag=0
 rflag=0
 oflag=0
 fflag=0
+cflag=0
 blastflag=FALSE
+silvaASVflag=FALSE
 bypassflag=FALSE
 keepIntermediateFiles=TRUE
 
-while getopts ":p:s:r:o:b:f:yk" opt; do
+while getopts ":p:s:r:o:b:f:yke" opt; do
   case ${opt} in
     p ) pflag=1
         parameterfilepath=$OPTARG #metapipe_config.txt (see README)
@@ -61,6 +65,8 @@ while getopts ":p:s:r:o:b:f:yk" opt; do
     b ) blastflag=TRUE
         optionalUserBLASTResult=$OPTARG #Location of user blastn input (optional)
       ;;
+    e ) silvaASVflag=TRUE
+      ;;
     y ) bypassflag=TRUE
       ;;
     k ) keepIntermediateFiles=FALSE
@@ -73,6 +79,7 @@ while getopts ":p:s:r:o:b:f:yk" opt; do
          echo "       -r Read folder"
          echo "       -o Output directory"
          echo "       -b User-supplied BLASTn btab result file (optional)"
+         echo "       -e Toggle use of SILVAngs taxonomy assignments by ASV (optional)"
          echo "       -y Bypass all terminal prompts (optional)"
          echo "       -k Remove all intermediate files (optional)"
          echo "          Not recommended for first run"
@@ -88,6 +95,7 @@ while getopts ":p:s:r:o:b:f:yk" opt; do
         echo "       -r Read folder"
         echo "       -o Output directory"
         echo "       -b User-supplied BLASTn btab result file (optional)"
+        echo "       -e Toggle use of SILVAngs taxonomy assignments by ASV (optional)"
         echo "       -y Bypass all terminal prompts (optional)"
         echo "       -k Remove all intermediate files (optional)"
         echo "          Not recommended for first run"
@@ -107,6 +115,7 @@ if [ $OPTIND -eq 1 ]
         echo "       -r Read folder"
         echo "       -o Output directory"
         echo "       -b User-supplied BLASTn btab result file (optional)"
+        echo "       -e Toggle use of SILVAngs taxonomy assignments by ASV (optional)"
         echo "       -y Bypass all terminal prompts (optional)"
         echo "       -k Remove all intermediate files (optional)"
         echo "          Not recommended for first run"
@@ -124,6 +133,7 @@ if [[ $pflag -eq 0 || $sflag -eq 0 || $rflag -eq 0 || $oflag -eq 0 || $fflag -eq
         echo "       -r Read folder"
         echo "       -o Output directory"
         echo "       -b User-supplied BLASTn btab result file (optional)"
+        echo "       -e Toggle use of SILVAngs taxonomy assignments by ASV (optional)"
         echo "       -y Bypass all terminal prompts (optional)"
         echo "       -k Remove all intermediate files (optional)"
         echo "          Not recommended for first run"
@@ -131,6 +141,7 @@ if [[ $pflag -eq 0 || $sflag -eq 0 || $rflag -eq 0 || $oflag -eq 0 || $fflag -eq
         echo "       See README for details"
         exit
       fi
+      
 ##########################################################################################
 ##########################################################################################
 
@@ -514,7 +525,7 @@ else
   
   
     echo
-    echo "Learning error, Dereplication, Merge, and ASVs in DADA2..."
+    echo "Learning error, Dereplication, and ASVs in DADA2..."
     echo "Please be patient, may take a while. Messages printed to Rscript log."
     echo
     Rscript --vanilla ${metapipedir}/assets/dada2_step2_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB forward \
@@ -599,7 +610,7 @@ else
   
   
     echo
-    echo "Learning error, Dereplication, Merge, and ASVs in DADA2..."
+    echo "Learning error, Dereplication, and ASVs in DADA2..."
     echo "Please be patient, may take a while. Messages printed to Rscript log."
     echo
     Rscript --vanilla ${metapipedir}/assets/dada2_step2_mergeFail.R ${workingdirectory}/${outdirectory}/dada2 $systemmemoryMB reverse \
@@ -642,62 +653,68 @@ fi
 ##    Blastn ASVs
 ##
 ##########################################################################################
-if [[ "${blastFinished}" = "TRUE" ]]; then
-  echo "BLASTn from prior run"
+if [[ "${silvaASVflag}" = "TRUE" ]]; then
+  echo "Skipping BLASTn to use SILVAngs taxonomy downstream"
+  echo "Enter the location of the SILVAngs ssu or lsu results directory (i.e. ~/Downloads/results/ssu/)"
+  read silvaNGSdirectory
 else
-  if [ -d "${outdirectory}/blast_results" ]; then
-    rm -r ${outdirectory}/blast_results
-    mkdir ${outdirectory}/blast_results
+  if [[ "${blastFinished}" = "TRUE" ]]; then
+    echo "BLASTn from prior run"
   else
-    mkdir ${outdirectory}/blast_results
-  fi
-  
-  if [[ "$blastflag" = "FALSE" ]]; then
-  echo
-  echo "Running BLASTn: `date`"
-  
-  passblastscrutiny=FALSE
-  maxtargetseqs=4000
-  runthroughcount=3 #temp TODO
-  
-  while [ $passblastscrutiny = FALSE ]
-    do
-    let "runthroughcount=runthroughcount+1"
-    if [[ "${blastMode}" = "allIN" ]]; then
-      blastn -db ${locationNTdatabase}/nt -query ${outdirectory}/dada2/ASVs.fa -outfmt '6 qseqid pident length staxids sacc' -subject_besthit -max_target_seqs $maxtargetseqs -num_threads 6 -out ${outdirectory}/blast_results/ASV_blastn_nt.btab
-    elif [[ "${blastMode}" = "mostEnvOUT" ]]; then
-      blastn -db ${locationNTdatabase}/nt -query ${outdirectory}/dada2/ASVs.fa -outfmt '6 qseqid pident length staxids sacc' -subject_besthit -max_target_seqs $maxtargetseqs -num_threads 6 -out ${outdirectory}/blast_results/ASV_blastn_nt.btab -negative_taxidlist ${locationNTdatabase}/taxdump/taxid_exclusion_list_leavesinUnclassified.txt
-    elif [[ "${blastMode}" = "allEnvOUT" ]]; then
-      blastn -db ${locationNTdatabase}/nt -query ${outdirectory}/dada2/ASVs.fa -outfmt '6 qseqid pident length staxids sacc' -subject_besthit -max_target_seqs $maxtargetseqs -num_threads 6 -out ${outdirectory}/blast_results/ASV_blastn_nt.btab -negative_taxidlist ${locationNTdatabase}/taxdump/taxid_exclusion_list_removesUnclassified.txt
+    if [ -d "${outdirectory}/blast_results" ]; then
+      rm -r ${outdirectory}/blast_results
+      mkdir ${outdirectory}/blast_results
     else
-      echo "Incorrect blastMode specified"
-      exit
+      mkdir ${outdirectory}/blast_results
     fi
-    perl ${metapipedir}/assets/blast_assessment.pl -i ${outdirectory}/blast_results/ASV_blastn_nt.btab -c `grep -c ">" ${outdirectory}/dada2/ASVs.fa` > ${outdirectory}/blast_results/checkmaxtargetseqs.txt
-    highestnumber=`cat ${outdirectory}/blast_results/checkmaxtargetseqs.txt | sort -k2 -nr | head -1 | cut -f2`
-    if [[ "$highestnumber" -lt "$maxtargetseqs" ]]; then
-      passblastscrutiny=TRUE
-    elif [[ "$highestnumber" -ge "$maxtargetseqs" && "$runthroughcount" -le 3 ]]; then
-      echo "Rerun BLAST Number ${runthroughcount} - Max Target Not High Enough (${maxtargetseqs})"
-      let "multiplierseqs=runthroughcount+2"
-      let "maxtargetseqs=highestnumber*multiplierseqs"
-      echo "New max target seqs = ${maxtargetseqs}"
-    else
-      echo "Max target seqs inclusive of all top hits cannot be reached"
-      echo "Used max target seqs parameter = ${maxtargetseqs}"
-      passblastscrutiny=TRUE
+    
+    if [[ "$blastflag" = "FALSE" ]]; then
+    echo
+    echo "Running BLASTn: `date`"
+    
+    passblastscrutiny=FALSE
+    maxtargetseqs=4000
+    runthroughcount=3 #temp TODO
+    
+    while [ $passblastscrutiny = FALSE ]
+      do
+      let "runthroughcount=runthroughcount+1"
+      if [[ "${blastMode}" = "allIN" ]]; then
+        blastn -db ${locationNTdatabase}/nt -query ${outdirectory}/dada2/ASVs.fa -outfmt '6 qseqid pident length staxids sacc' -subject_besthit -max_target_seqs $maxtargetseqs -num_threads 6 -out ${outdirectory}/blast_results/ASV_blastn_nt.btab
+      elif [[ "${blastMode}" = "mostEnvOUT" ]]; then
+        blastn -db ${locationNTdatabase}/nt -query ${outdirectory}/dada2/ASVs.fa -outfmt '6 qseqid pident length staxids sacc' -subject_besthit -max_target_seqs $maxtargetseqs -num_threads 6 -out ${outdirectory}/blast_results/ASV_blastn_nt.btab -negative_taxidlist ${locationNTdatabase}/taxdump/taxid_exclusion_list_leavesinUnclassified.txt
+      elif [[ "${blastMode}" = "allEnvOUT" ]]; then
+        blastn -db ${locationNTdatabase}/nt -query ${outdirectory}/dada2/ASVs.fa -outfmt '6 qseqid pident length staxids sacc' -subject_besthit -max_target_seqs $maxtargetseqs -num_threads 6 -out ${outdirectory}/blast_results/ASV_blastn_nt.btab -negative_taxidlist ${locationNTdatabase}/taxdump/taxid_exclusion_list_removesUnclassified.txt
+      else
+        echo "Incorrect blastMode specified"
+        exit
+      fi
+      perl ${metapipedir}/assets/blast_assessment.pl -i ${outdirectory}/blast_results/ASV_blastn_nt.btab -c `grep -c ">" ${outdirectory}/dada2/ASVs.fa` > ${outdirectory}/blast_results/checkmaxtargetseqs.txt
+      highestnumber=`cat ${outdirectory}/blast_results/checkmaxtargetseqs.txt | sort -k2 -nr | head -1 | cut -f2`
+      if [[ "$highestnumber" -lt "$maxtargetseqs" ]]; then
+        passblastscrutiny=TRUE
+      elif [[ "$highestnumber" -ge "$maxtargetseqs" && "$runthroughcount" -le 3 ]]; then
+        echo "Rerun BLAST Number ${runthroughcount} - Max Target Not High Enough (${maxtargetseqs})"
+        let "multiplierseqs=runthroughcount+2"
+        let "maxtargetseqs=highestnumber*multiplierseqs"
+        echo "New max target seqs = ${maxtargetseqs}"
+      else
+        echo "Max target seqs inclusive of all top hits cannot be reached"
+        echo "Used max target seqs parameter = ${maxtargetseqs}"
+        passblastscrutiny=TRUE
+      fi
+    done
+    
+    elif [[ "$blastflag" = "TRUE" ]]; then
+    echo "Using user supplied BLASTn btab result"
+    cp $optionalUserBLASTResult ${outdirectory}/blast_results/ASV_blastn_nt.btab
     fi
-  done
   
-  elif [[ "$blastflag" = "TRUE" ]]; then
-  echo "Using user supplied BLASTn btab result"
-  cp $optionalUserBLASTResult ${outdirectory}/blast_results/ASV_blastn_nt.btab
+    echo
+    
+    echo "blastFinished=TRUE" >> ${outdirectory}/progress.txt
+  
   fi
-
-  echo
-  
-  echo "blastFinished=TRUE" >> ${outdirectory}/progress.txt
-
 fi
 
 ##########################################################################################
@@ -705,26 +722,30 @@ fi
 ##    Reformat BLAST output
 ##
 ##########################################################################################
-if [[ "${blastformattingFinished}" = "TRUE" ]]; then
-  echo "BLAST formatting from prior run"
+if [[ "${silvaASVflag}" = "TRUE" ]]; then
+  echo "Skipping BLAST formatting to use SILVAngs taxonomy downstream"
 else
-  if [ -f "${outdirectory}/blast_results/ASV_blastn_nt_formatted.txt" ]; then
-    rm ${outdirectory}/blast_results/ASV_blastn_nt_formatted.txt
+  if [[ "${blastformattingFinished}" = "TRUE" ]]; then
+    echo "BLAST formatting from prior run"
+  else
+    if [ -f "${outdirectory}/blast_results/ASV_blastn_nt_formatted.txt" ]; then
+      rm ${outdirectory}/blast_results/ASV_blastn_nt_formatted.txt
+    fi
+  
+    echo
+    echo "Reformatting BLAST output: `date`"
+    
+    #let "insertSize=ampliconSize - ${#primerF} - ${#primerR}"
+    
+    Rscript --vanilla ${metapipedir}/assets/reformat_blast.R ${workingdirectory}/${outdirectory}/blast_results $blastLengthCutoff \
+        1>> ${workingdirectory}/${outdirectory}/blast_results/blastreformatting_rscript_out.log 2>&1
+    echo "reformat_blast.R	${workingdirectory}/${outdirectory}/blast_results $blastLengthCutoff" >> ${outdirectory}/Rscript_arguments.log
+    
+    echo
+    
+    echo "blastformattingFinished=TRUE" >> ${outdirectory}/progress.txt
+  
   fi
-
-  echo
-  echo "Reformatting BLAST output: `date`"
-  
-  #let "insertSize=ampliconSize - ${#primerF} - ${#primerR}"
-  
-  Rscript --vanilla ${metapipedir}/assets/reformat_blast.R ${workingdirectory}/${outdirectory}/blast_results $blastLengthCutoff \
-      1>> ${workingdirectory}/${outdirectory}/blast_results/blastreformatting_rscript_out.log 2>&1
-  echo "reformat_blast.R	${workingdirectory}/${outdirectory}/blast_results $blastLengthCutoff" >> ${outdirectory}/Rscript_arguments.log
-  
-  echo
-  
-  echo "blastformattingFinished=TRUE" >> ${outdirectory}/progress.txt
-
 fi
 
 ##########################################################################################
@@ -732,82 +753,33 @@ fi
 ##    Running perl script for taxonomy decisions, standard table outs, and KRONA plots
 ##
 ##########################################################################################
-if [[ "${taxonomyscriptFinished}" = "TRUE" ]]; then
-  echo "ASV-2-Taxonomy Script results from prior run"
-else
-  if [ -d "${outdirectory}/ASV2Taxonomy" ]; then
-    rm -r ${outdirectory}/ASV2Taxonomy
-    mkdir ${outdirectory}/ASV2Taxonomy
-    if [[ "$removeASVsFILE" != "NULL" ]]; then
-      mv ${outdirectory}/dada2/ASVs_unfiltered.fa ${outdirectory}/dada2/ASVs.fa
-      mv ${outdirectory}/dada2/ASVs_counts_unfiltered.tsv ${outdirectory}/dada2/ASVs_counts.tsv
-      #WILL THROW AN ERROR: If you run with removeASVsFILE given then remove that parameter without moving the *unfiltered* back to their original names.
-    fi
+if [[ "${silvaASVflag}" = "TRUE" ]]; then
+  silvangsInputExportFile=${silvaNGSdirectory}/exports/*---otus.csv
+  silvangsInputClusterFile=${silvaNGSdirectory}/stats/sequence_cluster_map/data/*.fa.clstr
+  
+  if [[ "${taxonomyscriptFinished}" = "TRUE" ]]; then
+    echo "ASV-2-Taxonomy Script results from prior run"
   else
-    mkdir ${outdirectory}/ASV2Taxonomy
-  fi
-
-  echo
-  echo "Running ASV-2-Taxonomy Script: `date`"
-  
-  #prep taxon ids for taxonkit
-  cat ${outdirectory}/blast_results/ASV_blastn_nt_formatted.txt | cut -f4 | sed -E "s/ //g" | tr ',' '\n' | tr ';' '\n' | sort | uniq | grep -v "taxid" > ${outdirectory}/ASV2Taxonomy/taxids.txt
-  taxonkit lineage ${outdirectory}/ASV2Taxonomy/taxids.txt | awk '$2!=""' > ${outdirectory}/ASV2Taxonomy/taxonkit_out.txt
-  taxonkit reformat ${outdirectory}/ASV2Taxonomy/taxonkit_out.txt | cut -f1,3 > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
-  
-  if [[ "$bypassflag" = "FALSE" ]]; then
-    echo
-    echo "Reformatted taxon strings created. Options:"
-    echo "Continue without changes [c]"
-    echo "Manually edit file and replace in same location with identical file structure [m]"
-    echo "    (Make choice when file is modified and you are ready to proceed)"
-    echo "Automatically fill gaps in reformatted taxonkit hierarchy [a]"
-    read mainmenuinput
-    if [[ "$mainmenuinput" = "c" || "$mainmenuinput" = "C" ]]; then
-      cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
-      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
-      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
-      echo "Continuing!"
-    elif [[ "$mainmenuinput" = "m" || "$mainmenuinput" = "M" ]]; then
-      echo "Continuing!"
-      cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt | tr '\r' '\n' | tr -s '\n' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
-      cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
-      rm ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
-    elif [[ "$mainmenuinput" = "a" || "$mainmenuinput" = "A" ]]; then
-      echo "Reformatting..."
-      echo "Original reformatted taxonkit out stored at ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt"
-      perl ${metapipedir}/assets/fillIn_taxonkit.pl -i ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
-      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
-      cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
-      rm ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
-      echo "Continuing!"
+    if [ -d "${outdirectory}/ASV2Taxonomy" ]; then
+      rm -r ${outdirectory}/ASV2Taxonomy
+      mkdir ${outdirectory}/ASV2Taxonomy
     else
-      echo "Invalid selection, exiting"
-      exit
+      mkdir ${outdirectory}/ASV2Taxonomy
     fi
-  elif [[ "$bypassflag" = "TRUE" ]]; then
-    echo "Automatically reformatting taxonkit hierarchy..."
-    echo "Original reformatted taxonkit out stored at ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt"
-    perl ${metapipedir}/assets/fillIn_taxonkit.pl -i ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
-    mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
-    cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
-    rm ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
-    echo "Continuing!"
-  fi
-    
   
-  if [[ "$removeASVsFILE" = "NULL" ]]; then
+    echo
+    echo "Running ASV-2-Taxonomy Script: `date`"
+    
     cd ${outdirectory}/ASV2Taxonomy
   
-    perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt \
-        -t reformatted_taxonkit_out.txt -f $taxonomyCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
+    perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv \
+        -n ${outdirectory} -o ../sample_order.txt -y $silvangsInputExportFile -z $silvangsInputClusterFile -e
     cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
     cd ${workingdirectory}
-    cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt | cut -f1 | sed -E 's/$/	/' > ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
-    cat ${outdirectory}/dada2/ASVs_counts.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv
+    
+    cat ${outdirectory}/dada2/ASVs_counts.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt > ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv
     perl ${metapipedir}/assets/merge_on_taxonomy.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt -o ${outdirectory}/ASV2Taxonomy > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv
-    cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv
-    rm ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+    cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv
     mkdir ${outdirectory}/ASV2Taxonomy/KRONA_plots
     mkdir ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs
     mv ${outdirectory}/ASV2Taxonomy/MP* ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs/
@@ -818,73 +790,164 @@ else
     
     perl ${metapipedir}/assets/stats.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv -i ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/basic_ASV_taxonomy_stats.txt
     
-  else
-    cd ${outdirectory}/ASV2Taxonomy
-    
-    perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt -d $removeASVsFILE \
-        -t reformatted_taxonkit_out.txt -f $taxonomyCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
-    
-    #Move non-filtered files to folder, replace with files from "IGNORING_ASVs" directory
-    mkdir unfiltered_files
-    mkdir -p KRONA_plots/KRONA_inputs
-    mv MP* KRONA_plots/KRONA_inputs/
-    mv ${outdirectory}_wholeKRONA.txt KRONA_plots/KRONA_inputs/${outdirectory}_samplesSummedKRONA.txt
-    mv ${outdirectory}_master_krona.html KRONA_plots/
-    mv ${outdirectory}_wholeKRONA.html KRONA_plots/${outdirectory}_samplesSummedKRONA.html
-    mv ${outdirectory}_allin_KRONA.txt ${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt
-    mv KRONA_plots unfiltered_files/
-    mv ${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt unfiltered_files/
-    mv ${outdirectory}_asvTaxonomyTable.txt unfiltered_files/
-    mv ${outdirectory}_barchart_forR.txt unfiltered_files/
-    mv ${outdirectory}_barchart.txt unfiltered_files/
-    mv ${outdirectory}_heatmap_multiASV.txt unfiltered_files/
-    mv ${outdirectory}_NO_UNKNOWNS_barchart.txt unfiltered_files/
-    
-    mkdir -p IGNORING_ASVs/KRONA_plots/KRONA_inputs
-    mv IGNORING_ASVs/MP* IGNORING_ASVs/KRONA_plots/KRONA_inputs/
-    mv IGNORING_ASVs/${outdirectory}_IGNORE_master_krona.html IGNORING_ASVs/KRONA_plots/
-    mv IGNORING_ASVs/${outdirectory}_IGNORE_allin_KRONA.txt ${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt
-    mv IGNORING_ASVs/KRONA_plots ./
-    mv IGNORING_ASVs/${outdirectory}_ASVs_to_IGNORE.txt ./
-    mv IGNORING_ASVs/${outdirectory}_IGNORE_asvTaxonomyTable.txt ./${outdirectory}_asvTaxonomyTable.txt
-    mv IGNORING_ASVs/${outdirectory}_IGNORE_barchart_forR.txt ./${outdirectory}_barchart_forR.txt
-    mv IGNORING_ASVs/${outdirectory}_IGNORE_barchart.txt ./${outdirectory}_barchart.txt
-    mv IGNORING_ASVs/${outdirectory}_IGNORE_heatmap_multiASV.txt ./${outdirectory}_heatmap_multiASV.txt
-    mv IGNORING_ASVs/${outdirectory}_IGNORE_NO_UNKNOWNS_barchart.txt ./${outdirectory}_NO_UNKNOWNS_barchart.txt
-    rmdir IGNORING_ASVs
-    
-    cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
-    cd ${workingdirectory}
-    
-    mv ${outdirectory}/dada2/ASVs.fa ${outdirectory}/dada2/ASVs_unfiltered.fa
-    mv ${outdirectory}/dada2/ASVs_counts.tsv ${outdirectory}/dada2/ASVs_counts_unfiltered.tsv
-    
-    cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_ASVs_to_IGNORE.txt | sed -E 's/$/\$/' > ${outdirectory}/temp
-    grep -A 1 -f ${outdirectory}/temp ${outdirectory}/dada2/ASVs_unfiltered.fa | sed -E 's/$/\$/' > ${outdirectory}/temp2
-    grep -v "^--\$$" ${outdirectory}/temp2 > ${outdirectory}/temp
-    grep -v -f ${outdirectory}/temp ${outdirectory}/dada2/ASVs_unfiltered.fa > ${outdirectory}/dada2/ASVs.fa
-    rm ${outdirectory}/temp
-    rm ${outdirectory}/temp2
-    #Note for potential bug: Will remove the sequence (but not the header) for sequences identical to an ASV in the IGNORE list. 
-    
-    cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_ASVs_to_IGNORE.txt | sed -E 's/$/	/' > ${outdirectory}/temp
-    cat ${outdirectory}/dada2/ASVs_counts_unfiltered.tsv | grep -v -f ${outdirectory}/temp > ${outdirectory}/dada2/ASVs_counts.tsv
-    rm ${outdirectory}/temp
-    
-    cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt | cut -f1 | sed -E 's/$/	/' > ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
-    cat ${outdirectory}/dada2/ASVs_counts.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv
-    perl ${metapipedir}/assets/merge_on_taxonomy.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt -o ${outdirectory}/ASV2Taxonomy > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv
-    cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv
-    rm ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
-    
-    perl ${metapipedir}/assets/stats.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv -i ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/basic_ASV_taxonomy_stats.txt
-    
+    echo "taxonomyscriptFinished=TRUE" >> ${outdirectory}/progress.txt
+  
   fi
-
-  echo "taxonomyscriptFinished=TRUE" >> ${outdirectory}/progress.txt
-
+  
+else
+  if [[ "${taxonomyscriptFinished}" = "TRUE" ]]; then
+    echo "ASV-2-Taxonomy Script results from prior run"
+  else
+    if [ -d "${outdirectory}/ASV2Taxonomy" ]; then
+      rm -r ${outdirectory}/ASV2Taxonomy
+      mkdir ${outdirectory}/ASV2Taxonomy
+      if [[ "$removeASVsFILE" != "NULL" ]]; then
+        mv ${outdirectory}/dada2/ASVs_unfiltered.fa ${outdirectory}/dada2/ASVs.fa
+        mv ${outdirectory}/dada2/ASVs_counts_unfiltered.tsv ${outdirectory}/dada2/ASVs_counts.tsv
+        #WILL THROW AN ERROR: If you run with removeASVsFILE given then remove that parameter without moving the *unfiltered* back to their original names.
+      fi
+    else
+      mkdir ${outdirectory}/ASV2Taxonomy
+    fi
+  
+    echo
+    echo "Running ASV-2-Taxonomy Script: `date`"
+    
+    #prep taxon ids for taxonkit
+    cat ${outdirectory}/blast_results/ASV_blastn_nt_formatted.txt | cut -f4 | sed -E "s/ //g" | tr ',' '\n' | tr ';' '\n' | sort | uniq | grep -v "taxid" > ${outdirectory}/ASV2Taxonomy/taxids.txt
+    taxonkit lineage ${outdirectory}/ASV2Taxonomy/taxids.txt | awk '$2!=""' > ${outdirectory}/ASV2Taxonomy/taxonkit_out.txt
+    taxonkit reformat ${outdirectory}/ASV2Taxonomy/taxonkit_out.txt | cut -f1,3 > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+    
+    if [[ "$bypassflag" = "FALSE" ]]; then
+      echo
+      echo "Reformatted taxon strings created. Options:"
+      echo "Continue without changes [c]"
+      echo "Manually edit file and replace in same location with identical file structure [m]"
+      echo "    (Make choice when file is modified and you are ready to proceed)"
+      echo "Automatically fill gaps in reformatted taxonkit hierarchy [a]"
+      read mainmenuinput
+      if [[ "$mainmenuinput" = "c" || "$mainmenuinput" = "C" ]]; then
+        cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+        mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
+        mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+        echo "Continuing!"
+      elif [[ "$mainmenuinput" = "m" || "$mainmenuinput" = "M" ]]; then
+        echo "Continuing!"
+        cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt | tr '\r' '\n' | tr -s '\n' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+        cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+        rm ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+      elif [[ "$mainmenuinput" = "a" || "$mainmenuinput" = "A" ]]; then
+        echo "Reformatting..."
+        echo "Original reformatted taxonkit out stored at ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt"
+        perl ${metapipedir}/assets/fillIn_taxonkit.pl -i ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+        mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
+        cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+        rm ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+        echo "Continuing!"
+      else
+        echo "Invalid selection, exiting"
+        exit
+      fi
+    elif [[ "$bypassflag" = "TRUE" ]]; then
+      echo "Automatically reformatting taxonkit hierarchy..."
+      echo "Original reformatted taxonkit out stored at ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt"
+      perl ${metapipedir}/assets/fillIn_taxonkit.pl -i ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+      mv ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out_ORIGINAL.txt
+      cat ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt
+      rm ${outdirectory}/ASV2Taxonomy/reformatted_taxonkit_out.txt_temp
+      echo "Continuing!"
+    fi
+      
+    
+    if [[ "$removeASVsFILE" = "NULL" ]]; then
+      cd ${outdirectory}/ASV2Taxonomy
+    
+      perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt \
+          -t reformatted_taxonkit_out.txt -f $taxonomyCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
+      cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
+      cd ${workingdirectory}
+      cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt | cut -f1 | sed -E 's/$/	/' > ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+      cat ${outdirectory}/dada2/ASVs_counts.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv
+      perl ${metapipedir}/assets/merge_on_taxonomy.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt -o ${outdirectory}/ASV2Taxonomy > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv
+      cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv
+      rm ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+      mkdir ${outdirectory}/ASV2Taxonomy/KRONA_plots
+      mkdir ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs
+      mv ${outdirectory}/ASV2Taxonomy/MP* ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs/
+      mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_wholeKRONA.txt ${outdirectory}/ASV2Taxonomy/KRONA_plots/KRONA_inputs/${outdirectory}_samplesSummedKRONA.txt
+      mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_master_krona.html ${outdirectory}/ASV2Taxonomy/KRONA_plots/
+      mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_wholeKRONA.html ${outdirectory}/ASV2Taxonomy/KRONA_plots/${outdirectory}_samplesSummedKRONA.html
+      mv ${outdirectory}/ASV2Taxonomy/${outdirectory}_allin_KRONA.txt ${outdirectory}/ASV2Taxonomy/${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt
+      
+      perl ${metapipedir}/assets/stats.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv -i ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/basic_ASV_taxonomy_stats.txt
+      
+    else
+      cd ${outdirectory}/ASV2Taxonomy
+      
+      perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv -s ../blast_results/ASV_blastn_nt_formatted.txt -d $removeASVsFILE \
+          -t reformatted_taxonkit_out.txt -f $taxonomyCutoffs -n ${outdirectory} -c ${locationNTdatabase}/taxdump/common_names.dmp -o ../sample_order.txt
+      
+      #Move non-filtered files to folder, replace with files from "IGNORING_ASVs" directory
+      mkdir unfiltered_files
+      mkdir -p KRONA_plots/KRONA_inputs
+      mv MP* KRONA_plots/KRONA_inputs/
+      mv ${outdirectory}_wholeKRONA.txt KRONA_plots/KRONA_inputs/${outdirectory}_samplesSummedKRONA.txt
+      mv ${outdirectory}_master_krona.html KRONA_plots/
+      mv ${outdirectory}_wholeKRONA.html KRONA_plots/${outdirectory}_samplesSummedKRONA.html
+      mv ${outdirectory}_allin_KRONA.txt ${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt
+      mv KRONA_plots unfiltered_files/
+      mv ${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt unfiltered_files/
+      mv ${outdirectory}_asvTaxonomyTable.txt unfiltered_files/
+      mv ${outdirectory}_barchart_forR.txt unfiltered_files/
+      mv ${outdirectory}_barchart.txt unfiltered_files/
+      mv ${outdirectory}_heatmap_multiASV.txt unfiltered_files/
+      mv ${outdirectory}_NO_UNKNOWNS_barchart.txt unfiltered_files/
+      
+      mkdir -p IGNORING_ASVs/KRONA_plots/KRONA_inputs
+      mv IGNORING_ASVs/MP* IGNORING_ASVs/KRONA_plots/KRONA_inputs/
+      mv IGNORING_ASVs/${outdirectory}_IGNORE_master_krona.html IGNORING_ASVs/KRONA_plots/
+      mv IGNORING_ASVs/${outdirectory}_IGNORE_allin_KRONA.txt ${outdirectory}_allin_TaxonomyASVSampleCount_byline.txt
+      mv IGNORING_ASVs/KRONA_plots ./
+      mv IGNORING_ASVs/${outdirectory}_ASVs_to_IGNORE.txt ./
+      mv IGNORING_ASVs/${outdirectory}_IGNORE_asvTaxonomyTable.txt ./${outdirectory}_asvTaxonomyTable.txt
+      mv IGNORING_ASVs/${outdirectory}_IGNORE_barchart_forR.txt ./${outdirectory}_barchart_forR.txt
+      mv IGNORING_ASVs/${outdirectory}_IGNORE_barchart.txt ./${outdirectory}_barchart.txt
+      mv IGNORING_ASVs/${outdirectory}_IGNORE_heatmap_multiASV.txt ./${outdirectory}_heatmap_multiASV.txt
+      mv IGNORING_ASVs/${outdirectory}_IGNORE_NO_UNKNOWNS_barchart.txt ./${outdirectory}_NO_UNKNOWNS_barchart.txt
+      rmdir IGNORING_ASVs
+      
+      cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
+      cd ${workingdirectory}
+      
+      mv ${outdirectory}/dada2/ASVs.fa ${outdirectory}/dada2/ASVs_unfiltered.fa
+      mv ${outdirectory}/dada2/ASVs_counts.tsv ${outdirectory}/dada2/ASVs_counts_unfiltered.tsv
+      
+      cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_ASVs_to_IGNORE.txt | sed -E 's/$/\$/' > ${outdirectory}/temp
+      grep -A 1 -f ${outdirectory}/temp ${outdirectory}/dada2/ASVs_unfiltered.fa | sed -E 's/$/\$/' > ${outdirectory}/temp2
+      grep -v "^--\$$" ${outdirectory}/temp2 > ${outdirectory}/temp
+      grep -v -f ${outdirectory}/temp ${outdirectory}/dada2/ASVs_unfiltered.fa > ${outdirectory}/dada2/ASVs.fa
+      rm ${outdirectory}/temp
+      rm ${outdirectory}/temp2
+      #Note for potential bug: Will remove the sequence (but not the header) for sequences identical to an ASV in the IGNORE list. 
+      
+      cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_ASVs_to_IGNORE.txt | sed -E 's/$/	/' > ${outdirectory}/temp
+      cat ${outdirectory}/dada2/ASVs_counts_unfiltered.tsv | grep -v -f ${outdirectory}/temp > ${outdirectory}/dada2/ASVs_counts.tsv
+      rm ${outdirectory}/temp
+      
+      cat ${outdirectory}/ASV2Taxonomy/${outdirectory}_unknown_asvids.txt | cut -f1 | sed -E 's/$/	/' > ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+      cat ${outdirectory}/dada2/ASVs_counts.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_NOUNKNOWNS.tsv
+      perl ${metapipedir}/assets/merge_on_taxonomy.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt -o ${outdirectory}/ASV2Taxonomy > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv
+      cat ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv | grep -v -f ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns > ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy_NOUNKNOWNS.tsv
+      rm ${outdirectory}/ASV2Taxonomy/temp_grep_unknowns
+      
+      perl ${metapipedir}/assets/stats.pl -a ${outdirectory}/dada2/ASVs_counts.tsv -t ${outdirectory}/ASV2Taxonomy/ASVs_counts_mergedOnTaxonomy.tsv -i ${outdirectory}/ASV2Taxonomy/${outdirectory}_asvTaxonomyTable.txt > ${outdirectory}/ASV2Taxonomy/basic_ASV_taxonomy_stats.txt
+      
+    fi
+  
+    echo "taxonomyscriptFinished=TRUE" >> ${outdirectory}/progress.txt
+  
+  fi
 fi
-
 ##########################################################################################
 ##
 ##    File cleanup
@@ -893,7 +956,9 @@ fi
 if [[ "$keepIntermediateFiles" = "FALSE" ]]; then
   rm -f ${outdirectory}/cutadapt/*_trimmed.fq.gz
   rm -f ${outdirectory}/dada2/*_filtered.fq.gz
-  gzip -q -9 ${outdirectory}/blast_results/ASV_blastn_nt.btab
+  if [[ "${silvaASVflag}" != "TRUE" ]]; then
+    gzip -q -9 ${outdirectory}/blast_results/ASV_blastn_nt.btab
+  fi
 fi
 
 ##########################################################################################
