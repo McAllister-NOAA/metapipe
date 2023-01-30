@@ -43,7 +43,6 @@ my @uniq_bartaxa_ig;
 my @sample_headers;
 my @file_sample_headers;
 my @commondat;
-my $ignore_ASV_string;
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # - - - - - M A I N - - - - - - - - - - - - - - - - - - - -
@@ -93,6 +92,30 @@ foreach my $i (sort keys %ASV)
 				else {die "\n\nImported sample headers don't match the ASV count table. Try again.\n\n";}
 			}
 	}
+
+#IMPORT List of ASVs to ingore in output
+my @ignore_array;
+my $output_ignore_string;
+my $ignore_ASV_string;
+if ($options{d})
+    {	open(IGNORE, "<$options{d}") or die "\n\nThere is no $options{d} file!!\n\n";
+        my @igdat = <IGNORE>; close(IGNORE);
+        foreach my $linei (@igdat)
+            {	chomp($linei);
+                push(@ignore_array, $linei);
+            }
+        foreach my $i (@ignore_array)
+            {	$ignore_ASV_string .= "_".$i."_";
+                $output_ignore_string .= $i.";";
+            }
+        my @ignoreASVarray = split(';', $output_ignore_string);
+        open(ASVsToIG, ">".$options{n}."_ASVs_to_IGNORE.txt");
+        foreach my $igasv (@ignoreASVarray)
+            {   chomp($igasv);
+                print ASVsToIG "$igasv\n";
+            }
+        close(ASVsToIG);
+    }
 
 if ($options{e})
     {   #Import SILVAngs export file
@@ -462,30 +485,6 @@ else
                     {	$TAXON{$taxid_clean}{'common_name'} = $common_name_clean;
                     }
             }
-            
-        #IMPORT List of ASVs to ingore in output
-        my @ignore_array;
-        my $output_ignore_string;
-        if ($options{d})
-            {	open(IGNORE, "<$options{d}") or die "\n\nThere is no $options{d} file!!\n\n";
-                my @igdat = <IGNORE>; close(IGNORE);
-                foreach my $linei (@igdat)
-                    {	chomp($linei);
-                        push(@ignore_array, $linei);
-                    }
-                foreach my $i (@ignore_array)
-                    {	$ignore_ASV_string .= "_".$i."_";
-                        $output_ignore_string .= $i.";";
-                    }
-                my @ignoreASVarray = split(';', $output_ignore_string);
-                open(ASVsToIG, ">".$options{n}."_ASVs_to_IGNORE.txt");
-                foreach my $igasv (@ignoreASVarray)
-                    {   chomp($igasv);
-                        print ASVsToIG "$igasv\n";
-                    }
-                close(ASVsToIG);
-            }
-        
             
         #Basic filtering of taxonomy to:
         #1) replace ;;;;;;;string with Environmental unknown
@@ -1125,6 +1124,7 @@ unless ($options{e})
                     {	print COT "$CommonName_Term{$taxid_clean}{'name'} (".$common_name_clean.")\t$taxid_clean\n";
                     }
             }
+        close(COT);
     }
 
 

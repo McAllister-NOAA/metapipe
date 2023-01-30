@@ -655,8 +655,6 @@ fi
 ##########################################################################################
 if [[ "${silvaASVflag}" = "TRUE" ]]; then
   echo "Skipping BLASTn to use SILVAngs taxonomy downstream"
-  echo "Enter the location of the SILVAngs ssu or lsu results directory (i.e. ~/Downloads/results/ssu/)"
-  read silvaNGSdirectory
 else
   if [[ "${blastFinished}" = "TRUE" ]]; then
     echo "BLASTn from prior run"
@@ -754,9 +752,6 @@ fi
 ##
 ##########################################################################################
 if [[ "${silvaASVflag}" = "TRUE" ]]; then
-  silvangsInputExportFile=${silvaNGSdirectory}/exports/*---otus.csv
-  silvangsInputClusterFile=${silvaNGSdirectory}/stats/sequence_cluster_map/data/*.fa.clstr
-  
   if [[ "${taxonomyscriptFinished}" = "TRUE" ]]; then
     echo "ASV-2-Taxonomy Script results from prior run"
   else
@@ -766,6 +761,11 @@ if [[ "${silvaASVflag}" = "TRUE" ]]; then
     else
       mkdir ${outdirectory}/ASV2Taxonomy
     fi
+    
+    echo "Enter the location of the SILVAngs ssu or lsu results directory (i.e. ~/Downloads/results/ssu/)"
+    read silvaNGSdirectory
+    silvangsInputExportFile=${silvaNGSdirectory}/exports/*---otus.csv
+    silvangsInputClusterFile=${silvaNGSdirectory}/stats/sequence_cluster_map/data/*.fa.clstr
   
     echo
     echo "Running ASV-2-Taxonomy Script: `date`"
