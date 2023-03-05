@@ -157,7 +157,7 @@ cat ${outdirectory}/sample_metadata_forR.txt | cut -f1 | grep -v "Sample" > ${ou
 
 ##########################################################################################
 ##
-##    Run perl script morphology_table_convert2taxonomy.pl
+##    Run perl script silvangs_convert.pl
 ##
 ##########################################################################################
 if [[ "${mergeNCBISILVAeuks}" = "TRUE" ]]; then

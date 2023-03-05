@@ -54,12 +54,17 @@ foreach my $line (@data)
         $sample = "MP_".$sample;
         push(@sample_headers, $sample);
         my $ncbi_tax;
+        my $ncbi_taxid;
         if ($split_line[8] ne "")
             {   $ncbi_tax = $split_line[8];
+                $ncbi_tax =~ m/^ncbi\|.+\|(.+)\|/;
+                $ncbi_taxid = $1;
                 $ncbi_tax =~ s/^ncbi\|.+\|.+\|//;
                 $ncbi_tax =~ s/[^A-Za-z0-9; ]/_/g;    
             }
-        else {$ncbi_tax = "Unknown";}
+        else {  $ncbi_tax = "Unknown";
+                $ncbi_taxid = "NA";
+             }
         my $silva_tax;
         if ($split_line[9] ne "")
             {   $silva_tax = $split_line[9];
@@ -77,6 +82,7 @@ foreach my $line (@data)
             }
         unless (exists $TAXA{$keytax}{'asv'})
             {   $TAXA{$keytax}{'asv'} = "ASV_".$asv_count;
+                $TAXA{$keytax}{'ncbi_taxid'} = $ncbi_taxid;
                 $asv_count += 1;
             }
     }
@@ -84,76 +90,66 @@ foreach my $line (@data)
 my @unique_sampleHeaders = uniq @sample_headers;
 
 #Clean up taxonomy
-open(NCBI, ">".$options{o}."/ncbiTaxonomy_TOCLEANUP.txt");
+my @taxIDS;
 foreach my $i (sort keys %TAXA)
-    {   my @tax = split(',', $i);
-        my @ncbi_taxa = split(';', $tax[1]);
-        print NCBI "<$i>";
-        foreach my $j (@ncbi_taxa)
-            {   print NCBI "\t$j"
+    {   unless ($TAXA{$i}{'ncbi_taxid'} eq "NA")
+            {   push(@taxIDS, $TAXA{$i}{'ncbi_taxid'});
             }
-        print NCBI "\n";
+    }
+my @uniq_taxids = uniq @taxIDS;
+
+open(NCBI, ">".$options{o}."/ncbiTaxonomyIDs.txt");
+foreach my $i (@uniq_taxids)
+    {   print NCBI "$i\n";
     }
 close(NCBI);
 
-print "\nEdit the NCBI taxonomy file to match a K/P/C/O/F/G/S architecture with tab delimiter\n";
-print "Leave the FIRST column AS IS (remember not to run replace search in that column)\n";
-print "Rename to have _mod.txt at the end of the file name\n";
-print "Once finished...press ENTER\n";
-my $hold1 = <STDIN>;
+system("taxonkit lineage ".$options{o}."/ncbiTaxonomyIDs.txt | awk '".'$2!=""'."' > ".$options{o}."/taxonkit_out.txt");
+system("taxonkit reformat ".$options{o}."/taxonkit_out.txt | cut -f1,3 > ".$options{o}."/reformatted_taxonkit_out.txt");
+system("perl ".$options{m}."/assets/fillIn_taxonkit.pl -i ".$options{o}."/reformatted_taxonkit_out.txt > ".$options{o}."/reformatted_taxonkit_out.txt_temp");
+system("mv ".$options{o}."/reformatted_taxonkit_out.txt ".$options{o}."/reformatted_taxonkit_out_ORIGINAL.txt");
+system("cat ".$options{o}."/reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > ".$options{o}."/reformatted_taxonkit_out.txt");
+system("rm ".$options{o}."/reformatted_taxonkit_out.txt_temp");
 
-#import and set the NCBI taxonomy
-open(IN2, "<".$options{o}."/ncbiTaxonomy_TOCLEANUP_mod.txt") or die "\n\nThere is no ncbiTaxonomy_TOCLEANUP_mod.txt in the $options{o} outdirectory!!\n\n";
-my @data2 = <IN2>; close(IN2);
-foreach my $line (@data2)
-	{	chomp($line);
-        $line =~ s/ /\+/g;
-        $line =~ s/\t/\*/g;
-        $line =~ s/\r//;
-        $line =~ s/\s//;
-        $line =~ s/\+/ /g;
-        $line =~ s/\*/\t/g;
-        $line =~ s/\"//g;
-		my @split_line = split('\t', $line);
-        my $original_key = $split_line[0];
-        $original_key =~ s/\<//;
-        $original_key =~ s/\>//;
-        my @ntax;
-        foreach my $i (1..$#split_line)
-            {   if ($split_line[$i] eq "")
-                    {   push(@ntax, "NA");   
-                    }
-                else
-                    {   push(@ntax, $split_line[$i]);
-                    }
-            }
-        if (scalar @ntax == 7)
-            {   if (exists $TAXA{$original_key})
-                    {   my $newncbitax = join(';', @ntax);
-                        $TAXA{$original_key}{'cleaned_ncbi'} = $newncbitax;
-                    }
-                else
-                    {   print "\nError matching taxonomy key string $original_key\n";
-                    }
+open(NCBITAXIN, "<".$options{o}."/reformatted_taxonkit_out.txt") or die "\n\nThere is no reformatted_taxonkit_out.txt in the $options{o} outdirectory!!\n\n";
+my @taxiddat = <NCBITAXIN>; close(NCBITAXIN);
+my %TAXONKIT;
+foreach my $line (@taxiddat)
+    {   chomp($line);
+        my @splitline = split('\t', $line);
+        my $ncbi_taxid = $splitline[0];
+        my $ncbi_taxonkit_format;
+        if (exists $splitline[1])
+            {   $ncbi_taxonkit_format = $splitline[1];
             }
         else
-            {   if (scalar @ntax > 7)
-                    {   die "\n\nYour NCBI modifie taxonomy has extra columns\n\n";}
-                if (scalar @ntax < 7)
-                    {   if (exists $TAXA{$original_key})
-                            {   my @nntax = @ntax;
-                                my $term = $#ntax + 1;
-                                foreach my $j ($term..6)
-                                    {   push(@nntax, "NA");
-                                    }
-                                @ntax = @nntax;
-                                my $newncbitax = join(';', @ntax);
-                                $TAXA{$original_key}{'cleaned_ncbi'} = $newncbitax;
+            {   $ncbi_taxonkit_format = "Unknown";
+            }
+        $TAXONKIT{$ncbi_taxid}{'taxonomystring'} = $ncbi_taxonkit_format;
+    }
+
+foreach my $i (sort keys %TAXA)
+    {   if (exists $TAXONKIT{$TAXA{$i}{'ncbi_taxid'}}{'taxonomystring'})
+            {   my $newNCBItax = $TAXONKIT{$TAXA{$i}{'ncbi_taxid'}}{'taxonomystring'};
+                my @splittax = split(';', $newNCBItax);
+                if (scalar @splittax < 7)
+                    {   my @newlist = @splittax;
+                        my $startpos = $#splittax + 1;
+                        foreach my $j ($startpos..6)
+                            {   push(@newlist, "NA");
                             }
-                        else
-                            {   print "\nError matching taxonomy key string $original_key\n";
+                        @splittax = @newlist;
+                    }
+                foreach my $j (0..$#splittax)
+                    {   if ($splittax[$j] eq "")
+                            {   $splittax[$j] = "NA";
                             }
                     }
+                my $newnewNCBItax = join(';', @splittax);
+                $TAXA{$i}{'cleaned_ncbi'} = $newnewNCBItax;
+            }
+        else
+            {   $TAXA{$i}{'cleaned_ncbi'} = "Unknown;NA;NA;NA;NA;NA;NA";
             }
     }
 

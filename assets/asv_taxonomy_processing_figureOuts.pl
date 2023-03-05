@@ -16,7 +16,7 @@ $|=1; #Autoflush so pauses within this script are pushed up to the shell script 
 
 # - - - - - C O M M A N D    L I N E    O P T I O N S - - - - - - - -
 my %options=();
-getopts("a:s:t:n:f:c:d:o:y:z:eh", \%options);
+getopts("a:s:t:m:n:f:c:d:o:y:z:eh", \%options);
 
 if ($options{h})
     {   print "\n\nHelp called:\nOptions:\n";
@@ -32,6 +32,7 @@ if ($options{h})
         print "-e = Toggle use of SILVAngs taxonomy assignments by ASV (optional)\n";
         print "-y = SILVAngs results/[ls]su/exports/*---otus.csv File\n";
         print "-z = SILVAngs results/[ls]su/stats/sequence_cluster_map/data/*.fa.clstr File\n";
+        print "-m = Location of the metapipe directory\n";
         print "-h = This help message\n\n";
         die;
     }
@@ -134,12 +135,17 @@ if ($options{e})
                 my $asv = $split_line[2];
                 chomp($asv);
                 my $ncbi_tax;
+                my $ncbi_taxid;
                 if ($split_line[8] ne "")
                     {   $ncbi_tax = $split_line[8];
+                        $ncbi_tax =~ m/^ncbi\|.+\|(.+)\|/;
+                        $ncbi_taxid = $1;
                         $ncbi_tax =~ s/^ncbi\|.+\|.+\|//;
                         $ncbi_tax =~ s/[^A-Za-z0-9; ]/_/g;    
                     }
-                else {$ncbi_tax = "Unknown";}
+                else {  $ncbi_tax = "Unknown";
+                        $ncbi_taxid = "NA";
+                     }
                 my $silva_tax;
                 if ($split_line[9] ne "")
                     {   $silva_tax = $split_line[9];
@@ -149,6 +155,7 @@ if ($options{e})
                 else {$silva_tax = "Unknown";}
                 $SILVATAX{$asv}{'silva'} = $silva_tax;
                 $SILVATAX{$asv}{'ncbi'} = $ncbi_tax;
+                $SILVATAX{$asv}{'ncbi_taxid'} = $ncbi_taxid;
                 if ($split_line[3] > 1)
                     {   $SILVATAX{$asv}{'multi'} = "TRUE";
                     }
@@ -158,56 +165,53 @@ if ($options{e})
             }
         
         #Clean up taxonomy
-        open(NCBI, ">ncbiTaxonomy_TOCLEANUP.txt");
+        my @taxIDS;
         foreach my $i (sort keys %SILVATAX)
-            {   my $ncbi = $SILVATAX{$i}{'ncbi'};
-                my @ncbi_taxa = split(';', $ncbi);
-                print NCBI "$i";
-                foreach my $j (@ncbi_taxa)
-                    {   print NCBI "\t$j"
+            {   unless ($SILVATAX{$i}{'ncbi_taxid'} eq "NA")
+                    {   push(@taxIDS, $SILVATAX{$i}{'ncbi_taxid'});
                     }
-                print NCBI "\n";
+            }
+        my @uniq_taxids = uniq @taxIDS;
+        
+        open(NCBI, ">ncbiTaxonomyIDs.txt");
+        foreach my $i (@uniq_taxids)
+            {   print NCBI "$i\n";
             }
         close(NCBI);
         
-        print "\nEdit the NCBI taxonomy file (ncbiTaxonomy_TOCLEANUP.txt) to match a K/P/C/O/F/G/S architecture with tab delimiter\n";
-        print "Leave the FIRST column AS IS; NO NA's\n";
-        print "Rename to have _mod.txt at the end of the file name\n";
-        print "Once finished...press ENTER\n";
-        my $hold1 = <STDIN>;
-        
-        #import and set the NCBI taxonomy
-        open(NCBICLEAN, "<ncbiTaxonomy_TOCLEANUP_mod.txt") or die "\n\nThere is no ncbiTaxonomy_TOCLEANUP_mod.txt in the outdirectory!!\n\n";
-        my @ncbiclean = <NCBICLEAN>; close(NCBICLEAN);
-        foreach my $line (@ncbiclean)
-            {	chomp($line);
-                $line =~ s/ /\+/g;
-                $line =~ s/\t/\*/g;
-                $line =~ s/\r//;
-                $line =~ s/\s//;
-                $line =~ s/\+/ /g;
-                $line =~ s/\*/\t/g;
-                $line =~ s/\"//g;
-                my @split_line = split('\t', $line);
-                my $original_key = $split_line[0];
-                my @ntax;
-                foreach my $i (1..$#split_line)
-                    {   unless ($split_line[$i] eq "")
-                            {   push(@ntax, $split_line[$i]);
-                            }
-                    }
-                if (scalar @ntax <= 7)
-                    {   if (exists $SILVATAX{$original_key})
-                            {   my $newncbitax = join(';', @ntax);
-                                $SILVATAX{$original_key}{'cleaned_ncbi'} = $newncbitax;
-                            }
-                        else
-                            {   print "\nError matching taxonomy key string $original_key\n";
-                            }
+        system("taxonkit lineage ncbiTaxonomyIDs.txt | awk '".'$2!=""'."' > taxonkit_out.txt");
+        system("taxonkit reformat taxonkit_out.txt | cut -f1,3 > reformatted_taxonkit_out.txt");
+        system("perl ".$options{m}."/assets/fillIn_taxonkit.pl -i reformatted_taxonkit_out.txt > reformatted_taxonkit_out.txt_temp");
+        system("mv reformatted_taxonkit_out.txt reformatted_taxonkit_out_ORIGINAL.txt");
+        system("cat reformatted_taxonkit_out.txt_temp | sed -E 's/[^A-Za-z0-9;[:blank:]]/_/g' > reformatted_taxonkit_out.txt");
+        system("rm reformatted_taxonkit_out.txt_temp");
+
+        open(NCBITAXIN, "<reformatted_taxonkit_out.txt") or die "\n\nThere is no reformatted_taxonkit_out.txt in the outdirectory!!\n\n";
+        my @taxiddat = <NCBITAXIN>; close(NCBITAXIN);
+        my %TAXONKIT;
+        foreach my $line (@taxiddat)
+            {   chomp($line);
+                my @splitline = split('\t', $line);
+                my $ncbi_taxid = $splitline[0];
+                my $ncbi_taxonkit_format;
+                if (exists $splitline[1])
+                    {   $ncbi_taxonkit_format = $splitline[1];
                     }
                 else
-                    {   if (scalar @ntax > 7)
-                            {   die "\n\nYour NCBI modified taxonomy has extra columns\n\n";}
+                    {   $ncbi_taxonkit_format = "Unknown";
+                    }
+                $TAXONKIT{$ncbi_taxid}{'taxonomystring'} = $ncbi_taxonkit_format;
+            }
+      
+        foreach my $i (sort keys %SILVATAX)
+            {   if (exists $TAXONKIT{$SILVATAX{$i}{'ncbi_taxid'}}{'taxonomystring'})
+                    {   my $newNCBItax = $TAXONKIT{$SILVATAX{$i}{'ncbi_taxid'}}{'taxonomystring'};
+                        my @splittax = split(';', $newNCBItax);
+                        my $newnewNCBItax = join(';', @splittax);
+                        $SILVATAX{$i}{'cleaned_ncbi'} = $newnewNCBItax;
+                    }
+                else
+                    {   $SILVATAX{$i}{'cleaned_ncbi'} = "Unknown";
                     }
             }
         

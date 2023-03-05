@@ -773,7 +773,7 @@ if [[ "${silvaASVflag}" = "TRUE" ]]; then
     cd ${outdirectory}/ASV2Taxonomy
   
     perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv \
-        -n ${outdirectory} -o ../sample_order.txt -y $silvangsInputExportFile -z $silvangsInputClusterFile -e
+        -n ${outdirectory} -o ../sample_order.txt -y $silvangsInputExportFile -z $silvangsInputClusterFile -m $metapipedir -e
     cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
     cd ${workingdirectory}
     
