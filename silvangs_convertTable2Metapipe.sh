@@ -10,6 +10,8 @@
 #metapipe.sh must be in PATH
 
 unset inputspreadsheet
+unset silvaRefpath
+unset clusterinfopath
 unset samplemetafilepath
 unset outdirectory
 unset filterPercent
@@ -33,13 +35,15 @@ iflag=0
 sflag=0
 oflag=0
 fflag=0
+rflag=0
 bypassflag=FALSE
 filterNAs=FALSE
 providedTaxaOfInterest=FALSE
 taxaOfInterestCategory=FALSE
 mergeNCBISILVAeuks=FALSE
+providedClusterInfo=FALSE
 
-while getopts ":i:s:n:m:o:t:c:f:y" opt; do
+while getopts ":i:s:r:n:d:m:o:t:c:f:y" opt; do
   case ${opt} in
     i ) iflag=1
         inputspreadsheet=$OPTARG #Input SILVA spreadsheet
@@ -63,11 +67,18 @@ while getopts ":i:s:n:m:o:t:c:f:y" opt; do
       ;;
     m ) mergeNCBISILVAeuks=TRUE #Optional switch to create new folder with merged Eukaryotic assignments from NCBI with SILVA Bact/Arch assignments
       ;;
+    r ) rflag=1
+        silvaRefpath=$OPTARG #Input SILVA taxonomy map i.e. tax_slv_ssu_138.1.txt with tax\tsilvaAccession\tlevel info
+      ;;
+    d ) providedClusterInfo=TRUE
+        clusterinfopath=$OPTARG #Optional cd-hit clustr mapping file
+      ;;  
     y ) bypassflag=TRUE
       ;;
     \? ) echo "Invalid option: -$OPTARG"
          echo "Usage: silvangs_convertTable2Metapipe.sh" #Invalid option provided
          echo "       -i Input SILVAngs exports/x---[ls]su---otus.csv spreadsheet"
+         echo "       -r Reference taxonomy map for current SILVA database: i.e. tax_slv_ssu_138.1.txt"
          echo "       -s Sample metadata file"
          echo "       -o Output directory"
          echo "       -f Filter percent cutoff for assignment to zzOther"
@@ -75,11 +86,13 @@ while getopts ":i:s:n:m:o:t:c:f:y" opt; do
          echo "       -t Taxa of interest file (one per line) (optional)"
          echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
          echo "       -m Merge NCBI Eukaryote taxa assignments with SILVA Bacteria/Archaea assignments (optional)"
+         echo "       -d CD-HIT clustr mapping file if clustering done before hand (optional)"
          exit
       ;;
     : ) echo "Option is missing an argument: -$OPTARG"
         echo "Usage: silvangs_convertTable2Metapipe.sh" #Arg for a called option not provided
         echo "       -i Input SILVAngs exports/x---[ls]su---otus.csv spreadsheet"
+        echo "       -r Reference taxonomy map for current SILVA database: i.e. tax_slv_ssu_138.1.txt"
         echo "       -s Sample metadata file"
         echo "       -o Output directory"
         echo "       -f Filter percent cutoff for assignment to zzOther"
@@ -87,6 +100,7 @@ while getopts ":i:s:n:m:o:t:c:f:y" opt; do
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
         echo "       -m Merge NCBI Eukaryote taxa assignments with SILVA Bacteria/Archaea assignments (optional)"
+        echo "       -d CD-HIT clustr mapping file if clustering done before hand (optional)"
         exit
       ;;
   esac
@@ -96,6 +110,7 @@ shift $((OPTIND -1))
 if [ $OPTIND -eq 1 ]
   then echo "Usage: silvangs_convertTable2Metapipe.sh" #No options passed
         echo "       -i Input SILVAngs exports/x---[ls]su---otus.csv spreadsheet"
+        echo "       -r Reference taxonomy map for current SILVA database: i.e. tax_slv_ssu_138.1.txt"
         echo "       -s Sample metadata file"
         echo "       -o Output directory"
         echo "       -f Filter percent cutoff for assignment to zzOther"
@@ -103,13 +118,15 @@ if [ $OPTIND -eq 1 ]
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
         echo "       -m Merge NCBI Eukaryote taxa assignments with SILVA Bacteria/Archaea assignments (optional)"
+        echo "       -d CD-HIT clustr mapping file if clustering done before hand (optional)"
         exit
     fi
 
-if [[ $iflag -eq 0 || $sflag -eq 0 || $oflag -eq 0 || $fflag -eq 0 ]]
-  then echo "All options except -n, -t, -c, and -m are required."
+if [[ $iflag -eq 0 || $sflag -eq 0 || $oflag -eq 0 || $fflag -eq 0 || $rflag -eq 0 ]]
+  then echo "All options except -n, -t, -c, -m, and -d are required."
         echo "Usage: silvangs_convertTable2Metapipe.sh" #Missing required options
         echo "       -i Input SILVAngs exports/x---[ls]su---otus.csv spreadsheet"
+        echo "       -r Reference taxonomy map for current SILVA database: i.e. tax_slv_ssu_138.1.txt"
         echo "       -s Sample metadata file"
         echo "       -o Output directory"
         echo "       -f Filter percent cutoff for assignment to zzOther"
@@ -117,6 +134,7 @@ if [[ $iflag -eq 0 || $sflag -eq 0 || $oflag -eq 0 || $fflag -eq 0 ]]
         echo "       -t Taxa of interest file (one per line) (optional)"
         echo "       -c Taxonomic category (e.g. Order) used in Taxa of interest file (required if -t called)"
         echo "       -m Merge NCBI Eukaryote taxa assignments with SILVA Bacteria/Archaea assignments (optional)"
+        echo "       -d CD-HIT clustr mapping file if clustering done before hand (optional)"
         exit
       fi
 ##########################################################################################
@@ -160,10 +178,18 @@ cat ${outdirectory}/sample_metadata_forR.txt | cut -f1 | grep -v "Sample" > ${ou
 ##    Run perl script silvangs_convert.pl
 ##
 ##########################################################################################
-if [[ "${mergeNCBISILVAeuks}" = "TRUE" ]]; then
-  perl ${metapipedir}/assets/silvangs_convert.pl -i ${inputspreadsheet} -m ${metapipedir} -o ${outdirectory} -f ${filterPercent} -a
+if [[ "${providedClusterInfo}" = "TRUE" ]]; then
+  if [[ "${mergeNCBISILVAeuks}" = "TRUE" ]]; then
+    perl ${metapipedir}/assets/silvangs_convert.pl -i ${inputspreadsheet} -m ${metapipedir} -o ${outdirectory} -f ${filterPercent} -r ${silvaRefpath} -c ${clusterinfopath} -a
+  else
+    perl ${metapipedir}/assets/silvangs_convert.pl -i ${inputspreadsheet} -m ${metapipedir} -o ${outdirectory} -f ${filterPercent} -r ${silvaRefpath} -c ${clusterinfopath}
+  fi
 else
-  perl ${metapipedir}/assets/silvangs_convert.pl -i ${inputspreadsheet} -m ${metapipedir} -o ${outdirectory} -f ${filterPercent}
+  if [[ "${mergeNCBISILVAeuks}" = "TRUE" ]]; then
+    perl ${metapipedir}/assets/silvangs_convert.pl -i ${inputspreadsheet} -m ${metapipedir} -o ${outdirectory} -f ${filterPercent} -r ${silvaRefpath} -a
+  else
+    perl ${metapipedir}/assets/silvangs_convert.pl -i ${inputspreadsheet} -m ${metapipedir} -o ${outdirectory} -f ${filterPercent} -r ${silvaRefpath}
+  fi
 fi
 
 ##########################################################################################

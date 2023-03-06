@@ -19,6 +19,7 @@ unset optionalUserBLASTResult
 unset figureparamfilepath
 unset silvangsInputExportFile
 unset silvangsInputClusterFile
+unset silvaRefMap
 
 workingdirectory=`pwd`
 
@@ -762,18 +763,20 @@ if [[ "${silvaASVflag}" = "TRUE" ]]; then
       mkdir ${outdirectory}/ASV2Taxonomy
     fi
     
-    echo "Enter the location of the SILVAngs ssu or lsu results directory (i.e. ~/Downloads/results/ssu/)"
+    echo "Enter the location of the SILVAngs ssu or lsu results directory (i.e. ~/Downloads/results/ssu)"
     read silvaNGSdirectory
     silvangsInputExportFile=${silvaNGSdirectory}/exports/*---otus.csv
     silvangsInputClusterFile=${silvaNGSdirectory}/stats/sequence_cluster_map/data/*.fa.clstr
-  
+    echo "Enter the location of the reference taxonomy map for current SILVA database: i.e. tax_slv_ssu_138.1.txt"
+    read silvaRefMap
+    
     echo
     echo "Running ASV-2-Taxonomy Script: `date`"
     
     cd ${outdirectory}/ASV2Taxonomy
   
     perl ${metapipedir}/assets/asv_taxonomy_processing_figureOuts.pl -a ../dada2/ASVs_counts.tsv \
-        -n ${outdirectory} -o ../sample_order.txt -y $silvangsInputExportFile -z $silvangsInputClusterFile -m $metapipedir -e
+        -n ${outdirectory} -o ../sample_order.txt -y $silvangsInputExportFile -z $silvangsInputClusterFile -r $silvaRefMap -m $metapipedir -e
     cat ${outdirectory}_asvTaxonomyTable.txt | grep -v "Unknown" > ${outdirectory}_asvTaxonomyTable_NOUNKNOWNS.txt
     cd ${workingdirectory}
     

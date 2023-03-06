@@ -16,7 +16,7 @@ $|=1; #Autoflush so pauses within this script are pushed up to the shell script 
 
 # - - - - - C O M M A N D    L I N E    O P T I O N S - - - - - - - -
 my %options=();
-getopts("a:s:t:m:n:f:c:d:o:y:z:eh", \%options);
+getopts("a:s:t:m:n:f:c:d:o:r:y:z:eh", \%options);
 
 if ($options{h})
     {   print "\n\nHelp called:\nOptions:\n";
@@ -32,6 +32,7 @@ if ($options{h})
         print "-e = Toggle use of SILVAngs taxonomy assignments by ASV (optional)\n";
         print "-y = SILVAngs results/[ls]su/exports/*---otus.csv File\n";
         print "-z = SILVAngs results/[ls]su/stats/sequence_cluster_map/data/*.fa.clstr File\n";
+        print "-r = Reference taxonomy map for current SILVA database: i.e. tax_slv_ssu_138.1.txt\n";
         print "-m = Location of the metapipe directory\n";
         print "-h = This help message\n\n";
         die;
@@ -44,11 +45,26 @@ my @uniq_bartaxa_ig;
 my @sample_headers;
 my @file_sample_headers;
 my @commondat;
+my %SILVAREF;
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # - - - - - M A I N - - - - - - - - - - - - - - - - - - - -
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+if ($options{e})
+    {   open(REFIN, "<$options{r}") or die "\n\nThere is no $options{r} file!!\n\n";
+        my @refdat = <REFIN>; close(REFIN);
+        foreach my $line (@refdat)
+            {   chomp($line);
+                my @split_line = split('\t', $line);
+                my $header = $split_line[0];
+                $header =~ s/[^A-Za-z0-9; ]/_/g;
+                my $silvataxid = $split_line[1];
+                my $level = $split_line[2];
+                $SILVAREF{$header}{'silvataxid'} = $silvataxid;
+                $SILVAREF{$header}{'level'} = $level;
+            }
+    }
+    
 #IMPORT ASV count table info
 open(IN1, "<$options{a}") or die "\n\nThere is no $options{a} file!!\n\n";
 my @asv_dat = <IN1>; close(IN1);
@@ -221,136 +237,121 @@ if ($options{e})
                     }
             }
         
-        
-        open(TAXCHOICES, ">silvangs_silvaTaxonomyChoices.txt");
-        
-        my %SOLVEDTAXA;
         foreach my $i (sort keys %SILVATAX)
-            {   my $silva = $SILVATAX{$i}{'silva'};
-                my @silva_taxa = split(';', $silva);
-                my $newtax = "none";
-                if (exists $SOLVEDTAXA{$silva})
-                    {   $newtax = $SOLVEDTAXA{$silva};
-                    }
-                else
-                    {   if (scalar @silva_taxa <= 6)
-                            {   if ($silva_taxa[0] eq "Bacteria" || $silva_taxa[0] eq "Archaea")
-                                {   foreach my $j (0..$#silva_taxa)
-                                        {   unless ($j == 3)
-                                                {   if ($silva_taxa[$j] =~ m/ales$/)
-                                                        {   print "\nCheck taxa w/ order-stye name in incorrect column:\n";
-                                                            print TAXCHOICES "\nCheck taxa w/ order-stye name in incorrect column:\n";
-                                                            print "$silva\n";
-                                                            print TAXCHOICES "$silva\n";
-                                                            print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
-                                                            $newtax = <STDIN>;
-                                                            chomp($newtax);
-                                                            $SOLVEDTAXA{$silva} = $newtax;
-                                                            print TAXCHOICES "Chose:\n";
-                                                            print TAXCHOICES "$newtax\n";
-                                                            
-                                                        }
-                                                }
-                                        }
-                                    foreach my $j (0..$#silva_taxa)
-                                        {   unless ($j == 4)
-                                                {   if ($silva_taxa[$j] =~ m/aceae$/)
-                                                        {   print "\nCheck taxa w/ family-stye name in incorrect column:\n";
-                                                            print TAXCHOICES "\nCheck taxa w/ family-stye name in incorrect column:\n";
-                                                            print "$silva\n";
-                                                            print TAXCHOICES "$silva\n";
-                                                            print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
-                                                            $newtax = <STDIN>;
-                                                            chomp($newtax);
-                                                            $SOLVEDTAXA{$silva} = $newtax;
-                                                            print TAXCHOICES "Chose:\n";
-                                                            print TAXCHOICES "$newtax\n";
-                                                        }
-                                                }
-                                        }
-                                }
-                            else
-                                {   print "\nCheck lineage:\n";
-                                    print TAXCHOICES "\nCheck lineage:\n";
-                                    print "$silva\n";
-                                    print TAXCHOICES "$silva\n";
-                                    print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
-                                    $newtax = <STDIN>;
-                                    chomp($newtax);
-                                    $SOLVEDTAXA{$silva} = $newtax;
-                                    print TAXCHOICES "Chose:\n";
-                                    print TAXCHOICES "$newtax\n";
-                                }
+            {   my $inputtaxonomy = $SILVATAX{$i}{'silva'};
+                my @silva_taxa = split(';', $inputtaxonomy);
+                my @silva_taxa_copy = @silva_taxa;
+                my $countSilva = scalar(@silva_taxa);
+                my $kingdom = "NA";
+                my $phylum = "NA";
+                my $class = "NA";
+                my $order = "NA";
+                my $family = "NA";
+                my $genus = "NA";
+                my $species = "NA";
+                foreach my $count (1..$countSilva)
+                    {   my $comparison = join(';', @silva_taxa).";";
+                        if (exists $SILVAREF{$comparison})
+                            {   my $assignedLevel = $SILVAREF{$comparison}{'level'};
+                                if ($assignedLevel eq "domain")
+                                    {   $kingdom = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "phylum")
+                                    {   $phylum = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "class")
+                                    {   $class = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "order")
+                                    {   $order = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "family")
+                                    {   $family = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "genus")
+                                    {   $genus = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "species")
+                                    {   $species = $silva_taxa[$#silva_taxa];
+                                    }
                             }
                         else
-                            {   if ($silva_taxa[0] eq "Bacteria" || $silva_taxa[0] eq "Archaea")
-                                    {   print "\nCheck taxa w/ larger than expected hierarchy for Bacteria/Archaea:\n";
-                                        print TAXCHOICES "\nCheck taxa w/ larger than expected hierarchy for Bacteria/Archaea:\n";
-                                        print "$silva\n";
-                                        print TAXCHOICES "$silva\n";
-                                        print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
-                                        $newtax = <STDIN>;
-                                        chomp($newtax);
-                                        $SOLVEDTAXA{$silva} = $newtax;
-                                        print TAXCHOICES "Chose:\n";
-                                        print TAXCHOICES "$newtax\n";
+                            {   unless ($comparison =~ m/^Unknown/)
+                                    {   die "\n\nThe SILVA tax $comparison is missing from the reference file. Check that you have a current file.\n\n";
                                     }
-                                elsif ($silva_taxa[0] eq "Eukaryota")
-                                    {   print "\nCheck Eukaryota lineage:\n";
-                                        print TAXCHOICES "\nCheck Eukaryota lineage:\n";
-                                        print "$silva\n";
-                                        print TAXCHOICES "$silva\n";
-                                        print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
-                                        $newtax = <STDIN>;
-                                        chomp($newtax);
-                                        $SOLVEDTAXA{$silva} = $newtax;
-                                        print TAXCHOICES "Chose:\n";
-                                        print TAXCHOICES "$newtax\n";
+                            }
+                        pop(@silva_taxa);
+                    }
+                    
+                my $comparison = join(';', @silva_taxa_copy).";"; #i.e. terminal subclass or other
+                if (exists $SILVAREF{$comparison})
+                    {   my $assignedLevel = $SILVAREF{$comparison}{'level'};
+                        unless ($assignedLevel eq "domain" || $assignedLevel eq "phylum" || $assignedLevel eq "class" || $assignedLevel eq "order" || $assignedLevel eq "family" || $assignedLevel eq "genus" || $assignedLevel eq "species")
+                            {   if ($species eq "NA" && $genus ne "NA")
+                                    {   $species = $silva_taxa_copy[$#silva_taxa_copy]."__s";
                                     }
-                                else
-                                    {   print "\nCheck unknown lineage:\n";
-                                        print TAXCHOICES "\nCheck unknown lineage:\n";
-                                        print "$silva\n";
-                                        print TAXCHOICES "$silva\n";
-                                        print "Input new taxonomy string K/P/C/O/F/G/S with ';' delimiter no NAs:\n";
-                                        print "If you wish to remove this taxa, simply press enter\n";
-                                        $newtax = <STDIN>;
-                                        chomp($newtax);
-                                        $SOLVEDTAXA{$silva} = $newtax;
-                                        print TAXCHOICES "Chose:\n";
-                                        print TAXCHOICES "$newtax\n";
+                                elsif ($species eq "NA" && $genus eq "NA" && $family ne "NA")
+                                    {   $genus = $silva_taxa_copy[$#silva_taxa_copy]."__g";
+                                    }
+                                elsif ($species eq "NA" && $genus eq "NA" && $family eq "NA" && $order ne "NA")
+                                    {   $family = $silva_taxa_copy[$#silva_taxa_copy]."__f";
+                                    }
+                                elsif ($species eq "NA" && $genus eq "NA" && $family eq "NA" && $order eq "NA" && $class ne "NA")
+                                    {   $order = $silva_taxa_copy[$#silva_taxa_copy]."__o";
+                                    }
+                                elsif ($species eq "NA" && $genus eq "NA" && $family eq "NA" && $order eq "NA" && $class eq "NA" && $phylum ne "NA")
+                                    {   $class = $silva_taxa_copy[$#silva_taxa_copy]."__c";
+                                    }
+                                elsif ($species eq "NA" && $genus eq "NA" && $family eq "NA" && $order eq "NA" && $class eq "NA" && $phylum eq "NA" && $kingdom ne "NA")
+                                    {   $phylum = $silva_taxa_copy[$#silva_taxa_copy]."__p";
                                     }
                             }
                     }
-                my $final_silva_taxa;
-                if ($newtax eq "none")
-                    {   $final_silva_taxa = join(';', @silva_taxa);
-                        $final_silva_taxa =~ s/\;uncultured$//;
+                
+                if ($genus ne "NA") #CHECK to FILL GAPS
+                    {   if ($family eq "NA")
+                            {   $family = $genus."__f";}
+                        if ($order eq "NA")
+                            {   $order = $family."__o";}
+                        if ($class eq "NA")
+                            {   $class = $order."__c";} 
+                        if ($phylum eq "NA")
+                            {   $phylum = $class."__p";}   
                     }
-                elsif ($newtax eq "")
-                    {   $final_silva_taxa = "DELETE";
+                if ($genus eq "NA")
+                    {   if ($family ne "NA")
+                            {   if ($order eq "NA")
+                                    {   $order = $family."__o";}
+                                if ($class eq "NA")
+                                    {   $class = $order."__c";}
+                                if ($phylum eq "NA")
+                                    {   $phylum = $class."__p";}
+                            }
+                        if ($order ne "NA")
+                            {   if ($class eq "NA")
+                                    {   $class = $order."__c";}
+                                if ($phylum eq "NA")
+                                    {   $phylum = $class."__p";}
+                            }
+                        if ($class ne "NA")
+                            {   if ($phylum eq "NA")
+                                    {   $phylum = $class."__p";}
+                            }
                     }
-                else
-                    {   my @splitnew = split(';', $newtax);
-                        @silva_taxa = @splitnew;
-                        $final_silva_taxa = join(';', @silva_taxa);
-                    }
+                
+                my $final_silva_taxa = $kingdom.";".$phylum.";".$class.";".$order.";".$family.";".$genus.";".$species;
                 $SILVATAX{$i}{'cleaned_silva'} = $final_silva_taxa;
+                
+                if ($comparison =~ m/^Unknown/)
+                    {   $SILVATAX{$i}{'cleaned_silva'} = "Unknown;NA;NA;NA;NA;NA;NA";
+                    }
             }
-        close(TAXCHOICES);
         
         foreach my $i (sort keys %SILVATAX)
             {   unless (exists $SILVATAX{$i}{'cleaned_silva'})
                     {   die "\n\nSome of the taxa (like $i) are missing a cleaned SILVA taxonomy\n\n";
                     }
             }
-        
-        foreach my $i (sort keys %SILVATAX)
-            {   if ($SILVATAX{$i}{'cleaned_silva'} eq "DELETE")
-                    {   delete $SILVATAX{$i};}
-            }
-        
-        
         
         #Populate $TAXA{$i}{'cleaned_merged'} filling in Euk assignments from NCBI
         open(EUKMERGE, ">merged_NCBI_SILVA_Eukaryotes_info.txt");
