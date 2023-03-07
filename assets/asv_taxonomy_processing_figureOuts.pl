@@ -223,6 +223,11 @@ if ($options{e})
             {   if (exists $TAXONKIT{$SILVATAX{$i}{'ncbi_taxid'}}{'taxonomystring'})
                     {   my $newNCBItax = $TAXONKIT{$SILVATAX{$i}{'ncbi_taxid'}}{'taxonomystring'};
                         my @splittax = split(';', $newNCBItax);
+                        my $lastentry = $#splittax;
+                        my $secondlastentry = $#splittax - 1;
+                        if ($splittax[$lastentry] eq $splittax[$secondlastentry]." sp_")
+                            {   pop(@splittax);
+                            }
                         my $newnewNCBItax = join(';', @splittax);
                         $SILVATAX{$i}{'cleaned_ncbi'} = $newnewNCBItax;
                     }
@@ -253,26 +258,28 @@ if ($options{e})
                     {   my $comparison = join(';', @silva_taxa).";";
                         if (exists $SILVAREF{$comparison})
                             {   my $assignedLevel = $SILVAREF{$comparison}{'level'};
-                                if ($assignedLevel eq "domain")
-                                    {   $kingdom = $silva_taxa[$#silva_taxa];
-                                    }
-                                elsif ($assignedLevel eq "phylum")
-                                    {   $phylum = $silva_taxa[$#silva_taxa];
-                                    }
-                                elsif ($assignedLevel eq "class")
-                                    {   $class = $silva_taxa[$#silva_taxa];
-                                    }
-                                elsif ($assignedLevel eq "order")
-                                    {   $order = $silva_taxa[$#silva_taxa];
-                                    }
-                                elsif ($assignedLevel eq "family")
-                                    {   $family = $silva_taxa[$#silva_taxa];
-                                    }
-                                elsif ($assignedLevel eq "genus")
-                                    {   $genus = $silva_taxa[$#silva_taxa];
-                                    }
-                                elsif ($assignedLevel eq "species")
-                                    {   $species = $silva_taxa[$#silva_taxa];
+                                unless ($comparison =~ m/;uncultured$/ || $comparison =~ m/;Unknown .+$/ || $comparison =~ m/;Incertae Sedis$/)
+                                    {   if ($assignedLevel eq "domain")
+                                            {   $kingdom = $silva_taxa[$#silva_taxa];
+                                            }
+                                        elsif ($assignedLevel eq "phylum")
+                                            {   $phylum = $silva_taxa[$#silva_taxa];
+                                            }
+                                        elsif ($assignedLevel eq "class")
+                                            {   $class = $silva_taxa[$#silva_taxa];
+                                            }
+                                        elsif ($assignedLevel eq "order")
+                                            {   $order = $silva_taxa[$#silva_taxa];
+                                            }
+                                        elsif ($assignedLevel eq "family")
+                                            {   $family = $silva_taxa[$#silva_taxa];
+                                            }
+                                        elsif ($assignedLevel eq "genus")
+                                            {   $genus = $silva_taxa[$#silva_taxa];
+                                            }
+                                        elsif ($assignedLevel eq "species")
+                                            {   $species = $silva_taxa[$#silva_taxa];
+                                            }
                                     }
                             }
                         else

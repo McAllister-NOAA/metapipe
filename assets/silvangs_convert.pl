@@ -61,7 +61,12 @@ if ($options{c})
         foreach my $line (@clustdata)
             {   if ($line =~ m/^>.+/)
                     {   unless ($clustaccession eq "NULL")
-                            {   $CLUSTER{$clustaccession}{'additionalcount'} = $totalnum - 1;
+                            {   if (exists $CLUSTER{$clustaccession})
+                                    {   die "\n\nIt appears that cd-hit cluster accessions are not unique. Please assess $clustaccession. \n\n";
+                                    }
+                                else
+                                    {   $CLUSTER{$clustaccession}{'additionalcount'} = $totalnum - 1;
+                                    }
                             }
                         $line =~ m/^>(.+)$/;
                         $clustaccession = $1;
@@ -71,6 +76,12 @@ if ($options{c})
                 else
                     {   $totalnum += 1;
                     }
+            }
+        if (exists $CLUSTER{$clustaccession}) #Store the last clustaccession
+            {   die "\n\nIt appears that cd-hit cluster accessions are not unique. Please assess $clustaccession. \n\n";
+            }
+        else
+            {   $CLUSTER{$clustaccession}{'additionalcount'} = $totalnum - 1;
             }
     }
     
@@ -117,7 +128,8 @@ foreach my $line (@data)
             {$sequencedata = $split_line[6];}
         $TAXA{$keytax}{$sample}{'count'} += $split_line[3];
         if ($options{c})
-            {   $TAXA{$keytax}{$sample}{'count'} += $CLUSTER{$clusteraccession}{'additionalcount'};
+            {   if (exists $CLUSTER{$clusteraccession}) {$TAXA{$keytax}{$sample}{'count'} += $CLUSTER{$clusteraccession}{'additionalcount'};}
+                else {die "\n\nLooks like $clusteraccession is missing from the cluster file but is present in the SILVA output.\n\n";}
             }
         unless (exists $TAXA{$keytax}{'sequence'} && $TAXA{$keytax}{'sequence'} ne "BLANK")
             {   $TAXA{$keytax}{'sequence'} = $sequencedata;
@@ -174,6 +186,11 @@ foreach my $i (sort keys %TAXA)
     {   if (exists $TAXONKIT{$TAXA{$i}{'ncbi_taxid'}}{'taxonomystring'})
             {   my $newNCBItax = $TAXONKIT{$TAXA{$i}{'ncbi_taxid'}}{'taxonomystring'};
                 my @splittax = split(';', $newNCBItax);
+                my $lastentry = $#splittax;
+                my $secondlastentry = $#splittax - 1;
+                if ($splittax[$lastentry] eq $splittax[$secondlastentry]." sp_")
+                    {   pop(@splittax);
+                    }
                 if (scalar @splittax < 7)
                     {   my @newlist = @splittax;
                         my $startpos = $#splittax + 1;
@@ -217,26 +234,28 @@ foreach my $i (sort keys %TAXA)
             {   my $comparison = join(';', @silva_taxa).";";
                 if (exists $SILVAREF{$comparison})
                     {   my $assignedLevel = $SILVAREF{$comparison}{'level'};
-                        if ($assignedLevel eq "domain")
-                            {   $kingdom = $silva_taxa[$#silva_taxa];
-                            }
-                        elsif ($assignedLevel eq "phylum")
-                            {   $phylum = $silva_taxa[$#silva_taxa];
-                            }
-                        elsif ($assignedLevel eq "class")
-                            {   $class = $silva_taxa[$#silva_taxa];
-                            }
-                        elsif ($assignedLevel eq "order")
-                            {   $order = $silva_taxa[$#silva_taxa];
-                            }
-                        elsif ($assignedLevel eq "family")
-                            {   $family = $silva_taxa[$#silva_taxa];
-                            }
-                        elsif ($assignedLevel eq "genus")
-                            {   $genus = $silva_taxa[$#silva_taxa];
-                            }
-                        elsif ($assignedLevel eq "species")
-                            {   $species = $silva_taxa[$#silva_taxa];
+                        unless ($comparison =~ m/;uncultured$/ || $comparison =~ m/;Unknown .+$/ || $comparison =~ m/;Incertae Sedis$/)
+                            {   if ($assignedLevel eq "domain")
+                                    {   $kingdom = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "phylum")
+                                    {   $phylum = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "class")
+                                    {   $class = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "order")
+                                    {   $order = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "family")
+                                    {   $family = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "genus")
+                                    {   $genus = $silva_taxa[$#silva_taxa];
+                                    }
+                                elsif ($assignedLevel eq "species")
+                                    {   $species = $silva_taxa[$#silva_taxa];
+                                    }
                             }
                     }
                 else
@@ -352,8 +371,8 @@ if ($options{a}) #Populate $TAXA{$i}{'cleaned_merged'} filling in Euk assignment
                                 print EUKMERGE "$silva_clean\t$ncbi_clean\n";
                             }
                         else
-                            {   $TAXA{$i}{'cleaned_merged'} = "Eukaryota;NA;NA;NA;NA;NA;NA";
-                                print EUKMERGE "$silva_clean\tEukaryota;NA;NA;NA;NA;NA;NA\n";
+                            {   $TAXA{$i}{'cleaned_merged'} = "Eukaryota;Chloroplast;NA;NA;NA;NA;NA";
+                                print EUKMERGE "$silva_clean\tEukaryota;Chloroplast;NA;NA;NA;NA;NA\n";
                             }
                     }
                 elsif ($silva_clean =~ m/Bacteria\;Proteobacteria\;Alphaproteobacteria\;Rickettsiales\;Mitochondria/)
@@ -364,8 +383,8 @@ if ($options{a}) #Populate $TAXA{$i}{'cleaned_merged'} filling in Euk assignment
                                 print EUKMERGE "$silva_clean\t$ncbi_clean\n";
                             }
                         else
-                            {   $TAXA{$i}{'cleaned_merged'} = "Eukaryota;NA;NA;NA;NA;NA;NA";
-                                print EUKMERGE "$silva_clean\tEukaryota;NA;NA;NA;NA;NA;NA\n";
+                            {   $TAXA{$i}{'cleaned_merged'} = "Eukaryota;Mitochondria;NA;NA;NA;NA;NA";
+                                print EUKMERGE "$silva_clean\tEukaryota;Mitochondria;NA;NA;NA;NA;NA\n";
                             }
                     }
                 else
