@@ -188,7 +188,7 @@ foreach my $i (sort keys %TAXA)
                 my @splittax = split(';', $newNCBItax);
                 my $lastentry = $#splittax;
                 my $secondlastentry = $#splittax - 1;
-                if ($splittax[$lastentry] eq $splittax[$secondlastentry]." sp_")
+                if ($splittax[$lastentry] eq $splittax[$secondlastentry]." sp_" || $splittax[$lastentry] =~ m/uncultured/ || $splittax[$lastentry] =~ m/unidentified/ || $splittax[$lastentry] =~ m/metagenome/)
                     {   pop(@splittax);
                     }
                 if (scalar @splittax < 7)
@@ -203,6 +203,9 @@ foreach my $i (sort keys %TAXA)
                     {   if ($splittax[$j] eq "")
                             {   $splittax[$j] = "NA";
                             }
+                    }
+                if ($splittax[0] eq "NA")
+                    {   $splittax[0] = "Unknown";
                     }
                 my $newnewNCBItax = join(';', @splittax);
                 $TAXA{$i}{'cleaned_ncbi'} = $newnewNCBItax;
@@ -234,7 +237,7 @@ foreach my $i (sort keys %TAXA)
             {   my $comparison = join(';', @silva_taxa).";";
                 if (exists $SILVAREF{$comparison})
                     {   my $assignedLevel = $SILVAREF{$comparison}{'level'};
-                        unless ($comparison =~ m/;uncultured$/ || $comparison =~ m/;Unknown .+$/ || $comparison =~ m/;Incertae Sedis$/)
+                        unless ($comparison =~ m/;uncultured;$/ || $comparison =~ m/;Unknown .+$/ || $comparison =~ m/;Incertae Sedis;$/)
                             {   if ($assignedLevel eq "domain")
                                     {   $kingdom = $silva_taxa[$#silva_taxa];
                                     }

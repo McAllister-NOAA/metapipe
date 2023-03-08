@@ -225,8 +225,11 @@ if ($options{e})
                         my @splittax = split(';', $newNCBItax);
                         my $lastentry = $#splittax;
                         my $secondlastentry = $#splittax - 1;
-                        if ($splittax[$lastentry] eq $splittax[$secondlastentry]." sp_")
+                        if ($splittax[$lastentry] eq $splittax[$secondlastentry]." sp_" || $splittax[$lastentry] =~ m/uncultured/ || $splittax[$lastentry] =~ m/unidentified/ || $splittax[$lastentry] =~ m/metagenome/)
                             {   pop(@splittax);
+                            }
+                        if ($splittax[0] eq "NA" || $splittax[0] eq "")
+                            {   $splittax[0] = "Unknown";
                             }
                         my $newnewNCBItax = join(';', @splittax);
                         $SILVATAX{$i}{'cleaned_ncbi'} = $newnewNCBItax;
@@ -258,7 +261,7 @@ if ($options{e})
                     {   my $comparison = join(';', @silva_taxa).";";
                         if (exists $SILVAREF{$comparison})
                             {   my $assignedLevel = $SILVAREF{$comparison}{'level'};
-                                unless ($comparison =~ m/;uncultured$/ || $comparison =~ m/;Unknown .+$/ || $comparison =~ m/;Incertae Sedis$/)
+                                unless ($comparison =~ m/;uncultured;$/ || $comparison =~ m/;Unknown .+$/ || $comparison =~ m/;Incertae Sedis;$/)
                                     {   if ($assignedLevel eq "domain")
                                             {   $kingdom = $silva_taxa[$#silva_taxa];
                                             }
