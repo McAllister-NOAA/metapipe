@@ -97,47 +97,56 @@ if ($heads !~ m/^sample name/)
 foreach my $line (@data)
 	{	chomp($line);
 		my @split_line = split('\t', $line);
-        my $sample = $split_line[0];
-        my $clusteraccession = $split_line[2];
-        chomp($sample);
-        $sample =~ s/[^A-Za-z0-9_]/_/g;
-        $sample = "MP_".$sample;
-        push(@sample_headers, $sample);
-        my $ncbi_tax;
-        my $ncbi_taxid;
-        if ($split_line[8] ne "")
-            {   $ncbi_tax = $split_line[8];
-                $ncbi_tax =~ m/^ncbi\|.+\|(.+)\|/;
-                $ncbi_taxid = $1;
-                $ncbi_tax =~ s/^ncbi\|.+\|.+\|//;
-                $ncbi_tax =~ s/[^A-Za-z0-9; ]/_/g;    
-            }
-        else {  $ncbi_tax = "Unknown";
-                $ncbi_taxid = "NA";
-             }
-        my $silva_tax;
-        if ($split_line[9] ne "")
-            {   $silva_tax = $split_line[9];
-                $silva_tax =~ s/^silva\|.+\|.+\|//;
-                $silva_tax =~ s/[^A-Za-z0-9; ]/_/g;
-            }
-        else {$silva_tax = "Unknown";}
-        my $keytax = $silva_tax.','.$ncbi_tax;
-        my $sequencedata = "BLANK";
-        if ($split_line[6] ne "")
-            {$sequencedata = $split_line[6];}
-        $TAXA{$keytax}{$sample}{'count'} += $split_line[3];
-        if ($options{c})
-            {   if (exists $CLUSTER{$clusteraccession}) {$TAXA{$keytax}{$sample}{'count'} += $CLUSTER{$clusteraccession}{'additionalcount'};}
-                else {die "\n\nLooks like $clusteraccession is missing from the cluster file but is present in the SILVA output.\n\n";}
-            }
-        unless (exists $TAXA{$keytax}{'sequence'} && $TAXA{$keytax}{'sequence'} ne "BLANK")
-            {   $TAXA{$keytax}{'sequence'} = $sequencedata;
-            }
-        unless (exists $TAXA{$keytax}{'asv'})
-            {   $TAXA{$keytax}{'asv'} = "ASV_".$asv_count;
-                $TAXA{$keytax}{'ncbi_taxid'} = $ncbi_taxid;
-                $asv_count += 1;
+        if (scalar(@split_line) > 1)
+            {   my $sample = $split_line[0];
+                my $clusteraccession = $split_line[2];
+                chomp($sample);
+                $sample =~ s/[^A-Za-z0-9_]/_/g;
+                $sample = "MP_".$sample;
+                push(@sample_headers, $sample);
+                my $ncbi_tax;
+                my $ncbi_taxid;
+                if ($split_line[8] ne "")
+                    {   $ncbi_tax = $split_line[8];
+                        $ncbi_tax =~ m/^ncbi\|.+\|(.+)\|/;
+                        $ncbi_taxid = $1;
+                        $ncbi_tax =~ s/^ncbi\|.+\|.+\|//;
+                        $ncbi_tax =~ s/[^A-Za-z0-9; ]/_/g;
+                        if ($ncbi_tax eq "")
+                            {   $ncbi_tax = "Unknown";
+                                $ncbi_taxid = "NA";
+                            }
+                    }
+                else {  $ncbi_tax = "Unknown";
+                        $ncbi_taxid = "NA";
+                     }
+                my $silva_tax;
+                if ($split_line[9] ne "")
+                    {   $silva_tax = $split_line[9];
+                        $silva_tax =~ s/^silva\|.+\|.+\|//;
+                        $silva_tax =~ s/[^A-Za-z0-9; ]/_/g;
+                        if ($silva_tax eq "")
+                            {   $silva_tax = "Unknown";
+                            }
+                    }
+                else {$silva_tax = "Unknown";}
+                my $keytax = $silva_tax.','.$ncbi_tax;
+                my $sequencedata = "BLANK";
+                if ($split_line[6] ne "")
+                    {$sequencedata = $split_line[6];}
+                $TAXA{$keytax}{$sample}{'count'} += $split_line[3];
+                if ($options{c})
+                    {   if (exists $CLUSTER{$clusteraccession}) {$TAXA{$keytax}{$sample}{'count'} += $CLUSTER{$clusteraccession}{'additionalcount'};}
+                        else {die "\n\nLooks like $clusteraccession is missing from the cluster file but is present in the SILVA output.\n\n";}
+                    }
+                unless (exists $TAXA{$keytax}{'sequence'} && $TAXA{$keytax}{'sequence'} ne "BLANK")
+                    {   $TAXA{$keytax}{'sequence'} = $sequencedata;
+                    }
+                unless (exists $TAXA{$keytax}{'asv'})
+                    {   $TAXA{$keytax}{'asv'} = "ASV_".$asv_count;
+                        $TAXA{$keytax}{'ncbi_taxid'} = $ncbi_taxid;
+                        $asv_count += 1;
+                    }
             }
     }
 
@@ -146,8 +155,13 @@ my @unique_sampleHeaders = uniq @sample_headers;
 #Clean up taxonomy
 my @taxIDS;
 foreach my $i (sort keys %TAXA)
-    {   unless ($TAXA{$i}{'ncbi_taxid'} eq "NA")
-            {   push(@taxIDS, $TAXA{$i}{'ncbi_taxid'});
+    {   if (exists $TAXA{$i}{'ncbi_taxid'})
+            {   unless ($TAXA{$i}{'ncbi_taxid'} eq "NA")
+                {   push(@taxIDS, $TAXA{$i}{'ncbi_taxid'});
+                }
+            }
+        else
+            {   print "Missing ncbi_taxid:<<$i>>\n";
             }
     }
 my @uniq_taxids = uniq @taxIDS;
