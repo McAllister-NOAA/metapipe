@@ -1,31 +1,22 @@
 # MetaPipe
 
-Metabarcoding Pipeline - Currently In Development
+ALL SUPPORT FOR THIS PIPELINE HAS NOW BEEN TRANSFERRED TO REVAMP (URL).
 
-Created by Sean McAllister, Matt Galaska, and Chris Paight
+Metabarcoding Pipeline - DEVELOPMENT REPO
 
-Developed by the 'Omics Group at <a class="ui-tooltip" title="Pacific Marine Environmental Laboratory"><span style="cursor: help;">PMEL</span></a> (<a class="ui-tooltip" title="National Oceanic and Atmospheric Administration"><span style="cursor: help;">NOAA</span></a>) in cooperation with <a class="ui-tooltip" title="Cooperative Institute for Climate, Ocean, & Ecosystem Studies"><span style="cursor: help;">CICOES</span></a> (<a class="ui-tooltip" title="University of Washington"><span style="cursor: help;">UW</span></a>)
+Created by Sean McAllister, Chris Paight, Emily Norton, and Matt Galaska
 
-## Citation
-
-**If you find MetaPipe useful in your research, please cite...**
-
-```
-
-```
+Developed by the Ocean Molecular Ecology Group at <a class="ui-tooltip" title="Pacific Marine Environmental Laboratory"><span style="cursor: help;">PMEL</span></a> (<a class="ui-tooltip" title="National Oceanic and Atmospheric Administration"><span style="cursor: help;">NOAA</span></a>) in cooperation with <a class="ui-tooltip" title="Cooperative Institute for Climate, Ocean, & Ecosystem Studies"><span style="cursor: help;">CICOES</span></a> (<a class="ui-tooltip" title="University of Washington"><span style="cursor: help;">UW</span></a>)
 
 **MetaPipe employs several programs internally, which should also be cited:**
 
-* dada2 (including blog post)
+* dada2
 * cutadapt
-* blast
+* blastn
 * KRONA
 * taxonkit
 * phyloseq
 * vegan
-
-## Wiki
-Check the MetaPipe Wiki for more information on how MetaPipe works.
 
 ## Installation
 ### Easy Installation
@@ -55,36 +46,6 @@ Install the necessary dependencies, stand alone packages and in R (below)
 * subtree (taxonomy...)
 * perl : List::MoreUtils
 * And many more...
-
-## Toy Test dataset
-TBD
-
-## Quick Start Guide
-
-### Required input files
-* Raw reads
-* Program settings
-primer sequence F
-primer sequence R
-force merge? T/F [F]
-DESeq rarefaction T/F [F]
-expected insert size (bp)
-sequence read length (bp)
-location of sample metadata file
-taxa depth (for figures)
-control samples (positive/negative)
-contaminant taxa list
-taxid of interest list
-
-* Sample metadata
-sample order
-sample groups
-sample lat/long
-replicate indication
-chemistry
-
-## MetaPipe Results
-TBD
 
 #### Legal Disclaimer
 *This repository is a software product and is not official communication
